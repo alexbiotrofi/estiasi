@@ -103,27 +103,28 @@ body {
 
 /* Glass card base */
 .glass {
-  background: var(--glass);
+  background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(200, 192, 182, 0.35);
   border-radius: 20px;
-  box-shadow: var(--sh-m), inset 0 1px 0 var(--glass-highlight);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255,255,255,0.8);
   transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass:hover {
   transform: translateY(-4px);
-  box-shadow: var(--sh-l), inset 0 1px 0 var(--glass-highlight);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+  border-color: rgba(77, 139, 138, 0.2);
 }
 
 .glass-strong {
-  background: var(--glass-strong);
+  background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
-  border: 1px solid var(--glass-border-strong);
+  border: 1px solid rgba(200, 192, 182, 0.3);
   border-radius: 24px;
-  box-shadow: var(--sh-l), inset 0 1px 0 var(--glass-highlight);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
 /* Glass shine overlay */

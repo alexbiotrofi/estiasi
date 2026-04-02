@@ -25,24 +25,22 @@ const principles = [
 
 export default function Philosophy() {
   return (
-    <section
-      id="philosophy"
-      className="relative py-32 md:py-44 overflow-hidden"
-    >
+    <section id="philosophy" className="relative py-28 md:py-36 overflow-hidden">
       <div className="orb orb-copper" style={{ top: "10%", right: "-10%" }} />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-12">
+      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12">
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <span className="sect-num reveal">02 &mdash; Philosophy</span>
           <h2
-            className="font-serif mt-3 reveal"
+            className="mt-3 reveal"
             style={{
               fontFamily: "var(--font-serif)",
-              fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+              fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
               fontWeight: 400,
               color: "var(--charcoal)",
               letterSpacing: "-0.01em",
+              lineHeight: 1.15,
             }}
           >
             Great Hospitality Is a System,
@@ -52,57 +50,51 @@ export default function Philosophy() {
         </div>
 
         {/* Quote */}
-        <div className="max-w-3xl mx-auto mb-24 text-center reveal">
-          <div
-            className="w-8 h-[1px] mx-auto mb-8"
-            style={{ background: "var(--copper)", opacity: 0.4 }}
-          />
+        <div className="max-w-2xl mx-auto mb-16 md:mb-20 text-center reveal">
+          <div className="w-8 h-[1px] mx-auto mb-6" style={{ background: "var(--copper)", opacity: 0.5 }} />
           <p
-            className="font-serif italic"
             style={{
               fontFamily: "var(--font-serif)",
-              fontSize: "clamp(1.3rem, 2.5vw, 1.6rem)",
+              fontSize: "clamp(1.15rem, 2vw, 1.4rem)",
               fontWeight: 400,
+              fontStyle: "italic",
               color: "var(--charcoal)",
-              lineHeight: 1.7,
+              lineHeight: 1.8,
             }}
           >
             &ldquo;We believe that the best restaurants are not built on talent
             alone — they are built on structure, discipline, and a relentless
             focus on the details that guests feel but never see.&rdquo;
           </p>
-          <div
-            className="w-8 h-[1px] mx-auto mt-8"
-            style={{ background: "var(--copper)", opacity: 0.4 }}
-          />
+          <div className="w-8 h-[1px] mx-auto mt-6" style={{ background: "var(--copper)", opacity: 0.5 }} />
         </div>
 
-        {/* Principles grid */}
-        <div className="grid md:grid-cols-2 gap-6 stagger-children">
+        {/* Principles */}
+        <div className="grid md:grid-cols-2 gap-5 stagger-children">
           {principles.map((p, i) => (
-            <div
-              key={p.word}
-              className="glass glass-shine relative p-8 md:p-10 group cursor-default"
-            >
-              <div className="flex items-start gap-5">
+            <div key={p.word} className="glass relative p-7 md:p-8 group cursor-default">
+              <div className="flex items-start gap-4">
                 <span
-                  className="font-serif text-5xl md:text-6xl leading-none"
                   style={{
                     fontFamily: "var(--font-serif)",
+                    fontSize: "3.5rem",
                     fontWeight: 300,
+                    lineHeight: 1,
                     color: "var(--teal)",
-                    opacity: 0.15,
+                    opacity: 0.12,
                   }}
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <div>
+                <div className="pt-1">
                   <h3
-                    className="font-serif text-xl md:text-2xl mb-3 group-hover:text-teal transition-colors duration-300"
+                    className="group-hover:text-teal transition-colors duration-300"
                     style={{
                       fontFamily: "var(--font-serif)",
+                      fontSize: "1.35rem",
                       fontWeight: 500,
                       color: "var(--charcoal)",
+                      marginBottom: "0.6rem",
                     }}
                   >
                     {p.word}
@@ -110,7 +102,7 @@ export default function Philosophy() {
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
-                      fontSize: "0.85rem",
+                      fontSize: "0.88rem",
                       fontWeight: 300,
                       color: "var(--clay)",
                       lineHeight: 1.75,
@@ -124,41 +116,30 @@ export default function Philosophy() {
           ))}
         </div>
 
-        {/* Tone of voice strip */}
-        <div className="mt-24 reveal">
-          <div className="overflow-hidden py-8">
-            <div className="flex whitespace-nowrap text-scroll">
-              {[...Array(2)].map((_, setIdx) => (
-                <div key={setIdx} className="flex items-center shrink-0">
-                  {[
-                    "Direct",
-                    "Authoritative",
-                    "Confident",
-                    "Professional",
-                    "Precise",
-                    "Human",
-                  ].map((word) => (
-                    <span key={`${setIdx}-${word}`} className="flex items-center">
-                      <span
-                        className="font-serif text-5xl md:text-7xl px-6"
-                        style={{
-                          fontFamily: "var(--font-serif)",
-                          fontWeight: 300,
-                          color: "var(--charcoal)",
-                          opacity: 0.08,
-                        }}
-                      >
-                        {word}
-                      </span>
-                      <span
-                        className="w-2 h-2 rounded-full shrink-0"
-                        style={{ background: "var(--teal)", opacity: 0.15 }}
-                      />
+        {/* Scrolling words */}
+        <div className="mt-20 reveal overflow-hidden">
+          <div className="flex whitespace-nowrap text-scroll">
+            {[...Array(2)].map((_, setIdx) => (
+              <div key={setIdx} className="flex items-center shrink-0">
+                {["Direct", "Authoritative", "Confident", "Professional", "Precise", "Human"].map((word) => (
+                  <span key={`${setIdx}-${word}`} className="flex items-center">
+                    <span
+                      className="px-4 md:px-6"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "clamp(3rem, 6vw, 5rem)",
+                        fontWeight: 300,
+                        color: "var(--charcoal)",
+                        opacity: 0.06,
+                      }}
+                    >
+                      {word}
                     </span>
-                  ))}
-                </div>
-              ))}
-            </div>
+                    <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "var(--teal)", opacity: 0.12 }} />
+                  </span>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

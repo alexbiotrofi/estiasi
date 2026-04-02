@@ -64,68 +64,68 @@ export default function Services() {
   const [expanded, setExpanded] = useState<number | null>(0);
 
   return (
-    <section id="services" className="relative py-32 md:py-44 overflow-hidden marble-bg">
+    <section id="services" className="relative py-28 md:py-36 overflow-hidden marble-bg">
       <div className="orb orb-teal" style={{ bottom: "10%", right: "-12%" }} />
-      <div className="orb orb-white" style={{ top: "20%", left: "10%" }} />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-12">
+      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12">
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <span className="sect-num reveal">03 &mdash; Services</span>
           <h2
-            className="font-serif mt-3 reveal"
+            className="mt-3 reveal"
             style={{
               fontFamily: "var(--font-serif)",
-              fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+              fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
               fontWeight: 400,
               color: "var(--charcoal)",
               letterSpacing: "-0.01em",
+              lineHeight: 1.15,
             }}
           >
             Three Ways We Work
           </h2>
           <p
-            className="mt-4 max-w-lg mx-auto reveal"
+            className="mt-5 max-w-lg mx-auto reveal"
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "0.85rem",
+              fontSize: "1rem",
               fontWeight: 300,
               color: "var(--clay)",
-              lineHeight: 1.75,
+              lineHeight: 1.8,
             }}
           >
-            Each service line delivers structured deliverables, clear methodologies,
-            and measurable outcomes.
+            Each service line delivers structured deliverables, clear
+            methodologies, and measurable outcomes.
           </p>
         </div>
 
         {/* Service accordion */}
-        <div className="space-y-4 mb-24">
+        <div className="space-y-4 mb-20 md:mb-28">
           {services.map((service, i) => (
             <div
               key={service.num}
-              className="glass-strong glass-shine relative overflow-hidden cursor-pointer reveal"
+              className="glass-strong relative overflow-hidden cursor-pointer reveal"
+              style={{ borderRadius: "20px" }}
               onClick={() => setExpanded(expanded === i ? null : i)}
             >
-              {/* Header row */}
-              <div className="flex items-center justify-between p-7 md:p-10">
-                <div className="flex items-center gap-6 md:gap-10">
+              <div className="flex items-center justify-between p-6 md:p-8">
+                <div className="flex items-center gap-5 md:gap-8">
                   <span
-                    className="font-serif text-3xl md:text-4xl"
                     style={{
                       fontFamily: "var(--font-serif)",
+                      fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
                       fontWeight: 300,
                       color: "var(--teal)",
-                      opacity: 0.3,
+                      opacity: 0.25,
                     }}
                   >
                     {service.num}
                   </span>
                   <div>
                     <h3
-                      className="font-serif text-xl md:text-2xl"
                       style={{
                         fontFamily: "var(--font-serif)",
+                        fontSize: "clamp(1.15rem, 2vw, 1.5rem)",
                         fontWeight: 400,
                         color: "var(--charcoal)",
                       }}
@@ -136,7 +136,7 @@ export default function Services() {
                       className="mt-1 hidden md:block"
                       style={{
                         fontFamily: "var(--font-sans)",
-                        fontSize: "0.8rem",
+                        fontSize: "0.82rem",
                         fontWeight: 300,
                         color: "var(--clay)",
                       }}
@@ -145,13 +145,15 @@ export default function Services() {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4 md:gap-6">
                   <span
-                    className="hidden md:block text-[0.65rem] uppercase tracking-[0.15em] px-4 py-1.5 rounded-full"
+                    className="hidden md:inline-block text-[0.65rem] uppercase px-4 py-1.5 rounded-full"
                     style={{
+                      letterSpacing: "0.15em",
                       fontWeight: 500,
                       color: "var(--copper)",
-                      background: "rgba(184,112,58,0.08)",
+                      background: "rgba(184,112,58,0.1)",
+                      border: "1px solid rgba(184,112,58,0.15)",
                     }}
                   >
                     {service.price}
@@ -159,63 +161,35 @@ export default function Services() {
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-500"
                     style={{
-                      border: "1px solid rgba(44,44,44,0.1)",
+                      border: "1px solid rgba(200,192,182,0.4)",
                       transform: expanded === i ? "rotate(180deg)" : "rotate(0deg)",
                     }}
                   >
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                      style={{ color: "var(--charcoal)", opacity: 0.4 }}
-                    >
-                      <path d="M1 3.5L5 7.5L9 3.5" stroke="currentColor" strokeWidth="1" />
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M1 3.5L5 7.5L9 3.5" stroke="var(--clay)" strokeWidth="1.2" />
                     </svg>
                   </div>
                 </div>
               </div>
 
-              {/* Expanded content */}
               <div
-                className="overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                className="transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 style={{
                   maxHeight: expanded === i ? "600px" : "0px",
                   opacity: expanded === i ? 1 : 0,
+                  overflow: "hidden",
                 }}
               >
-                <div className="px-7 md:px-10 pb-8 md:pb-10">
-                  <div
-                    className="h-[1px] mb-6"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, var(--stone), transparent)",
-                      opacity: 0.2,
-                    }}
-                  />
-                  <p
-                    className="md:hidden mb-4"
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "0.8rem",
-                      fontWeight: 300,
-                      color: "var(--clay)",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    {service.subtitle}
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-3">
+                <div className="px-6 md:px-8 pb-7 md:pb-8">
+                  <div className="h-[1px] mb-5" style={{ background: "linear-gradient(90deg, transparent, rgba(200,192,182,0.4), transparent)" }} />
+                  <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
                     {service.items.map((item) => (
                       <div key={item} className="flex items-start gap-3">
-                        <span
-                          className="w-[3px] h-[3px] rounded-full mt-2 shrink-0"
-                          style={{ background: "var(--teal)", opacity: 0.4 }}
-                        />
+                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: "var(--teal)", opacity: 0.4 }} />
                         <span
                           style={{
                             fontFamily: "var(--font-sans)",
-                            fontSize: "0.8rem",
+                            fontSize: "0.85rem",
                             fontWeight: 300,
                             color: "var(--clay)",
                             lineHeight: 1.6,
@@ -226,13 +200,15 @@ export default function Services() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 md:hidden">
+                  <div className="mt-5 md:hidden">
                     <span
-                      className="text-[0.65rem] uppercase tracking-[0.15em] px-4 py-1.5 rounded-full"
+                      className="text-[0.65rem] uppercase px-4 py-1.5 rounded-full"
                       style={{
+                        letterSpacing: "0.15em",
                         fontWeight: 500,
                         color: "var(--copper)",
-                        background: "rgba(184,112,58,0.08)",
+                        background: "rgba(184,112,58,0.1)",
+                        border: "1px solid rgba(184,112,58,0.15)",
                       }}
                     >
                       {service.price}
@@ -246,13 +222,13 @@ export default function Services() {
 
         {/* Add-ons */}
         <div className="reveal">
-          <div className="text-center mb-12">
+          <div className="text-center mb-10">
             <span className="sect-num">Optional Add-Ons</span>
             <h3
-              className="font-serif mt-3"
+              className="mt-3"
               style={{
                 fontFamily: "var(--font-serif)",
-                fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+                fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
                 fontWeight: 400,
                 color: "var(--charcoal)",
               }}
@@ -263,16 +239,15 @@ export default function Services() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
             {addOns.map((addon) => (
-              <div
-                key={addon.title}
-                className="glass glass-shine relative p-6 group cursor-default"
-              >
+              <div key={addon.title} className="glass relative p-6 group cursor-default">
                 <h4
-                  className="font-serif text-lg mb-2 group-hover:text-teal transition-colors duration-300"
+                  className="group-hover:text-teal transition-colors duration-300"
                   style={{
                     fontFamily: "var(--font-serif)",
+                    fontSize: "1.1rem",
                     fontWeight: 500,
                     color: "var(--charcoal)",
+                    marginBottom: "0.4rem",
                   }}
                 >
                   {addon.title}
@@ -280,7 +255,7 @@ export default function Services() {
                 <p
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: "0.78rem",
+                    fontSize: "0.82rem",
                     fontWeight: 300,
                     color: "var(--clay)",
                     lineHeight: 1.65,

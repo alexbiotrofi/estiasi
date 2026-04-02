@@ -18,6 +18,8 @@ const founders = [
       "HACCP & food safety systems specialist",
       "Menu engineering & food cost optimisation",
     ],
+    gradient: "linear-gradient(150deg, var(--teal-light), var(--teal), var(--teal-deep))",
+    shadow: "0 16px 48px rgba(77,139,138,0.25)",
   },
   {
     name: "Alex Apostolides",
@@ -30,39 +32,41 @@ const founders = [
       "Technology & platform implementation",
       "Business development & client relations",
     ],
+    gradient: "linear-gradient(150deg, #d4ccc2, var(--stone), var(--clay))",
+    shadow: "0 16px 48px rgba(138,123,108,0.2)",
   },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="relative py-32 md:py-44 overflow-hidden">
-      {/* Background */}
+    <section id="about" className="relative py-28 md:py-36 overflow-hidden">
       <div className="orb orb-teal" style={{ top: "20%", left: "-15%" }} />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-12">
-        {/* Section header */}
-        <div className="text-center mb-20">
+      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12">
+        {/* Header */}
+        <div className="text-center mb-16 md:mb-20">
           <span className="sect-num reveal">01 &mdash; About</span>
           <h2
-            className="font-serif mt-3 reveal"
+            className="mt-3 reveal"
             style={{
               fontFamily: "var(--font-serif)",
-              fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+              fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
               fontWeight: 400,
               color: "var(--charcoal)",
               letterSpacing: "-0.01em",
+              lineHeight: 1.15,
             }}
           >
             Built in Kitchens,<br />Not Boardrooms
           </h2>
           <p
-            className="mt-4 max-w-lg mx-auto reveal"
+            className="mt-5 max-w-xl mx-auto reveal"
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "0.85rem",
+              fontSize: "1rem",
               fontWeight: 300,
               color: "var(--clay)",
-              lineHeight: 1.75,
+              lineHeight: 1.8,
             }}
           >
             Estiasi was founded by operators who have done the work — launching
@@ -71,25 +75,29 @@ export default function About() {
           </p>
         </div>
 
-        {/* Stats row */}
-        <div className="grid grid-cols-3 gap-6 mb-24 stagger-children">
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4 md:gap-6 mb-20 md:mb-28 stagger-children">
           {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="glass glass-shine relative text-center py-8 px-4"
-            >
+            <div key={stat.label} className="glass text-center py-7 px-4 relative overflow-hidden">
               <div
-                className="counter-value text-3xl md:text-4xl mb-2"
                 style={{
                   fontFamily: "var(--font-serif)",
+                  fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+                  fontWeight: 400,
                   color: "var(--teal)",
+                  marginBottom: "0.5rem",
                 }}
               >
                 {stat.number}
               </div>
               <div
-                className="text-[0.6rem] uppercase tracking-[0.2em]"
-                style={{ color: "var(--clay)" }}
+                style={{
+                  fontSize: "0.6rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase" as const,
+                  color: "var(--clay)",
+                }}
               >
                 {stat.label}
               </div>
@@ -98,48 +106,36 @@ export default function About() {
         </div>
 
         {/* Founders */}
-        <div className="space-y-16">
+        <div className="space-y-20 md:space-y-28">
           {founders.map((founder, i) => (
             <div
               key={founder.name}
               className={`flex flex-col ${
                 i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } gap-10 md:gap-16 items-start`}
+              } gap-8 md:gap-14 items-center`}
             >
-              {/* Photo placeholder */}
-              <div
-                className={`w-full md:w-[340px] shrink-0 ${i % 2 === 0 ? "reveal-left" : "reveal-right"}`}
-              >
+              {/* Photo */}
+              <div className={`w-full md:w-[320px] shrink-0 ${i % 2 === 0 ? "reveal-left" : "reveal-right"}`}>
                 <div
-                  className="aspect-[3/4] rounded-2xl glass-shine relative overflow-hidden"
+                  className="aspect-[3/4] rounded-2xl relative overflow-hidden"
                   style={{
-                    background:
-                      i === 0
-                        ? "linear-gradient(150deg, var(--teal-light), var(--teal), var(--teal-deep))"
-                        : "linear-gradient(150deg, var(--stone), var(--clay))",
-                    boxShadow:
-                      i === 0
-                        ? "0 16px 48px rgba(77,139,138,0.2)"
-                        : "var(--sh-l)",
+                    background: founder.gradient,
+                    boxShadow: founder.shadow,
                   }}
                 >
-                  <div className="absolute inset-0 flex items-end p-6">
-                    <div>
-                      <div
-                        className="text-[0.5rem] uppercase tracking-[0.3em] mb-1"
-                        style={{ color: "rgba(255,255,255,0.6)" }}
-                      >
-                        {founder.role}
-                      </div>
-                      <div
-                        className="font-serif text-xl"
-                        style={{
-                          fontFamily: "var(--font-serif)",
-                          color: "white",
-                        }}
-                      >
-                        {founder.name}
-                      </div>
+                  {/* Shine */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: "linear-gradient(168deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.05) 35%, transparent 55%)",
+                    }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 pt-20" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)" }}>
+                    <div style={{ fontSize: "0.5rem", letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.65)", marginBottom: "4px" }}>
+                      {founder.role}
+                    </div>
+                    <div style={{ fontFamily: "var(--font-serif)", fontSize: "1.35rem", fontWeight: 400, color: "white" }}>
+                      {founder.name}
                     </div>
                   </div>
                 </div>
@@ -148,54 +144,63 @@ export default function About() {
               {/* Bio */}
               <div className={`flex-1 ${i % 2 === 0 ? "reveal-right" : "reveal-left"}`}>
                 <h3
-                  className="font-serif text-2xl md:text-3xl mb-2"
                   style={{
                     fontFamily: "var(--font-serif)",
+                    fontSize: "clamp(1.6rem, 3vw, 2rem)",
                     fontWeight: 400,
                     color: "var(--charcoal)",
+                    marginBottom: "0.35rem",
                   }}
                 >
                   {founder.name}
                 </h3>
                 <p
-                  className="text-[0.65rem] uppercase tracking-[0.25em] mb-5"
-                  style={{ color: "var(--teal)", fontWeight: 500 }}
+                  style={{
+                    fontSize: "0.65rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.25em",
+                    textTransform: "uppercase" as const,
+                    color: "var(--teal)",
+                    marginBottom: "1.25rem",
+                  }}
                 >
                   {founder.role}
                 </p>
                 <p
-                  className="mb-6"
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: "0.88rem",
+                    fontSize: "0.92rem",
                     fontWeight: 300,
                     color: "var(--clay)",
-                    lineHeight: 1.8,
+                    lineHeight: 1.85,
+                    marginBottom: "1.5rem",
                   }}
                 >
                   {founder.description}
                 </p>
-                <ul className="space-y-3">
-                  {founder.credentials.map((cred) => (
-                    <li key={cred} className="flex items-start gap-3">
-                      <span
-                        className="w-1 h-1 rounded-full mt-2 shrink-0"
-                        style={{ background: "var(--teal)", opacity: 0.5 }}
-                      />
-                      <span
-                        className="text-[0.8rem]"
-                        style={{
-                          fontFamily: "var(--font-sans)",
-                          fontWeight: 300,
-                          color: "var(--clay)",
-                          lineHeight: 1.6,
-                        }}
-                      >
-                        {cred}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="glass rounded-xl p-5">
+                  <ul className="space-y-2.5">
+                    {founder.credentials.map((cred) => (
+                      <li key={cred} className="flex items-start gap-3">
+                        <span
+                          className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
+                          style={{ background: "var(--teal)", opacity: 0.5 }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "0.82rem",
+                            fontWeight: 300,
+                            color: "var(--charcoal)",
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          {cred}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           ))}
