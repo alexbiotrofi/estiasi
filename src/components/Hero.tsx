@@ -80,7 +80,7 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  const taglineWords = ["We", "Bring", "Restaurants", "to", "Life."];
+  // taglineWords no longer used — words are hardcoded in two lines for layout control
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: "100vh", overflow: "hidden" }}>
@@ -139,17 +139,40 @@ export default function Hero() {
 
       {/* Layer 2: Tagline — scroll-revealed, word by word */}
       <div ref={taglineRef} className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center pointer-events-none" style={{ padding: "0 2rem" }}>
-        <div className="flex flex-wrap items-baseline justify-center" style={{ maxWidth: "90vw", gap: "0 0.4em" }}>
-          {taglineWords.map((word, i) => (
+        {/* Line 1: We Bring */}
+        <div className="flex items-baseline justify-center" style={{ gap: "0 0.5em", marginBottom: "0.15em" }}>
+          {["We", "Bring"].map((word, i) => (
             <span
               key={i}
               className="tagline-word inline-block"
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(3rem, 9vw, 8rem)",
+                fontSize: "clamp(3.5rem, 10vw, 9rem)",
                 fontWeight: 400,
                 color: "#fff",
-                lineHeight: 1.05,
+                lineHeight: 1,
+                letterSpacing: "0.02em",
+                opacity: 0,
+                willChange: "transform, opacity",
+              }}
+            >
+              {word}
+            </span>
+          ))}
+        </div>
+        {/* Line 2: Restaurants to Life. */}
+        <div className="flex items-baseline justify-center" style={{ gap: "0 0.4em" }}>
+          {["Restaurants", "to", "Life."].map((word, i) => (
+            <span
+              key={i + 2}
+              className="tagline-word inline-block"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: word === "to" ? "clamp(2.5rem, 7vw, 6rem)" : "clamp(3.5rem, 10vw, 9rem)",
+                fontWeight: 400,
+                color: "#fff",
+                lineHeight: 1,
+                letterSpacing: "0.02em",
                 opacity: 0,
                 willChange: "transform, opacity",
               }}
@@ -160,7 +183,7 @@ export default function Hero() {
         </div>
 
         {/* CTA — appears after tagline */}
-        <div ref={ctaRef} className="pointer-events-auto" style={{ marginTop: "3rem", opacity: 0 }}>
+        <div ref={ctaRef} className="pointer-events-auto" style={{ marginTop: "3.5rem", opacity: 0 }}>
           <a
             href="#work"
             className="btn"
@@ -177,18 +200,19 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Stats bar — always visible at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-30" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(0,0,0,0.35)", backdropFilter: "blur(12px)" }}>
-        <div className="wrap">
-          <div className="grid grid-cols-3">
-            {[{ n: "15+", l: "Years Experience" }, { n: "40+", l: "Venues Supported" }, { n: "3", l: "Countries" }].map((s, i) => (
-              <div key={s.l} className="text-center" style={{ padding: "1.25rem 1rem", borderRight: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", color: "var(--copper-light)", marginBottom: "0.1rem" }}>{s.n}</div>
-                <div style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.3)" }}>{s.l}</div>
-              </div>
-            ))}
-          </div>
+      {/* Scroll indicator — animated line */}
+      <div className="absolute bottom-8 left-1/2 z-30" style={{ transform: "translateX(-50%)", textAlign: "center" }}>
+        <span style={{ fontSize: "0.38rem", fontWeight: 500, letterSpacing: "0.35em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)" }}>Scroll</span>
+        <div style={{ width: 1, height: 40, margin: "0.5rem auto 0", position: "relative", overflow: "hidden", background: "rgba(255,255,255,0.08)" }}>
+          <div style={{ width: "100%", height: "100%", background: "var(--copper)", animation: "scrollPulse 2s ease-in-out infinite" }} />
         </div>
+        <style>{`
+          @keyframes scrollPulse {
+            0% { transform: translateY(-100%); }
+            50% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+          }
+        `}</style>
       </div>
     </section>
   );
