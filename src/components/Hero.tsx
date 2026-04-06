@@ -36,22 +36,20 @@ export default function Hero() {
       tl.to(wordmarkRef.current, { opacity: 0, scale: 0.95, duration: 0.3, ease: "power2.in" }, 0);
       tl.to(videoRef.current, { filter: "brightness(0.15)", duration: 0.3 }, 0);
 
-      // Phase 2: Each word reveals — stays fully visible once it appears
+      // Phase 2: All words visible but dim, then highlight one by one
+      tl.set(words, { opacity: 0.15, y: 0 }, 0.2);
+
       words.forEach((word, i) => {
-        const startTime = 0.25 + i * 0.12;
-        tl.fromTo(word, {
-          opacity: 0,
-          y: 40,
-        }, {
+        const startTime = 0.25 + i * 0.1;
+        tl.to(word, {
           opacity: 1,
-          y: 0,
-          duration: 0.12,
-          ease: "power3.out",
+          color: "#fff",
+          duration: 0.1,
+          ease: "power2.out",
         }, startTime);
       });
 
-      // Brief pause with all words visible
-      const allWordsTime = 0.25 + words.length * 0.12 + 0.08;
+      const allWordsTime = 0.25 + words.length * 0.1 + 0.08;
 
       // Phase 4: CTA fades in
       tl.fromTo(ctaRef.current, { opacity: 0, y: 20 }, {
@@ -134,17 +132,17 @@ export default function Hero() {
           {/* Line 1: We Bring */}
           <div className="flex items-baseline justify-center" style={{ gap: "0 1em" }}>
             {["We", "Bring"].map((word, i) => (
-              <span key={i} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0, willChange: "transform, opacity" }}>{word}</span>
+              <span key={i} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0.15, color: "rgba(255,255,255,0.15)", willChange: "opacity, color" }}>{word}</span>
             ))}
           </div>
           {/* Line 2: Restaurants */}
           <div className="flex items-baseline justify-center">
-            <span className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0, willChange: "transform, opacity" }}>Restaurants</span>
+            <span className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0.15, color: "rgba(255,255,255,0.15)", willChange: "opacity, color" }}>Restaurants</span>
           </div>
           {/* Line 3: to Life. */}
           <div className="flex items-baseline justify-center" style={{ gap: "0 0.8em" }}>
             {["to", "Life."].map((word, i) => (
-              <span key={i + 3} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: word === "to" ? "clamp(2rem, 6vw, 5rem)" : "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0, willChange: "transform, opacity" }}>{word}</span>
+              <span key={i + 3} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: word === "to" ? "clamp(2rem, 6vw, 5rem)" : "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0.15, color: "rgba(255,255,255,0.15)", willChange: "opacity, color" }}>{word}</span>
             ))}
           </div>
         </div>
@@ -168,7 +166,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator — animated line */}
-      <div className="absolute bottom-24 left-1/2 z-30" style={{ transform: "translateX(-50%)", textAlign: "center" }}>
+      <div className="absolute bottom-40 left-1/2 z-30" style={{ transform: "translateX(-50%)", textAlign: "center" }}>
         <span style={{ fontSize: "0.38rem", fontWeight: 500, letterSpacing: "0.35em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)" }}>Scroll</span>
         <div style={{ width: 1, height: 40, margin: "0.5rem auto 0", position: "relative", overflow: "hidden", background: "rgba(255,255,255,0.08)" }}>
           <div style={{ width: "100%", height: "100%", background: "var(--copper)", animation: "scrollPulse 2s ease-in-out infinite" }} />
