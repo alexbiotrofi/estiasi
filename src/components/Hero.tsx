@@ -3,7 +3,7 @@ export default function Hero() {
     <section className="relative" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {/* Marble background */}
       <div className="absolute inset-0 z-0">
-        <img src="/textures/marble-2.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.07 }} />
+        <img src="/textures/marble-2.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.35 }} />
       </div>
 
       <div className="wrap relative z-10 flex-1 flex flex-col justify-center" style={{ paddingTop: "8rem", paddingBottom: "4rem" }}>

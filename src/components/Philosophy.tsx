@@ -31,7 +31,7 @@ export default function Philosophy() {
           {/* Copper line */}
           <div style={{ width: "32px", height: "2px", background: "var(--copper)", margin: "2rem auto" }} />
 
-          <p style={{ fontFamily: "var(--font-serif)", fontSize: "1.15rem", fontWeight: 400, fontStyle: "italic", color: "var(--stone-light)", lineHeight: 1.8 }}>
+          <p style={{ fontFamily: "var(--font-serif)", fontSize: "1.15rem", fontWeight: 400, color: "var(--stone-light)", lineHeight: 1.8 }}>
             &ldquo;The best restaurants are not built on talent alone — they are
             built on structure, discipline, and a relentless focus on the
             details that guests feel but never see.&rdquo;
