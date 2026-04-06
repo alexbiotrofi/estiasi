@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>estiasi — Greek Characters in Times New Roman</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,sans-serif; background:#1C1C1A; color:#F4F1EC; -webkit-font-smoothing:antialiased; }
+
+.wrap { max-width:900px; margin:0 auto; padding:4rem 2.5rem; }
+.hdr { text-align:center; margin-bottom:4rem; }
+.hdr h1 { font-size:0.55rem; font-weight:500; letter-spacing:0.5em; text-transform:uppercase; color:#B07340; margin-bottom:1rem; }
+.hdr p { font-size:0.85rem; font-weight:300; color:#7A7368; line-height:1.7; max-width:50ch; margin:0 auto; }
+
+.opt { padding:3.5rem 0; border-bottom:1px solid rgba(255,255,255,0.06); text-align:center; }
+.opt:last-child { border-bottom:none; }
+.num { font-size:0.42rem; font-weight:500; letter-spacing:0.4em; text-transform:uppercase; color:#B07340; opacity:0.5; margin-bottom:1.5rem; }
+.word { font-family:'Times New Roman',Times,serif; font-size:clamp(5rem,14vw,9rem); font-weight:400; letter-spacing:0.0618em; color:#F4F1EC; line-height:0.9; margin-bottom:1rem; }
+.desc { font-size:0.8rem; font-weight:300; color:#7A7368; line-height:1.7; max-width:45ch; margin:0 auto; }
+.chars { font-size:0.55rem; font-weight:500; letter-spacing:0.2em; color:#A8A196; margin-top:0.75rem; font-family:monospace; }
+
+.box { position:relative; padding:4rem 2rem; border-radius:8px; overflow:hidden; margin-top:1.5rem; }
+.box img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.box-c { position:relative; z-index:1; text-align:center; }
+.box-word { font-family:'Times New Roman',Times,serif; font-weight:400; letter-spacing:0.0618em; line-height:0.9; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <h1>Times New Roman + Greek Characters</h1>
+    <p>Times New Roman has full Greek glyph support. These are the actual glyphs from the same font — no fallback mismatch.</p>
+  </div>
+
+  <div class="opt">
+    <div class="num">Original — All Latin</div>
+    <div class="word">estiasi</div>
+    <div class="desc">Current wordmark. All Latin characters.</div>
+    <div class="chars">e-s-t-i-a-s-i</div>
+  </div>
+
+  <div class="opt">
+    <div class="num">Option A — Greek τ + ι (tau + iota)</div>
+    <div class="word">esτιasι</div>
+    <div class="desc">Tau replaces t, iotas replace both i's. Tau (τ) has a distinctly different shape from Latin t — curved descender, no crossbar. The iotas lose their dots. Three characters changed.</div>
+    <div class="chars">e-s-τ-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="num">Option B — Greek ε + τ + ι</div>
+    <div class="word">εsτιasι</div>
+    <div class="desc">Epsilon + tau + iotas. Four Greek characters. Maximum Greek presence while keeping s and a in Latin for readability.</div>
+    <div class="chars">ε-s-τ-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="num">Option C — Greek ε + ι only</div>
+    <div class="word">εstιasι</div>
+    <div class="desc">Epsilon for the opening, iotas for both i's. Latin t stays. Three characters changed — the most balanced mix.</div>
+    <div class="chars">ε-s-t-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="num">Option D — Greek ι only (dotless i's)</div>
+    <div class="word">estιasι</div>
+    <div class="desc">Just the two i's replaced with iota. Most subtle change — the missing dots are the only tell.</div>
+    <div class="chars">e-s-t-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="num">Option E — Greek τ + ι (just t and i's)</div>
+    <div class="word">esτιasι</div>
+    <div class="desc">Same as Option A. The tau is the star here — its curved shape breaks the Latin rhythm. Combined with dotless iotas.</div>
+    <div class="chars">e-s-τ-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="num">Option F — Greek ε only</div>
+    <div class="word">εstiasi</div>
+    <div class="desc">Just the opening letter. Epsilon signals Greek immediately. Everything else stays Latin. Most minimal change.</div>
+    <div class="chars">ε-s-t-i-a-s-i</div>
+  </div>
+
+  <!-- On materials -->
+  <div class="opt">
+    <div class="num">On Dark Stone</div>
+    <div class="box">
+      <img src="/textures/dark-stone.jpg" alt="" style="opacity:0.3">
+      <div class="box-c">
+        <div class="box-word" style="font-size:clamp(3.5rem,10vw,6.5rem);color:#F4F1EC;margin-bottom:3rem">esτιasι</div>
+        <div style="width:32px;height:2px;background:#B07340;margin:0 auto 3rem"></div>
+        <div class="box-word" style="font-size:clamp(3.5rem,10vw,6.5rem);color:#F4F1EC">εsτιasι</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="num">On Marble</div>
+    <div class="box">
+      <img src="/textures/marble-1.jpg" alt="" style="opacity:0.5">
+      <div class="box-c">
+        <div class="box-word" style="font-size:clamp(3.5rem,10vw,6.5rem);color:#2A2A28;margin-bottom:3rem">esτιasι</div>
+        <div style="width:32px;height:2px;background:#B07340;margin:0 auto 3rem"></div>
+        <div class="box-word" style="font-size:clamp(3.5rem,10vw,6.5rem);color:#2A2A28">εsτιasι</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="num">On Copper</div>
+    <div style="background:#B07340;border-radius:8px;padding:4rem 2rem;text-align:center;margin-top:1.5rem">
+      <div class="box-word" style="font-size:clamp(3.5rem,10vw,6.5rem);color:#fff;margin-bottom:3rem">esτιasι</div>
+      <div style="width:32px;height:2px;background:rgba(255,255,255,0.3);margin:0 auto 3rem"></div>
+      <div class="box-word" style="font-size:clamp(3.5rem,10vw,6.5rem);color:#fff">εsτιasι</div>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="num">Small — Nav Size</div>
+    <div style="display:flex;justify-content:center;gap:4rem;margin-top:1.5rem;flex-wrap:wrap">
+      <div style="text-align:center">
+        <div style="font-family:'Times New Roman',Times,serif;font-size:1.4rem;letter-spacing:0.0618em;color:#F4F1EC;margin-bottom:0.5rem">esτιasι</div>
+        <div style="font-size:0.42rem;letter-spacing:0.2em;text-transform:uppercase;color:#7A7368">Option A/E</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Times New Roman',Times,serif;font-size:1.4rem;letter-spacing:0.0618em;color:#F4F1EC;margin-bottom:0.5rem">εsτιasι</div>
+        <div style="font-size:0.42rem;letter-spacing:0.2em;text-transform:uppercase;color:#7A7368">Option B</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Times New Roman',Times,serif;font-size:1.4rem;letter-spacing:0.0618em;color:#F4F1EC;margin-bottom:0.5rem">εstιasι</div>
+        <div style="font-size:0.42rem;letter-spacing:0.2em;text-transform:uppercase;color:#7A7368">Option C</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Times New Roman',Times,serif;font-size:1.4rem;letter-spacing:0.0618em;color:#F4F1EC;margin-bottom:0.5rem">estiasi</div>
+        <div style="font-size:0.42rem;letter-spacing:0.2em;text-transform:uppercase;color:#7A7368">Original</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

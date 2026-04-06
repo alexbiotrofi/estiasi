@@ -108,7 +108,7 @@ export default function Hero() {
 
         {/* Big wordmark */}
         <div className="flex items-baseline justify-center">
-          {"estiasi".split("").map((char, i) => (
+          {"estιasι".split("").map((char, i) => (
             <span
               key={i}
               className="h-letter inline-block"

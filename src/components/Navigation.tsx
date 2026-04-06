@@ -23,7 +23,7 @@ export default function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style={{ background: scrolled ? "rgba(255,255,255,0.96)" : "transparent", backdropFilter: scrolled ? "blur(8px)" : "none", borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent" }}>
       <div className="wrap flex items-center justify-between" style={{ height: 64 }}>
         <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} style={{ textDecoration: "none" }}>
-          <span style={{ fontFamily: "var(--font-logo)", fontSize: "1.6rem", letterSpacing: "0.0618em", color: "var(--charcoal)" }}>estiasi</span>
+          <span style={{ fontFamily: "var(--font-logo)", fontSize: "1.6rem", letterSpacing: "0.0618em", color: "var(--charcoal)" }}>estιasι</span>
         </a>
         <div className="hidden md:flex items-center gap-8">
           {links.map(l => (

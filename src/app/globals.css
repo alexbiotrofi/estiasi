@@ -14,8 +14,8 @@
   --stone-dark: #7A7368;
   --border: rgba(42, 42, 40, 0.08);
   --border-s: rgba(42, 42, 40, 0.14);
-  --font-logo: 'Boska', serif;
-  --font-display: 'Boska', Georgia, serif;
+  --font-logo: 'Times New Roman', Times, serif;
+  --font-display: 'Times New Roman', Times, serif;
   --font-body: 'Switzer', -apple-system, sans-serif;
 }
 
@@ -27,8 +27,8 @@
   --color-stone: #A8A196;
   --color-stone-dark: #7A7368;
   --color-stone-light: #C4BCB2;
-  --font-logo: 'Boska', serif;
-  --font-display: 'Boska', Georgia, serif;
+  --font-logo: 'Times New Roman', Times, serif;
+  --font-display: 'Times New Roman', Times, serif;
   --font-body: 'Switzer', -apple-system, sans-serif;
 }
 

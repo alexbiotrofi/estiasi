@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Font Detective</title>
+<style>
+@import url("https://api.fontshare.com/v2/css?f[]=boska@400&display=swap");
+body { font-family: -apple-system, sans-serif; padding: 3rem; background: #1C1C1A; color: #F4F1EC; }
+h1 { font-size: 1rem; margin-bottom: 2rem; color: #B07340; }
+.test { margin-bottom: 2rem; padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; }
+.test-label { font-size: 0.7rem; color: #7A7368; margin-bottom: 0.5rem; }
+.test-word { font-size: 5rem; line-height: 1; letter-spacing: 0.0618em; margin-bottom: 0.5rem; }
+.test-result { font-size: 0.75rem; color: #A8A196; font-family: monospace; }
+</style>
+</head>
+<body>
+<h1>Font Detective — Which font is actually rendering?</h1>
+
+<div class="test">
+  <div class="test-label">Test 1: font-family: 'Boska', serif</div>
+  <div class="test-word" id="t1" style="font-family: 'Boska', serif">estiasi</div>
+  <div class="test-result" id="r1"></div>
+</div>
+
+<div class="test">
+  <div class="test-label">Test 2: font-family: Georgia, serif</div>
+  <div class="test-word" id="t2" style="font-family: Georgia, serif">estiasi</div>
+  <div class="test-result" id="r2"></div>
+</div>
+
+<div class="test">
+  <div class="test-label">Test 3: font-family: 'Times New Roman', serif</div>
+  <div class="test-word" id="t3" style="font-family: 'Times New Roman', serif">estiasi</div>
+  <div class="test-result" id="r3"></div>
+</div>
+
+<div class="test">
+  <div class="test-label">Test 4: font-family: serif (system default)</div>
+  <div class="test-word" id="t4" style="font-family: serif">estiasi</div>
+  <div class="test-result" id="r4"></div>
+</div>
+
+<div class="test">
+  <div class="test-label">Test 5: font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, serif (macOS system serif)</div>
+  <div class="test-word" id="t5" style="font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, serif">estiasi</div>
+  <div class="test-result" id="r5"></div>
+</div>
+
+<div class="test">
+  <div class="test-label">Test 6: font-family: 'Didot', 'Bodoni MT', serif</div>
+  <div class="test-word" id="t6" style="font-family: 'Didot', 'Bodoni MT', serif">estiasi</div>
+  <div class="test-result" id="r6"></div>
+</div>
+
+<div class="test" style="border-color: #B07340;">
+  <div class="test-label" style="color:#B07340">COMPARE: Which one matches the hero?</div>
+  <div style="font-size:0.8rem; color:#A8A196; margin-top:1rem">Look at the hero screenshot and compare each "estiasi" above. The one that matches is your mystery font. Pay attention to the "e", "s", and "a" shapes — those differ most between serif fonts.</div>
+</div>
+
+<script>
+window.addEventListener('load', () => {
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById('t' + i);
+    const cs = getComputedStyle(el);
+    document.getElementById('r' + i).textContent = 'Computed: ' + cs.fontFamily + ' | Width: ' + el.getBoundingClientRect().width.toFixed(1) + 'px';
+  }
+
+  // Check which fonts are loaded
+  const loaded = Array.from(document.fonts).map(f => f.family + ' (' + f.status + ')');
+  const div = document.createElement('div');
+  div.style.cssText = 'padding:2rem;border:1px solid rgba(255,255,255,0.1);border-radius:8px;margin-top:1rem';
+  div.innerHTML = '<div style="font-size:0.7rem;color:#7A7368;margin-bottom:0.5rem">Loaded fonts:</div><div style="font-size:0.7rem;color:#A8A196;font-family:monospace">' + loaded.join('<br>') + '</div>';
+  document.body.appendChild(div);
+});
+</script>
+</body>
+</html>
