@@ -1,49 +1,32 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { DM_Serif_Display, Inter } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+const dmSerif = DM_Serif_Display({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: "400",
   style: ["normal", "italic"],
-  variable: "--font-cormorant",
+  variable: "--font-dm-serif",
 });
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600"],
-  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
   title: "Estiasi — Culinary Consulting, Cyprus",
   description:
-    "Premium culinary consulting for the hospitality sector. Launch venues, elevate operations, and gain independent evaluation. Based in Cyprus.",
-  keywords: [
-    "culinary consulting",
-    "restaurant consulting",
-    "Cyprus",
-    "hospitality",
-    "F&B",
-    "restaurant opening",
-    "menu engineering",
-  ],
-  openGraph: {
-    title: "Estiasi — Culinary Consulting, Cyprus",
-    description:
-      "Premium culinary consulting for the hospitality sector. Based in Cyprus.",
-    type: "website",
-  },
+    "End-to-end advisory and operational consulting for the hospitality sector. From concept to grand opening. Based in Cyprus.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${outfit.variable}`}>
-      <body className="min-h-screen antialiased">{children}</body>
+    <html lang="en" className={`${dmSerif.variable} ${inter.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

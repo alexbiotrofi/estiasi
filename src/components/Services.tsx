@@ -51,168 +51,62 @@ const services = [
 ];
 
 const addOns = [
-  { title: "Staff Management Systems", desc: "Scheduling, performance tracking, and HR tools." },
-  { title: "Reservations & Bookings", desc: "Booking system selection, configuration, and onboarding." },
-  { title: "Leads & CRM", desc: "Lead tracking and client management systems." },
-  { title: "Invoicing & Payments", desc: "Invoicing infrastructure and payment workflows." },
-  { title: "Brand Development", desc: "Logo, identity, visual language, and brand guidelines." },
-  { title: "Website Design", desc: "Strategy, design, and development of hospitality websites." },
-  { title: "SEO & Digital Visibility", desc: "Search optimisation, Google Business, local discovery." },
+  "Staff Management Systems",
+  "Reservations & Bookings",
+  "Leads & CRM",
+  "Invoicing & Payments",
+  "Brand Development",
+  "Website Design",
+  "SEO & Digital Visibility",
 ];
 
 export default function Services() {
-  const [expanded, setExpanded] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="services" className="relative py-28 md:py-36 overflow-hidden marble-bg">
-      <div className="orb orb-teal" style={{ bottom: "10%", right: "-12%" }} />
+    <section id="services" className="section">
+      <div className="wrap">
+        <span className="label">Services</span>
+        <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.1, marginTop: "0.75rem" }}>
+          Three Ways We Work
+        </h2>
+        <p style={{ marginTop: "1.25rem", fontSize: "0.95rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85, maxWidth: "50ch", marginBottom: "3rem" }}>
+          Each service line delivers structured deliverables, clear
+          methodologies, and measurable outcomes.
+        </p>
 
-      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <span className="sect-num reveal">03 &mdash; Services</span>
-          <h2
-            className="mt-3 reveal"
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
-              fontWeight: 400,
-              color: "var(--charcoal)",
-              letterSpacing: "-0.01em",
-              lineHeight: 1.15,
-            }}
-          >
-            Three Ways We Work
-          </h2>
-          <p
-            className="mt-5 max-w-lg mx-auto reveal"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "1rem",
-              fontWeight: 300,
-              color: "var(--clay)",
-              lineHeight: 1.8,
-            }}
-          >
-            Each service line delivers structured deliverables, clear
-            methodologies, and measurable outcomes.
-          </p>
-        </div>
-
-        {/* Service accordion */}
-        <div className="space-y-4 mb-20 md:mb-28">
-          {services.map((service, i) => (
-            <div
-              key={service.num}
-              className="glass-strong relative overflow-hidden cursor-pointer reveal"
-              style={{ borderRadius: "20px" }}
-              onClick={() => setExpanded(expanded === i ? null : i)}
-            >
-              <div className="flex items-center justify-between p-6 md:p-8">
-                <div className="flex items-center gap-5 md:gap-8">
-                  <span
-                    style={{
-                      fontFamily: "var(--font-serif)",
-                      fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
-                      fontWeight: 300,
-                      color: "var(--teal)",
-                      opacity: 0.25,
-                    }}
-                  >
-                    {service.num}
-                  </span>
-                  <div>
-                    <h3
-                      style={{
-                        fontFamily: "var(--font-serif)",
-                        fontSize: "clamp(1.15rem, 2vw, 1.5rem)",
-                        fontWeight: 400,
-                        color: "var(--charcoal)",
-                      }}
-                    >
-                      {service.title}
-                    </h3>
-                    <p
-                      className="mt-1 hidden md:block"
-                      style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: "0.82rem",
-                        fontWeight: 300,
-                        color: "var(--clay)",
-                      }}
-                    >
-                      {service.subtitle}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 md:gap-6">
-                  <span
-                    className="hidden md:inline-block text-[0.65rem] uppercase px-4 py-1.5 rounded-full"
-                    style={{
-                      letterSpacing: "0.15em",
-                      fontWeight: 500,
-                      color: "var(--copper)",
-                      background: "rgba(184,112,58,0.1)",
-                      border: "1px solid rgba(184,112,58,0.15)",
-                    }}
-                  >
-                    {service.price}
-                  </span>
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-500"
-                    style={{
-                      border: "1px solid rgba(200,192,182,0.4)",
-                      transform: expanded === i ? "rotate(180deg)" : "rotate(0deg)",
-                    }}
-                  >
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M1 3.5L5 7.5L9 3.5" stroke="var(--clay)" strokeWidth="1.2" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                style={{
-                  maxHeight: expanded === i ? "600px" : "0px",
-                  opacity: expanded === i ? 1 : 0,
-                  overflow: "hidden",
-                }}
+        {/* Accordion */}
+        <div style={{ border: "1px solid var(--border)", borderRadius: "8px", overflow: "hidden" }}>
+          {services.map((s, i) => (
+            <div key={s.num} style={{ borderBottom: i < services.length - 1 ? "1px solid var(--border)" : "none" }}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full text-left flex items-center justify-between"
+                style={{ padding: "1.5rem 2rem", background: "transparent", border: "none", cursor: "pointer" }}
               >
-                <div className="px-6 md:px-8 pb-7 md:pb-8">
-                  <div className="h-[1px] mb-5" style={{ background: "linear-gradient(90deg, transparent, rgba(200,192,182,0.4), transparent)" }} />
-                  <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
-                    {service.items.map((item) => (
-                      <div key={item} className="flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: "var(--teal)", opacity: 0.4 }} />
-                        <span
-                          style={{
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.85rem",
-                            fontWeight: 300,
-                            color: "var(--clay)",
-                            lineHeight: 1.6,
-                          }}
-                        >
-                          {item}
-                        </span>
+                <div className="flex items-center gap-4 md:gap-6">
+                  <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.5rem", color: "var(--copper)", opacity: 0.3 }}>{s.num}</span>
+                  <div>
+                    <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.2rem", color: "var(--charcoal)", display: "block" }}>{s.title}</span>
+                    <span className="hidden md:block" style={{ fontSize: "0.8rem", fontWeight: 300, color: "var(--stone)", marginTop: "0.15rem" }}>{s.subtitle}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="hidden md:block" style={{ fontSize: "0.55rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--copper)" }}>{s.price}</span>
+                  <span style={{ fontSize: "1.2rem", color: "var(--stone)", transition: "transform 0.3s", transform: open === i ? "rotate(180deg)" : "rotate(0)" }}>&#8964;</span>
+                </div>
+              </button>
+
+              <div style={{ maxHeight: open === i ? "500px" : "0", opacity: open === i ? 1 : 0, overflow: "hidden", transition: "max-height 0.4s ease, opacity 0.3s ease" }}>
+                <div style={{ padding: "0 2rem 1.75rem 2rem" }}>
+                  <div style={{ height: "1px", background: "var(--border)", marginBottom: "1.25rem" }} />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                    {s.items.map((item) => (
+                      <div key={item} className="flex items-start gap-2">
+                        <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "var(--copper)", marginTop: "0.5rem", flexShrink: 0, opacity: 0.35 }} />
+                        <span style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.55 }}>{item}</span>
                       </div>
                     ))}
-                  </div>
-                  <div className="mt-5 md:hidden">
-                    <span
-                      className="text-[0.65rem] uppercase px-4 py-1.5 rounded-full"
-                      style={{
-                        letterSpacing: "0.15em",
-                        fontWeight: 500,
-                        color: "var(--copper)",
-                        background: "rgba(184,112,58,0.1)",
-                        border: "1px solid rgba(184,112,58,0.15)",
-                      }}
-                    >
-                      {service.price}
-                    </span>
                   </div>
                 </div>
               </div>
@@ -221,49 +115,25 @@ export default function Services() {
         </div>
 
         {/* Add-ons */}
-        <div className="reveal">
-          <div className="text-center mb-10">
-            <span className="sect-num">Optional Add-Ons</span>
-            <h3
-              className="mt-3"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
-                fontWeight: 400,
-                color: "var(--charcoal)",
-              }}
-            >
-              Extend Any Engagement
-            </h3>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
-            {addOns.map((addon) => (
-              <div key={addon.title} className="glass relative p-6 group cursor-default">
-                <h4
-                  className="group-hover:text-teal transition-colors duration-300"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "1.1rem",
-                    fontWeight: 500,
-                    color: "var(--charcoal)",
-                    marginBottom: "0.4rem",
-                  }}
-                >
-                  {addon.title}
-                </h4>
-                <p
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.82rem",
-                    fontWeight: 300,
-                    color: "var(--clay)",
-                    lineHeight: 1.65,
-                  }}
-                >
-                  {addon.desc}
-                </p>
-              </div>
+        <div style={{ marginTop: "4rem" }}>
+          <span className="label">Optional Add-Ons</span>
+          <div className="flex flex-wrap gap-2" style={{ marginTop: "1rem" }}>
+            {addOns.map((a) => (
+              <span
+                key={a}
+                style={{
+                  padding: "0.5rem 1rem",
+                  fontSize: "0.6rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "var(--charcoal)",
+                  border: "1px solid var(--border-strong)",
+                  borderRadius: "4px",
+                }}
+              >
+                {a}
+              </span>
             ))}
           </div>
         </div>

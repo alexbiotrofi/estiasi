@@ -3,246 +3,91 @@
 import { useState } from "react";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    business: "",
-    location: "",
-    service: "",
-    message: "",
-    contact: "email",
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Thank you for your enquiry. We will be in touch shortly.");
-  };
+  const [form, setForm] = useState({ name: "", business: "", location: "", service: "", message: "" });
 
   const inputStyle: React.CSSProperties = {
-    fontFamily: "var(--font-sans)",
-    fontWeight: 300,
-    fontSize: "0.9rem",
-    color: "var(--charcoal)",
-    background: "rgba(255,255,255,0.6)",
-    border: "1px solid rgba(200,192,182,0.35)",
-    borderRadius: "12px",
-    padding: "12px 16px",
     width: "100%",
+    padding: "0.8rem 1rem",
+    fontFamily: "var(--font-sans)",
+    fontSize: "0.88rem",
+    fontWeight: 300,
+    color: "var(--charcoal)",
+    background: "#fff",
+    border: "1px solid var(--border-strong)",
+    borderRadius: "4px",
     outline: "none",
-    transition: "border-color 0.3s, box-shadow 0.3s",
+    transition: "border-color 0.25s",
+  };
+
+  const labelStyle: React.CSSProperties = {
+    display: "block",
+    fontSize: "0.5rem",
+    fontWeight: 500,
+    letterSpacing: "0.2em",
+    textTransform: "uppercase",
+    color: "var(--stone)",
+    marginBottom: "0.5rem",
   };
 
   return (
-    <section id="contact" className="relative py-28 md:py-36 overflow-hidden marble-bg">
-      <div className="orb orb-teal" style={{ top: "10%", left: "-10%" }} />
-      <div className="orb orb-copper" style={{ bottom: "5%", right: "-8%" }} />
+    <section id="contact" className="section">
+      <div className="wrap">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Left */}
+          <div>
+            <span className="label">Contact</span>
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.1, marginTop: "0.75rem" }}>
+              Start the<br />Conversation
+            </h2>
+            <p style={{ marginTop: "1.25rem", fontSize: "0.95rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85, maxWidth: "40ch", marginBottom: "2.5rem" }}>
+              Book a discovery call, send us an enquiry, or get in touch
+              directly. No obligation.
+            </p>
 
-      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <span className="sect-num reveal">05 &mdash; Contact</span>
-          <h2
-            className="mt-3 reveal"
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
-              fontWeight: 400,
-              color: "var(--charcoal)",
-              letterSpacing: "-0.01em",
-              lineHeight: 1.15,
-            }}
-          >
-            Start the Conversation
-          </h2>
-          <p
-            className="mt-5 max-w-lg mx-auto reveal"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "1rem",
-              fontWeight: 300,
-              color: "var(--clay)",
-              lineHeight: 1.8,
-            }}
-          >
-            Book a discovery call, send us an enquiry, or get in touch directly.
-            No obligation. No pressure.
-          </p>
-        </div>
+            <a href="#" className="btn btn-primary" style={{ marginBottom: "3rem" }}>Schedule a Discovery Call</a>
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
-          {/* Left column */}
-          <div className="lg:col-span-2 space-y-6 reveal-left">
-            {/* Book a call */}
-            <div className="glass-strong relative p-7" style={{ borderRadius: "20px" }}>
-              <div
-                style={{
-                  fontSize: "0.55rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.3em",
-                  textTransform: "uppercase" as const,
-                  color: "var(--teal)",
-                  marginBottom: "1rem",
-                }}
-              >
-                Primary
+            <div style={{ borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+              <div style={{ marginBottom: "1.5rem" }}>
+                <div style={labelStyle}>Email</div>
+                <a href="mailto:hello@estiasi.com" style={{ fontSize: "0.95rem", color: "var(--charcoal)", textDecoration: "none" }}>hello@estiasi.com</a>
               </div>
-              <h3
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "1.35rem",
-                  fontWeight: 400,
-                  color: "var(--charcoal)",
-                  marginBottom: "0.6rem",
-                }}
-              >
-                Book a Discovery Call
-              </h3>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.85rem",
-                  fontWeight: 300,
-                  color: "var(--clay)",
-                  lineHeight: 1.7,
-                  marginBottom: "1.5rem",
-                }}
-              >
-                30-minute introductory call to understand your venue, your
-                challenges, and how we can help.
-              </p>
-              <button className="magnetic-btn w-full text-center">
-                <span>Schedule a Call</span>
-              </button>
-            </div>
-
-            {/* Direct contact */}
-            <div className="glass relative p-7" style={{ borderRadius: "20px" }}>
-              <div
-                style={{
-                  fontSize: "0.55rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.3em",
-                  textTransform: "uppercase" as const,
-                  color: "var(--teal)",
-                  marginBottom: "1.25rem",
-                }}
-              >
-                Direct Contact
+              <div style={{ marginBottom: "1.5rem" }}>
+                <div style={labelStyle}>Phone</div>
+                <a href="tel:+35700000000" style={{ fontSize: "0.95rem", color: "var(--charcoal)", textDecoration: "none" }}>+357 00 000 000</a>
               </div>
-              <div className="space-y-5">
-                <div>
-                  <div style={{ fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--stone)", marginBottom: "4px" }}>
-                    Email
-                  </div>
-                  <a
-                    href="mailto:hello@estiasi.com"
-                    className="hover:text-teal transition-colors"
-                    style={{ fontFamily: "var(--font-sans)", fontWeight: 400, fontSize: "0.95rem", color: "var(--charcoal)" }}
-                  >
-                    hello@estiasi.com
-                  </a>
-                </div>
-                <div>
-                  <div style={{ fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--stone)", marginBottom: "4px" }}>
-                    Phone
-                  </div>
-                  <a
-                    href="tel:+35700000000"
-                    className="hover:text-teal transition-colors"
-                    style={{ fontFamily: "var(--font-sans)", fontWeight: 400, fontSize: "0.95rem", color: "var(--charcoal)" }}
-                  >
-                    +357 00 000 000
-                  </a>
-                </div>
-                <div>
-                  <div style={{ fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--stone)", marginBottom: "4px" }}>
-                    Location
-                  </div>
-                  <span style={{ fontFamily: "var(--font-sans)", fontWeight: 400, fontSize: "0.95rem", color: "var(--charcoal)" }}>
-                    Cyprus
-                  </span>
-                </div>
+              <div>
+                <div style={labelStyle}>Location</div>
+                <span style={{ fontSize: "0.95rem", color: "var(--charcoal)" }}>Cyprus</span>
               </div>
             </div>
           </div>
 
-          {/* Right column — Form */}
-          <div className="lg:col-span-3 reveal-right">
-            <form
-              onSubmit={handleSubmit}
-              className="glass-strong relative p-7 md:p-9"
-              style={{ borderRadius: "20px" }}
-            >
-              <div
-                style={{
-                  fontSize: "0.55rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.3em",
-                  textTransform: "uppercase" as const,
-                  color: "var(--teal)",
-                  marginBottom: "1.75rem",
-                }}
-              >
-                Send an Enquiry
-              </div>
+          {/* Right — Form */}
+          <div style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "2.5rem", background: "var(--limestone)" }}>
+            <div style={{ fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--copper)", marginBottom: "2rem" }}>
+              Send an Enquiry
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <form onSubmit={(e) => { e.preventDefault(); alert("Thank you. We will be in touch."); }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: "1rem" }}>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--clay)", marginBottom: "8px" }}>
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    style={inputStyle}
-                    placeholder="Full name"
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(77,139,138,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(77,139,138,0.08)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(200,192,182,0.35)"; e.currentTarget.style.boxShadow = "none"; }}
-                  />
+                  <label style={labelStyle}>Your Name</label>
+                  <input style={inputStyle} placeholder="Full name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--copper)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border-strong)"; }} />
                 </div>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--clay)", marginBottom: "8px" }}>
-                    Business Name
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.business}
-                    onChange={(e) => setFormData({ ...formData, business: e.target.value })}
-                    style={inputStyle}
-                    placeholder="Venue or company"
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(77,139,138,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(77,139,138,0.08)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(200,192,182,0.35)"; e.currentTarget.style.boxShadow = "none"; }}
-                  />
+                  <label style={labelStyle}>Business Name</label>
+                  <input style={inputStyle} placeholder="Venue or company" value={form.business} onChange={(e) => setForm({ ...form, business: e.target.value })} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--copper)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border-strong)"; }} />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: "1rem" }}>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--clay)", marginBottom: "8px" }}>
-                    Location
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    style={inputStyle}
-                    placeholder="City / Country"
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(77,139,138,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(77,139,138,0.08)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(200,192,182,0.35)"; e.currentTarget.style.boxShadow = "none"; }}
-                  />
+                  <label style={labelStyle}>Location</label>
+                  <input style={inputStyle} placeholder="City / Country" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--copper)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border-strong)"; }} />
                 </div>
                 <div>
-                  <label style={{ display: "block", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--clay)", marginBottom: "8px" }}>
-                    Service of Interest
-                  </label>
-                  <select
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    style={{ ...inputStyle, color: formData.service ? "var(--charcoal)" : "var(--stone)", appearance: "none" as const }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(77,139,138,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(77,139,138,0.08)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(200,192,182,0.35)"; e.currentTarget.style.boxShadow = "none"; }}
-                  >
+                  <label style={labelStyle}>Service of Interest</label>
+                  <select style={{ ...inputStyle, color: form.service ? "var(--charcoal)" : "var(--stone-light)", appearance: "none" }} value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--copper)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border-strong)"; }}>
                     <option value="">Select a service</option>
                     <option value="startup">Start-Up & Opening</option>
                     <option value="support">Restaurant Support</option>
@@ -252,49 +97,12 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="mb-5">
-                <label style={{ display: "block", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--clay)", marginBottom: "8px" }}>
-                  Brief Description
-                </label>
-                <textarea
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={4}
-                  style={{ ...inputStyle, resize: "none" as const }}
-                  placeholder="Tell us about your project..."
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(77,139,138,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(77,139,138,0.08)"; }}
-                  onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(200,192,182,0.35)"; e.currentTarget.style.boxShadow = "none"; }}
-                />
+              <div style={{ marginBottom: "1.5rem" }}>
+                <label style={labelStyle}>Brief Description</label>
+                <textarea style={{ ...inputStyle, resize: "none" }} rows={4} placeholder="Tell us about your project..." value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--copper)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border-strong)"; }} />
               </div>
 
-              <div className="mb-7">
-                <label style={{ display: "block", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--clay)", marginBottom: "10px" }}>
-                  Preferred Contact Method
-                </label>
-                <div className="flex gap-3">
-                  {["email", "phone", "either"].map((method) => (
-                    <button
-                      key={method}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, contact: method })}
-                      className="px-4 py-2 rounded-full text-[0.6rem] uppercase transition-all duration-300"
-                      style={{
-                        letterSpacing: "0.15em",
-                        fontWeight: 500,
-                        color: formData.contact === method ? "white" : "var(--clay)",
-                        background: formData.contact === method ? "var(--teal)" : "rgba(255,255,255,0.5)",
-                        border: `1px solid ${formData.contact === method ? "var(--teal)" : "rgba(200,192,182,0.35)"}`,
-                      }}
-                    >
-                      {method}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <button type="submit" className="magnetic-btn w-full text-center">
-                <span>Send Enquiry</span>
-              </button>
+              <button type="submit" className="btn btn-primary w-full" style={{ justifyContent: "center" }}>Send Enquiry</button>
             </form>
           </div>
         </div>
