@@ -121,7 +121,7 @@ export default function Hero() {
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             filter: "brightness(1.3) contrast(1.1)",
-            animation: "marbleFlow 20s ease-in-out infinite alternate",
+            animation: "marbleFlow 40s linear infinite alternate",
             opacity: 0,
           }}
         >
@@ -129,11 +129,8 @@ export default function Hero() {
         </h1>
         <style>{`
           @keyframes marbleFlow {
-            0% { background-position: 0% 0%; }
-            25% { background-position: 100% 30%; }
-            50% { background-position: 60% 100%; }
-            75% { background-position: 30% 60%; }
-            100% { background-position: 100% 100%; }
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
           }
         `}</style>
 
