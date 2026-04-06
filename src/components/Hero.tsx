@@ -42,17 +42,13 @@ export default function Hero() {
             color: "var(--limestone)",
             lineHeight: 0.95,
             letterSpacing: "-0.03em",
-            maxWidth: "14ch",
+            maxWidth: "12ch",
             opacity: 0,
           }}
         >
           We bring restaurants to life
         </h1>
-        <div ref={subRef} style={{ marginTop: "2rem", opacity: 0 }}>
-          <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-30)", lineHeight: 1.8, maxWidth: "44ch" }}>
-            End-to-end culinary consulting for the hospitality sector. From concept to grand opening — and everything between.
-          </p>
-        </div>
+        <div ref={subRef} style={{ opacity: 0 }} />
       </div>
     </section>
   );
