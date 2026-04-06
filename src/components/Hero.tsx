@@ -1,27 +1,26 @@
 export default function Hero() {
   return (
     <section className="relative" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* Marble background image */}
+      {/* Marble background */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/textures/marble-2.jpg"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.08 }}
-        />
+        <img src="/textures/marble-2.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.07 }} />
       </div>
 
       <div className="wrap relative z-10 flex-1 flex flex-col justify-center" style={{ paddingTop: "8rem", paddingBottom: "4rem" }}>
-        <div style={{ maxWidth: "680px" }}>
-          <p className="label" style={{ marginBottom: "1.5rem" }}>Culinary Consulting · Cyprus</p>
+        <div style={{ maxWidth: "720px" }}>
+          {/* Copper accent dot + label */}
+          <div className="flex items-center gap-3" style={{ marginBottom: "2rem" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--copper)" }} />
+            <span className="label">Culinary Consulting · Cyprus</span>
+          </div>
 
           <h1
             style={{
               fontFamily: "var(--font-serif)",
-              fontSize: "clamp(3rem, 6vw, 4.5rem)",
+              fontSize: "clamp(2.8rem, 5.5vw, 4.2rem)",
               fontWeight: 400,
               color: "var(--charcoal)",
-              lineHeight: 1.08,
+              lineHeight: 1.1,
               marginBottom: "1.75rem",
             }}
           >
@@ -29,9 +28,12 @@ export default function Hero() {
             <br />your kitchen runs on.
           </h1>
 
+          {/* Copper line accent */}
+          <div style={{ width: "48px", height: "2px", background: "var(--copper)", marginBottom: "1.75rem" }} />
+
           <p
             style={{
-              fontSize: "1rem",
+              fontSize: "1.05rem",
               fontWeight: 300,
               color: "var(--stone-dark)",
               lineHeight: 1.85,
@@ -62,10 +64,7 @@ export default function Hero() {
               <div
                 key={s.label}
                 className="text-center"
-                style={{
-                  padding: "2rem 1rem",
-                  borderRight: i < 2 ? "1px solid var(--border)" : "none",
-                }}
+                style={{ padding: "2rem 1rem", borderRight: i < 2 ? "1px solid var(--border)" : "none" }}
               >
                 <div style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", color: "var(--copper)", marginBottom: "0.25rem" }}>
                   {s.num}

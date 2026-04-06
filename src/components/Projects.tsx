@@ -13,7 +13,7 @@ const projects = [
     type: "Restaurant Support",
     description: "Operational diagnostic and improvement for an established Greek dining concept. Full review, menu reimagination, and procedural redesign to elevate service and guest experience.",
     tags: ["Operational Review", "Menu Engineering", "Procedures"],
-    image: "/textures/steel.jpg",
+    image: "/textures/marble-3.jpg",
   },
   {
     name: "Mesa Stone",

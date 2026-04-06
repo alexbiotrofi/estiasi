@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${caslonDisplay.variable} ${caslonText.variable}`}>
       <head>
-        <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600&f[]=zodiak@400,500,600&display=swap" rel="stylesheet" />
       </head>
       <body>{children}</body>
     </html>

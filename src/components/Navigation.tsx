@@ -31,9 +31,16 @@ export default function Navigation() {
         <a
           href="#"
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-          style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", color: "var(--charcoal)", textDecoration: "none" }}
+          className="flex items-center gap-3"
+          style={{ textDecoration: "none" }}
         >
-          estiasi
+          <span style={{ fontFamily: "'Zodiak', serif", fontSize: "1.4rem", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "0.04em" }}>
+            estiasi
+          </span>
+          <span style={{ width: "16px", height: "1px", background: "var(--copper)", opacity: 0.5 }} />
+          <span style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--stone)" }}>
+            Culinary Consulting
+          </span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
