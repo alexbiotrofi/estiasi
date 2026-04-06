@@ -168,7 +168,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator — animated line */}
-      <div className="absolute bottom-8 left-1/2 z-30" style={{ transform: "translateX(-50%)", textAlign: "center" }}>
+      <div className="absolute bottom-24 left-1/2 z-30" style={{ transform: "translateX(-50%)", textAlign: "center" }}>
         <span style={{ fontSize: "0.38rem", fontWeight: 500, letterSpacing: "0.35em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.35)" }}>Scroll</span>
         <div style={{ width: 1, height: 40, margin: "0.5rem auto 0", position: "relative", overflow: "hidden", background: "rgba(255,255,255,0.08)" }}>
           <div style={{ width: "100%", height: "100%", background: "var(--copper)", animation: "scrollPulse 2s ease-in-out infinite" }} />
