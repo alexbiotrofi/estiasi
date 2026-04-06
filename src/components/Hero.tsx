@@ -19,12 +19,9 @@ export default function Hero() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Entrance animation for wordmark
-      gsap.fromTo(wordRef.current, { opacity: 0, y: 20 }, {
+      // Entrance animation for wordmark + label together
+      gsap.fromTo(wordmarkRef.current, { opacity: 0, y: 20 }, {
         opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.4,
-      });
-      gsap.fromTo(labelRef.current, { opacity: 0 }, {
-        opacity: 1, duration: 0.6, delay: 0.8, ease: "power2.out",
       });
 
       // Scroll-driven timeline
@@ -42,7 +39,6 @@ export default function Hero() {
 
       // Phase 1: Wordmark and label fade out, video dims
       tl.to(wordmarkRef.current, { opacity: 0, scale: 0.95, duration: 0.3, ease: "power2.in" }, 0);
-      tl.to(labelRef.current, { opacity: 0, duration: 0.2 }, 0);
       tl.to(videoRef.current, { filter: "brightness(0.15)", duration: 0.3 }, 0);
 
       // Phase 2: Each word reveals — stays fully visible once it appears
@@ -99,7 +95,7 @@ export default function Hero() {
       {/* Layer 1: Wordmark — visible on load, fades on scroll */}
       <div ref={wordmarkRef} className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
         {/* Label */}
-        <div ref={labelRef} className="flex items-center gap-2" style={{ marginBottom: "2rem", opacity: 0 }}>
+        <div ref={labelRef} className="flex items-center gap-2" style={{ marginBottom: "2rem" }}>
           <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--copper)" }} />
           <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.5em", textTransform: "uppercase" as const, color: "var(--copper-light)" }}>Culinary Consulting · Cyprus</span>
         </div>
