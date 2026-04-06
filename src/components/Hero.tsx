@@ -76,21 +76,19 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: "100vh", overflow: "hidden" }}>
-      {/* Restaurant image with slow Ken Burns zoom */}
-      <div className="absolute inset-0 z-0" style={{ overflow: "hidden" }}>
-        <img
-          ref={videoRef as React.RefObject<HTMLImageElement | null>}
-          src="/photos/restaurant-interior.jpg"
-          alt=""
+      {/* Video background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={videoRef as React.RefObject<HTMLVideoElement | null>}
+          autoPlay
+          muted
+          loop
+          playsInline
           className="w-full h-full object-cover"
-          style={{ filter: "brightness(0.3)", animation: "kenBurns 25s ease-in-out infinite alternate" }}
-        />
-        <style>{`
-          @keyframes kenBurns {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.12) translate(-1%, -1%); }
-          }
-        `}</style>
+          style={{ filter: "brightness(0.3)" }}
+        >
+          <source src="/video/hero.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* Marble texture blend */}
