@@ -3,7 +3,7 @@ export default function Footer() {
     <footer style={{ borderTop: "1px solid var(--border)", padding: "3rem 0" }}>
       <div className="wrap flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-6">
-          <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.1rem", color: "var(--charcoal)" }}>Estiasi</span>
+          <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.1rem", color: "var(--charcoal)" }}>estiasi</span>
           <span style={{ fontSize: "0.5rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--stone-light)" }}>
             Culinary Consulting &middot; Cyprus
           </span>
@@ -20,7 +20,7 @@ export default function Footer() {
           ))}
         </div>
         <span style={{ fontSize: "0.48rem", letterSpacing: "0.1em", color: "var(--stone-light)" }}>
-          &copy; {new Date().getFullYear()} Estiasi
+          &copy; {new Date().getFullYear()} estiasi
         </span>
       </div>
     </footer>

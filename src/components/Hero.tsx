@@ -13,7 +13,7 @@ export default function Hero() {
 
       <div className="wrap relative z-10 flex-1 flex flex-col justify-center" style={{ paddingTop: "8rem", paddingBottom: "4rem" }}>
         <div style={{ maxWidth: "680px" }}>
-          <p className="label" style={{ marginBottom: "1.5rem" }}>Culinary Consulting &middot; Cyprus</p>
+          <p className="label" style={{ marginBottom: "1.5rem" }}>Culinary Consulting · Cyprus</p>
 
           <h1
             style={{

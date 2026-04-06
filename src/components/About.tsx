@@ -34,7 +34,7 @@ export default function About() {
             Built in Kitchens,<br />Not Boardrooms
           </h2>
           <p style={{ marginTop: "1.25rem", fontSize: "0.95rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85, maxWidth: "50ch" }}>
-            Estiasi was founded by operators who have done the work — launching venues, running kitchens, and building the systems that make hospitality function at its highest level.
+            estiasi was founded by operators who have done the work — launching venues, running kitchens, and building the systems that make hospitality function at its highest level.
           </p>
         </div>
 

@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
+import { Libre_Caslon_Display, Libre_Caslon_Text } from "next/font/google";
 import "./globals.css";
 
-const dmSerif = DM_Serif_Display({
+const caslonDisplay = Libre_Caslon_Display({
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-dm-serif",
+  variable: "--font-caslon-display",
 });
 
-const inter = Inter({
+const caslonText = Libre_Caslon_Text({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-inter",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-caslon-text",
 });
 
 export const metadata: Metadata = {
-  title: "Estiasi — Culinary Consulting, Cyprus",
+  title: "estiasi — culinary consulting, cyprus",
   description:
     "End-to-end advisory and operational consulting for the hospitality sector. From concept to grand opening. Based in Cyprus.",
 };
@@ -25,7 +25,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${dmSerif.variable} ${inter.variable}`}>
+    <html lang="en" className={`${caslonDisplay.variable} ${caslonText.variable}`}>
+      <head>
+        <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600&display=swap" rel="stylesheet" />
+      </head>
       <body>{children}</body>
     </html>
   );

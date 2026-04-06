@@ -33,7 +33,7 @@ export default function Navigation() {
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", color: "var(--charcoal)", textDecoration: "none" }}
         >
-          Estiasi
+          estiasi
         </a>
 
         <div className="hidden md:flex items-center gap-8">

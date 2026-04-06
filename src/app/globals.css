@@ -28,8 +28,8 @@
   --color-stone-light: #C4BCB2;
   --color-stone-dark: #7A7368;
   --color-steel: #6B6E70;
-  --font-serif: 'DM Serif Display', serif;
-  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Libre Caslon Display', 'Libre Caslon Text', Georgia, serif;
+  --font-sans: 'Switzer', 'Inter', -apple-system, sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
