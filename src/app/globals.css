@@ -14,7 +14,7 @@
   --border: rgba(42, 42, 40, 0.08);
   --border-s: rgba(42, 42, 40, 0.14);
   --font-logo: 'Boska', serif;
-  --font-display: 'Lora', Georgia, serif;
+  --font-display: 'Boska', Georgia, serif;
   --font-body: 'Switzer', -apple-system, sans-serif;
 }
 
@@ -27,7 +27,7 @@
   --color-stone-dark: #7A7368;
   --color-stone-light: #C4BCB2;
   --font-logo: 'Boska', serif;
-  --font-display: 'Lora', Georgia, serif;
+  --font-display: 'Boska', Georgia, serif;
   --font-body: 'Switzer', -apple-system, sans-serif;
 }
 
