@@ -11,6 +11,7 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wordmarkRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
+  const wordRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
@@ -19,9 +20,8 @@ export default function Hero() {
 
     const ctx = gsap.context(() => {
       // Entrance animation for wordmark
-      const letters = document.querySelectorAll(".h-letter");
-      gsap.fromTo(letters, { opacity: 0, y: 20 }, {
-        opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: "power3.out", delay: 0.4,
+      gsap.fromTo(wordRef.current, { opacity: 0, y: 20 }, {
+        opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.4,
       });
       gsap.fromTo(labelRef.current, { opacity: 0 }, {
         opacity: 1, duration: 0.6, delay: 0.8, ease: "power2.out",
@@ -105,35 +105,28 @@ export default function Hero() {
         </div>
 
         {/* Big wordmark — marble texture flowing through letters */}
-        <div
-          className="flex items-baseline justify-center"
+        <h1
+          ref={wordRef}
+          className="h-letter"
           style={{
+            fontFamily: "var(--font-logo)",
+            fontSize: "clamp(5rem, 14vw, 11rem)",
+            fontWeight: 400,
+            letterSpacing: "0.0618em",
+            lineHeight: 0.85,
+            color: "transparent",
+            WebkitTextFillColor: "transparent",
             backgroundImage: "url(/textures/marble-1.jpg)",
-            backgroundSize: "300% 300%",
+            backgroundSize: "250% 250%",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
+            filter: "brightness(1.3) contrast(1.1)",
             animation: "marbleFlow 20s ease-in-out infinite alternate",
+            opacity: 0,
           }}
         >
-          {"estιasι".split("").map((char, i) => (
-            <span
-              key={i}
-              className="h-letter inline-block"
-              style={{
-                fontFamily: "var(--font-logo)",
-                fontSize: "clamp(5rem, 14vw, 11rem)",
-                fontWeight: 400,
-                letterSpacing: "0.0618em",
-                color: "transparent",
-                WebkitTextFillColor: "transparent",
-                lineHeight: 0.85,
-                opacity: 0,
-              }}
-            >
-              {char}
-            </span>
-          ))}
-        </div>
+          estιasι
+        </h1>
         <style>{`
           @keyframes marbleFlow {
             0% { background-position: 0% 0%; }
