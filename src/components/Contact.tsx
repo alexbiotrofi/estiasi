@@ -5,17 +5,8 @@ import { useState } from "react";
 export default function Contact() {
   const [form, setForm] = useState({ name: "", business: "", location: "", service: "", message: "" });
 
-  const inp: React.CSSProperties = {
-    width: "100%", padding: "0.8rem 1rem", fontFamily: "var(--font-body)", fontSize: "0.88rem",
-    fontWeight: 300, color: "var(--charcoal)", background: "#fff", border: "1px solid var(--border-s)",
-    borderRadius: 4, outline: "none", transition: "border-color 0.25s",
-  };
-
-  const lbl: React.CSSProperties = {
-    display: "block", fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.2em",
-    textTransform: "uppercase", color: "var(--stone)", marginBottom: "0.5rem",
-  };
-
+  const inp: React.CSSProperties = { width: "100%", padding: "0.8rem 1rem", fontFamily: "var(--font-body)", fontSize: "0.88rem", fontWeight: 300, color: "var(--charcoal)", background: "#fff", border: "1px solid var(--border-s)", borderRadius: 4, outline: "none", transition: "border-color 0.25s" };
+  const lbl: React.CSSProperties = { display: "block", fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--stone)", marginBottom: "0.5rem" };
   const focus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderColor = "var(--copper)"; };
   const blur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderColor = "var(--border-s)"; };
 
@@ -23,18 +14,14 @@ export default function Contact() {
     <section id="contact" style={{ padding: "6rem 0" }}>
       <div className="wrap">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
-            <span style={{ fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.5em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.75rem" }}>Contact</span>
+          <div className="reveal-left">
+            <span className="label">Contact</span>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.1 }}>Start the<br />Conversation</h2>
             <p style={{ marginTop: "1.25rem", fontSize: "0.95rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85, maxWidth: "40ch", marginBottom: "2.5rem" }}>
-              Book a discovery call, send us an enquiry, or get in touch directly. No obligation.
+              30-minute discovery call. No obligation, no pitch.
             </p>
-            <a href="#" className="btn btn-dark" style={{ marginBottom: "3rem" }}>Schedule a Discovery Call</a>
             <div style={{ borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
-              {[
-                { l: "Email", v: "hello@estiasi.com", h: "mailto:hello@estiasi.com" },
-                { l: "Phone", v: "+357 00 000 000", h: "tel:+35700000000" },
-              ].map(c => (
+              {[{ l: "Email", v: "hello@estiasi.com", h: "mailto:hello@estiasi.com" }, { l: "Phone", v: "+357 00 000 000", h: "tel:+35700000000" }].map(c => (
                 <div key={c.l} style={{ marginBottom: "1.5rem" }}>
                   <div style={lbl}>{c.l}</div>
                   <a href={c.h} style={{ fontSize: "0.95rem", color: "var(--charcoal)", textDecoration: "none" }}>{c.v}</a>
@@ -44,7 +31,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div style={{ border: "1px solid var(--border)", borderRadius: 8, padding: "2.5rem", background: "var(--limestone)" }}>
+          <div className="reveal-right" style={{ border: "1px solid var(--border)", borderRadius: 8, padding: "2.5rem", background: "var(--limestone)" }}>
             <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "2rem" }}>Send an Enquiry</span>
             <form onSubmit={e => { e.preventDefault(); alert("Thank you. We will be in touch."); }}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: "1rem" }}>
@@ -55,10 +42,10 @@ export default function Contact() {
                 <div><label style={lbl}>Location</label><input style={inp} placeholder="City / Country" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} onFocus={focus} onBlur={blur} /></div>
                 <div><label style={lbl}>Service of Interest</label>
                   <select style={{ ...inp, color: form.service ? "var(--charcoal)" : "var(--stone-light)", appearance: "none" as const }} value={form.service} onChange={e => setForm({ ...form, service: e.target.value })} onFocus={focus} onBlur={blur}>
-                    <option value="">Select a service</option>
-                    <option value="startup">Start-Up & Opening</option>
-                    <option value="support">Restaurant Support</option>
-                    <option value="review">Restaurant & Hotel Review</option>
+                    <option value="">Select a tier</option>
+                    <option value="core">Culinary Core</option>
+                    <option value="operations">Complete Operations</option>
+                    <option value="full">Full Package</option>
                     <option value="other">Other / Not Sure</option>
                   </select>
                 </div>

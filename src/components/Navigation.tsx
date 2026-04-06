@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 
 const links = [
+  { label: "Work", href: "#work" },
+  { label: "Process", href: "#process" },
   { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -19,19 +20,10 @@ export default function Navigation() {
   }, []);
 
   return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        background: scrolled ? "rgba(255,255,255,0.96)" : "transparent",
-        backdropFilter: scrolled ? "blur(8px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-      }}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style={{ background: scrolled ? "rgba(255,255,255,0.96)" : "transparent", backdropFilter: scrolled ? "blur(8px)" : "none", borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent" }}>
       <div className="wrap flex items-center justify-between" style={{ height: 64 }}>
-        <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="flex items-center gap-3" style={{ textDecoration: "none" }}>
-          <span style={{ fontFamily: "var(--font-logo)", fontSize: "1.35rem", letterSpacing: "0.0618em", color: "var(--charcoal)" }}>estiasi</span>
-          <span style={{ width: 16, height: 1, background: "var(--copper)", opacity: 0.5 }} />
-          <span style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--stone)" }}>Culinary Consulting</span>
+        <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} style={{ textDecoration: "none" }}>
+          <span style={{ fontFamily: "var(--font-logo)", fontSize: "1.6rem", letterSpacing: "0.0618em", color: "var(--charcoal)" }}>estiasi</span>
         </a>
         <div className="hidden md:flex items-center gap-8">
           {links.map(l => (

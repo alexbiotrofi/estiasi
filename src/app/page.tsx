@@ -1,26 +1,30 @@
+"use client";
+
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useLenis } from "@/hooks/useLenis";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Philosophy from "@/components/Philosophy";
-import Services from "@/components/Services";
-import Projects from "@/components/Projects";
+import Work from "@/components/Work";
+import Process from "@/components/Process";
+import Dimitris from "@/components/Dimitris";
+import Pricing from "@/components/Pricing";
+import CTA from "@/components/CTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import MaterialStrip from "@/components/MaterialStrip";
 
 export default function Home() {
+  useScrollReveal();
+  useLenis();
+
   return (
     <>
       <Navigation />
       <Hero />
-      <MaterialStrip src="/textures/marble-3.jpg" height="80px" />
-      <About />
-      <Philosophy />
-      <MaterialStrip src="/textures/marble-1.jpg" height="80px" />
-      <Services />
-      <MaterialStrip src="/textures/dark-stone.jpg" height="60px" />
-      <Projects />
-      <MaterialStrip src="/textures/marble-3.jpg" height="80px" />
+      <Work />
+      <Process />
+      <Dimitris />
+      <Pricing />
+      <CTA />
       <Contact />
       <Footer />
     </>
