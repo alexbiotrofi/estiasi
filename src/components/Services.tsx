@@ -17,10 +17,11 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !descRef.current) return;
+    if (!sectionRef.current || !trackRef.current || !descRef.current) return;
     const ctx = gsap.context(() => {
       // Word blur on intro
       const text = descRef.current!.textContent || "";
@@ -43,75 +44,42 @@ export default function Services() {
         },
       });
 
-      // Each service word: pinned, sweeps across screen left→right
-      gsap.utils.toArray<HTMLElement>(".svc-block").forEach((block) => {
-        const word = block.querySelector<HTMLElement>(".svc-word");
-        const desc = block.querySelector<HTMLElement>(".svc-desc");
-        const num = block.querySelector<HTMLElement>(".svc-num");
-        const line = block.querySelector<HTMLElement>(".svc-line");
+      // Pinned horizontal scroll for service words
+      const track = trackRef.current!;
+      const totalWidth = track.scrollWidth - window.innerWidth;
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: block,
-            start: "top 70%",
-            end: "bottom 30%",
-            scrub: 0.5,
-          },
-        });
+      gsap.to(track, {
+        x: -totalWidth,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current!.querySelector(".svc-pinned"),
+          start: "top top",
+          end: () => `+=${totalWidth * 1.5}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
 
-        // Word sweeps from left (off-screen) to right (off-screen)
-        // Starts at -30% (left), passes through 0% (natural position), ends at 20% (right)
+      // Each word: scale + opacity pulses as it passes through centre
+      gsap.utils.toArray<HTMLElement>(".svc-slide").forEach((slide) => {
+        const word = slide.querySelector<HTMLElement>(".svc-giant");
+        const desc = slide.querySelector<HTMLElement>(".svc-slide-desc");
+        const num = slide.querySelector<HTMLElement>(".svc-slide-num");
+        const line = slide.querySelector<HTMLElement>(".svc-copper-line");
+
         if (word) {
-          tl.fromTo(word, {
-            xPercent: -15,
-            opacity: 0,
-            scale: 0.95,
-          }, {
-            xPercent: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.4,
-            ease: "power2.out",
-          }, 0);
-
-          // Then it continues moving right and fading
-          tl.to(word, {
-            xPercent: 15,
-            opacity: 0.1,
-            duration: 0.4,
-            ease: "power2.in",
-          }, 0.6);
-        }
-
-        // Number fades in with the word
-        if (num) {
-          tl.fromTo(num, { opacity: 0 }, { opacity: 0.15, duration: 0.3 }, 0.1);
-          tl.to(num, { opacity: 0, duration: 0.2 }, 0.7);
-        }
-
-        // Description slides up and fades in, then out
-        if (desc) {
-          tl.fromTo(desc, {
-            opacity: 0,
-            y: 30,
-          }, {
-            opacity: 1,
-            y: 0,
-            duration: 0.3,
-            ease: "power2.out",
-          }, 0.15);
-
-          tl.to(desc, {
-            opacity: 0,
-            y: -20,
-            duration: 0.3,
-          }, 0.65);
-        }
-
-        // Copper line draws in
-        if (line) {
-          tl.fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.inOut" }, 0.1);
-          tl.to(line, { scaleX: 0, transformOrigin: "right", duration: 0.2 }, 0.7);
+          gsap.fromTo(word, { scale: 0.85, opacity: 0.15 }, {
+            scale: 1, opacity: 1,
+            scrollTrigger: {
+              trigger: slide,
+              containerAnimation: gsap.getById?.("svc-scroll") || undefined,
+              start: "left 80%",
+              end: "left 20%",
+              scrub: true,
+              toggleActions: "play none none reverse",
+            },
+          });
         }
       });
     }, sectionRef);
@@ -121,79 +89,102 @@ export default function Services() {
   return (
     <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
       <div className="wrap">
-        {/* Header */}
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
-
-        {/* Intro with word blur */}
         <p ref={descRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.35, letterSpacing: "-0.02em", maxWidth: "800px", marginBottom: "4rem" }}>
           We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
         </p>
       </div>
 
-      {/* Animated service words — full width, each takes scroll space */}
-      <div style={{ position: "relative" }}>
-        {services.map((s, i) => (
-          <div
-            key={s.name}
-            className="svc-block"
-            style={{
-              minHeight: "70vh",
-              display: "flex",
-              alignItems: "center",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            {/* Copper accent line */}
-            <div className="svc-line" style={{ position: "absolute", top: 0, left: "40px", right: "40px", height: "1px", background: "var(--copper)", opacity: 0.3, transformOrigin: "left" }} />
+      {/* Pinned horizontal scroll section */}
+      <div className="svc-pinned" style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
+        {/* Copper glow behind */}
+        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "1200px", height: "600px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
-            {/* Big number background */}
-            <div className="svc-num" style={{
-              position: "absolute",
-              right: "5%",
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(15rem, 25vw, 22rem)",
-              fontWeight: 400,
-              color: "var(--limestone)",
-              opacity: 0,
-              lineHeight: 0.85,
-              letterSpacing: "-0.05em",
-              pointerEvents: "none",
-              userSelect: "none",
-            }}>
-              {String(i + 1).padStart(2, "0")}
-            </div>
+        <div
+          ref={trackRef}
+          className="flex items-center"
+          style={{ height: "100%", position: "relative", zIndex: 1 }}
+        >
+          {/* Left spacer */}
+          <div style={{ minWidth: "20vw", flexShrink: 0 }} />
 
-            <div className="wrap" style={{ position: "relative", zIndex: 1, width: "100%" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "2rem" }}>
-                {/* Giant word */}
-                <div className="svc-word" style={{
+          {services.map((s, i) => (
+            <div
+              key={s.name}
+              className="svc-slide"
+              style={{
+                minWidth: "100vw",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                flexShrink: 0,
+              }}
+            >
+              {/* Giant number behind */}
+              <div className="svc-slide-num" style={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(20rem, 40vw, 35rem)",
+                fontWeight: 400,
+                color: "var(--limestone)",
+                opacity: 0.02,
+                lineHeight: 0.85,
+                letterSpacing: "-0.05em",
+                pointerEvents: "none",
+                userSelect: "none",
+              }}>
+                {String(i + 1).padStart(2, "0")}
+              </div>
+
+              <div style={{ textAlign: "center", position: "relative", zIndex: 1, padding: "0 2rem" }}>
+                {/* Copper line above */}
+                <div className="svc-copper-line" style={{ width: "48px", height: "2px", background: "var(--copper)", margin: "0 auto 2rem", opacity: 0.5 }} />
+
+                {/* THE WORD — massive */}
+                <div className="svc-giant" style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(4rem, 10vw, 9rem)",
+                  fontSize: "clamp(6rem, 16vw, 14rem)",
                   fontWeight: 400,
                   letterSpacing: "-0.04em",
                   color: "var(--limestone)",
-                  lineHeight: 0.9,
+                  lineHeight: 0.85,
+                  marginBottom: "2rem",
                   whiteSpace: "nowrap" as const,
                 }}>
                   {s.name}
                 </div>
 
-                {/* Description — right aligned */}
-                <div className="svc-desc" style={{ maxWidth: "380px", paddingBottom: "0.5rem", opacity: 0 }}>
-                  <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--white-70)", lineHeight: 1.85 }}>
+                {/* Description */}
+                <div className="svc-slide-desc" style={{ maxWidth: "420px", margin: "0 auto" }}>
+                  <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85 }}>
                     {s.desc}
                   </p>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+
+          {/* Right spacer */}
+          <div style={{ minWidth: "20vw", flexShrink: 0 }} />
+        </div>
+
+        {/* Progress bar at bottom */}
+        <div style={{ position: "absolute", bottom: "3rem", left: "40px", right: "40px", height: "1px", background: "var(--border-dark)", zIndex: 2 }}>
+          <div className="svc-progress" style={{ height: "100%", background: "var(--copper)", width: "0%", transition: "width 0.1s linear" }} />
+        </div>
+
+        {/* Service counter */}
+        <div style={{ position: "absolute", bottom: "4rem", right: "40px", zIndex: 2 }}>
+          <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.2em", color: "var(--white-30)" }}>SCROLL →</span>
+        </div>
       </div>
 
       <div className="wrap" style={{ padding: "4rem 40px", textAlign: "center" }}>
