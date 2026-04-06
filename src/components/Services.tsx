@@ -17,11 +17,11 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const pinnedRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !trackRef.current || !descRef.current) return;
+    if (!sectionRef.current || !pinnedRef.current || !descRef.current) return;
     const ctx = gsap.context(() => {
       // Word blur on intro
       const text = descRef.current!.textContent || "";
@@ -44,42 +44,102 @@ export default function Services() {
         },
       });
 
-      // Pinned horizontal scroll for service words
-      const track = trackRef.current!;
-      const totalWidth = track.scrollWidth - window.innerWidth;
+      // Pinned section — each service cycles through with dramatic transforms
+      const slides = gsap.utils.toArray<HTMLElement>(".svc-slide");
+      const totalSlides = slides.length;
 
-      gsap.to(track, {
-        x: -totalWidth,
-        ease: "none",
+      // Master timeline pinned for totalSlides * 100vh of scroll
+      const master = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current!.querySelector(".svc-pinned"),
+          trigger: pinnedRef.current,
           start: "top top",
-          end: () => `+=${totalWidth * 1.5}`,
-          scrub: 1,
+          end: () => `+=${totalSlides * 100}%`,
+          scrub: 0.8,
           pin: true,
           anticipatePin: 1,
         },
       });
 
-      // Each word: scale + opacity pulses as it passes through centre
-      gsap.utils.toArray<HTMLElement>(".svc-slide").forEach((slide) => {
+      slides.forEach((slide, i) => {
         const word = slide.querySelector<HTMLElement>(".svc-giant");
         const desc = slide.querySelector<HTMLElement>(".svc-slide-desc");
         const num = slide.querySelector<HTMLElement>(".svc-slide-num");
-        const line = slide.querySelector<HTMLElement>(".svc-copper-line");
+        const copper = slide.querySelector<HTMLElement>(".svc-copper-line");
 
-        if (word) {
-          gsap.fromTo(word, { scale: 0.85, opacity: 0.15 }, {
-            scale: 1, opacity: 1,
-            scrollTrigger: {
-              trigger: slide,
-              containerAnimation: gsap.getById?.("svc-scroll") || undefined,
-              start: "left 80%",
-              end: "left 20%",
-              scrub: true,
-              toggleActions: "play none none reverse",
-            },
+        const segStart = i / totalSlides;
+        const segDur = 1 / totalSlides;
+
+        // ENTER: word comes from right, scaled down, blurred, rotated slightly
+        master.fromTo(word, {
+          xPercent: 120,
+          scale: 0.4,
+          opacity: 0,
+          filter: "blur(12px)",
+          rotation: 3,
+        }, {
+          xPercent: 0,
+          scale: 1,
+          opacity: 1,
+          filter: "blur(0px)",
+          rotation: 0,
+          duration: segDur * 0.35,
+          ease: "power3.out",
+        }, segStart);
+
+        // Number fades in
+        master.fromTo(num, { opacity: 0 }, {
+          opacity: 0.03,
+          duration: segDur * 0.3,
+        }, segStart + segDur * 0.05);
+
+        // Copper line scales in
+        master.fromTo(copper, { scaleX: 0 }, {
+          scaleX: 1,
+          duration: segDur * 0.2,
+          ease: "power2.inOut",
+        }, segStart + segDur * 0.1);
+
+        // Description: each word blur-reveals
+        const descWords = desc?.querySelectorAll("span");
+        if (descWords) {
+          descWords.forEach((dw, j) => {
+            master.fromTo(dw, {
+              filter: "blur(6px)",
+              opacity: 0,
+            }, {
+              filter: "blur(0px)",
+              opacity: 1,
+              duration: segDur * 0.03,
+              ease: "power2.out",
+            }, segStart + segDur * 0.25 + j * segDur * 0.015);
           });
+        }
+
+        // HOLD — word sits at centre (natural gap from enter→exit timing)
+
+        // EXIT: word flies off to the left, scales up, blurs
+        if (i < totalSlides - 1) {
+          master.to(word, {
+            xPercent: -120,
+            scale: 1.2,
+            opacity: 0,
+            filter: "blur(8px)",
+            rotation: -2,
+            duration: segDur * 0.3,
+            ease: "power3.in",
+          }, segStart + segDur * 0.65);
+
+          master.to(num, { opacity: 0, duration: segDur * 0.15 }, segStart + segDur * 0.7);
+          master.to(copper, { scaleX: 0, transformOrigin: "right", duration: segDur * 0.15 }, segStart + segDur * 0.7);
+
+          if (descWords) {
+            master.to(descWords, {
+              filter: "blur(4px)",
+              opacity: 0,
+              duration: segDur * 0.1,
+              stagger: 0.001,
+            }, segStart + segDur * 0.65);
+          }
         }
       });
     }, sectionRef);
@@ -98,92 +158,87 @@ export default function Services() {
         </p>
       </div>
 
-      {/* Pinned horizontal scroll section */}
-      <div className="svc-pinned" style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        {/* Copper glow behind */}
-        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "1200px", height: "600px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
+      {/* Pinned viewport — words cycle through */}
+      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
+        {/* Copper glow */}
+        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "1200px", height: "600px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.07) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
-        <div
-          ref={trackRef}
-          className="flex items-center"
-          style={{ height: "100%", position: "relative", zIndex: 1 }}
-        >
-          {/* Left spacer */}
-          <div style={{ minWidth: "20vw", flexShrink: 0 }} />
+        {/* All slides stacked on top of each other — only one visible at a time via GSAP */}
+        {services.map((s, i) => (
+          <div
+            key={s.name}
+            className="svc-slide"
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 1,
+            }}
+          >
+            {/* Giant number */}
+            <div className="svc-slide-num" style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(18rem, 35vw, 30rem)",
+              fontWeight: 400,
+              color: "var(--limestone)",
+              opacity: 0,
+              lineHeight: 0.85,
+              letterSpacing: "-0.05em",
+              pointerEvents: "none",
+              userSelect: "none",
+            }}>
+              {String(i + 1).padStart(2, "0")}
+            </div>
 
-          {services.map((s, i) => (
-            <div
-              key={s.name}
-              className="svc-slide"
-              style={{
-                minWidth: "100vw",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                flexShrink: 0,
-              }}
-            >
-              {/* Giant number behind */}
-              <div className="svc-slide-num" style={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
+            <div style={{ textAlign: "center", position: "relative", zIndex: 1, padding: "0 2rem" }}>
+              {/* Copper line */}
+              <div className="svc-copper-line" style={{ width: "48px", height: "2px", background: "var(--copper)", margin: "0 auto 2rem", opacity: 0.6, transformOrigin: "left" }} />
+
+              {/* THE WORD */}
+              <div className="svc-giant" style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(20rem, 40vw, 35rem)",
+                fontSize: "clamp(5rem, 15vw, 13rem)",
                 fontWeight: 400,
+                letterSpacing: "-0.04em",
                 color: "var(--limestone)",
-                opacity: 0.02,
                 lineHeight: 0.85,
-                letterSpacing: "-0.05em",
-                pointerEvents: "none",
-                userSelect: "none",
+                marginBottom: "2.5rem",
+                whiteSpace: "nowrap" as const,
+                willChange: "transform, opacity, filter",
+                opacity: 0,
               }}>
-                {String(i + 1).padStart(2, "0")}
+                {s.name}
               </div>
 
-              <div style={{ textAlign: "center", position: "relative", zIndex: 1, padding: "0 2rem" }}>
-                {/* Copper line above */}
-                <div className="svc-copper-line" style={{ width: "48px", height: "2px", background: "var(--copper)", margin: "0 auto 2rem", opacity: 0.5 }} />
-
-                {/* THE WORD — massive */}
-                <div className="svc-giant" style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(6rem, 16vw, 14rem)",
-                  fontWeight: 400,
-                  letterSpacing: "-0.04em",
-                  color: "var(--limestone)",
-                  lineHeight: 0.85,
-                  marginBottom: "2rem",
-                  whiteSpace: "nowrap" as const,
-                }}>
-                  {s.name}
-                </div>
-
-                {/* Description */}
-                <div className="svc-slide-desc" style={{ maxWidth: "420px", margin: "0 auto" }}>
-                  <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85 }}>
-                    {s.desc}
-                  </p>
-                </div>
+              {/* Description — pre-split into spans for blur animation */}
+              <div className="svc-slide-desc" style={{ maxWidth: "440px", margin: "0 auto" }}>
+                {s.desc.split(" ").map((w, j) => (
+                  <span key={j} style={{
+                    display: "inline-block",
+                    marginRight: "0.25em",
+                    fontSize: "0.95rem",
+                    fontWeight: 300,
+                    color: "var(--white-70)",
+                    lineHeight: 1.9,
+                    opacity: 0,
+                    filter: "blur(6px)",
+                    willChange: "opacity, filter",
+                  }}>{w}</span>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
+        ))}
 
-          {/* Right spacer */}
-          <div style={{ minWidth: "20vw", flexShrink: 0 }} />
-        </div>
-
-        {/* Progress bar at bottom */}
-        <div style={{ position: "absolute", bottom: "3rem", left: "40px", right: "40px", height: "1px", background: "var(--border-dark)", zIndex: 2 }}>
-          <div className="svc-progress" style={{ height: "100%", background: "var(--copper)", width: "0%", transition: "width 0.1s linear" }} />
-        </div>
-
-        {/* Service counter */}
-        <div style={{ position: "absolute", bottom: "4rem", right: "40px", zIndex: 2 }}>
-          <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.2em", color: "var(--white-30)" }}>SCROLL →</span>
+        {/* Counter at bottom */}
+        <div style={{ position: "absolute", bottom: "3rem", left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
+          <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>Scroll to explore</span>
         </div>
       </div>
 
