@@ -116,7 +116,7 @@ export default function Hero() {
             lineHeight: 0.85,
             color: "transparent",
             WebkitTextFillColor: "transparent",
-            backgroundImage: "url(/textures/marble-1.jpg)",
+            backgroundImage: "url(/textures/marble-hero.jpg)",
             backgroundSize: "250% 250%",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
