@@ -11,7 +11,7 @@ export default function Dimitris() {
           {/* Left — Photo placeholder */}
           <div className="reveal-left">
             <div style={{ aspectRatio: "4/5", borderRadius: 8, overflow: "hidden", position: "relative", background: "var(--graphite)" }}>
-              <img src="/textures/marble-3.jpg" alt="Dimitris Kamaritis" className="w-full h-full object-cover" style={{ opacity: 0.4 }} />
+              <img src="/photos/chef-portrait.jpg" alt="Dimitris Kamaritis" className="w-full h-full object-cover" />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(28,28,26,0.8) 0%, transparent 60%)" }} />
               <div style={{ position: "absolute", bottom: "2rem", left: "2rem", right: "2rem" }}>
                 <div style={{ fontFamily: "var(--font-logo)", fontSize: "2rem", letterSpacing: "0.0618em", color: "var(--limestone)", marginBottom: "0.5rem" }}>Dimitris Kamaritis</div>
