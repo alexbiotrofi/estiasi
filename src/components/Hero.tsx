@@ -45,30 +45,22 @@ export default function Hero() {
       tl.to(labelRef.current, { opacity: 0, duration: 0.2 }, 0);
       tl.to(videoRef.current, { filter: "brightness(0.15)", duration: 0.3 }, 0);
 
-      // Phase 2: Each word of tagline reveals — big, one at a time
+      // Phase 2: Each word reveals — stays fully visible once it appears
       words.forEach((word, i) => {
-        const startTime = 0.25 + i * 0.15;
+        const startTime = 0.25 + i * 0.12;
         tl.fromTo(word, {
           opacity: 0,
-          y: 60,
-          scale: 0.9,
+          y: 40,
         }, {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.15,
+          duration: 0.12,
           ease: "power3.out",
         }, startTime);
-
-        // Fade previous word slightly as next one appears (except last)
-        if (i > 0) {
-          tl.to(words[i - 1], { opacity: 0.2, duration: 0.1 }, startTime);
-        }
       });
 
-      // Phase 3: All words visible together at full opacity
-      const allWordsTime = 0.25 + words.length * 0.15;
-      tl.to(words, { opacity: 1, duration: 0.1 }, allWordsTime);
+      // Brief pause with all words visible
+      const allWordsTime = 0.25 + words.length * 0.12 + 0.08;
 
       // Phase 4: CTA fades in
       tl.fromTo(ctaRef.current, { opacity: 0, y: 20 }, {
@@ -84,23 +76,25 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: "100vh", overflow: "hidden" }}>
-      {/* Video background */}
-      <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
+      {/* Restaurant image with slow Ken Burns zoom */}
+      <div className="absolute inset-0 z-0" style={{ overflow: "hidden" }}>
+        <img
+          ref={videoRef as React.RefObject<HTMLImageElement | null>}
+          src="/photos/restaurant-interior.jpg"
+          alt=""
           className="w-full h-full object-cover"
-          style={{ filter: "brightness(0.35)" }}
-        >
-          <source src="/video/hero.mp4" type="video/mp4" />
-        </video>
+          style={{ filter: "brightness(0.3)", animation: "kenBurns 25s ease-in-out infinite alternate" }}
+        />
+        <style>{`
+          @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.12) translate(-1%, -1%); }
+          }
+        `}</style>
       </div>
 
       {/* Marble texture blend */}
-      <div className="absolute inset-0 z-1" style={{ mixBlendMode: "soft-light", opacity: 0.2 }}>
+      <div className="absolute inset-0 z-1" style={{ mixBlendMode: "soft-light", opacity: 0.15 }}>
         <img src="/textures/marble-1.jpg" alt="" className="w-full h-full object-cover" />
       </div>
 
