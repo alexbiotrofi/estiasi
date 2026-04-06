@@ -43,22 +43,75 @@ export default function Services() {
         },
       });
 
-      // Each service word: fade in on scroll, parallax up slightly
+      // Each service word: pinned, sweeps across screen left→right
       gsap.utils.toArray<HTMLElement>(".svc-block").forEach((block) => {
-        const word = block.querySelector(".svc-word");
-        const desc = block.querySelector(".svc-desc");
+        const word = block.querySelector<HTMLElement>(".svc-word");
+        const desc = block.querySelector<HTMLElement>(".svc-desc");
+        const num = block.querySelector<HTMLElement>(".svc-num");
+        const line = block.querySelector<HTMLElement>(".svc-line");
 
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: block,
+            start: "top 70%",
+            end: "bottom 30%",
+            scrub: 0.5,
+          },
+        });
+
+        // Word sweeps from left (off-screen) to right (off-screen)
+        // Starts at -30% (left), passes through 0% (natural position), ends at 20% (right)
         if (word) {
-          gsap.fromTo(word, { opacity: 0, y: 40 }, {
-            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
-            scrollTrigger: { trigger: block, start: "top 80%", once: true },
-          });
+          tl.fromTo(word, {
+            xPercent: -15,
+            opacity: 0,
+            scale: 0.95,
+          }, {
+            xPercent: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            ease: "power2.out",
+          }, 0);
+
+          // Then it continues moving right and fading
+          tl.to(word, {
+            xPercent: 15,
+            opacity: 0.1,
+            duration: 0.4,
+            ease: "power2.in",
+          }, 0.6);
         }
+
+        // Number fades in with the word
+        if (num) {
+          tl.fromTo(num, { opacity: 0 }, { opacity: 0.15, duration: 0.3 }, 0.1);
+          tl.to(num, { opacity: 0, duration: 0.2 }, 0.7);
+        }
+
+        // Description slides up and fades in, then out
         if (desc) {
-          gsap.fromTo(desc, { opacity: 0, y: 20 }, {
-            opacity: 1, y: 0, duration: 0.6, ease: "power3.out", delay: 0.15,
-            scrollTrigger: { trigger: block, start: "top 80%", once: true },
-          });
+          tl.fromTo(desc, {
+            opacity: 0,
+            y: 30,
+          }, {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            ease: "power2.out",
+          }, 0.15);
+
+          tl.to(desc, {
+            opacity: 0,
+            y: -20,
+            duration: 0.3,
+          }, 0.65);
+        }
+
+        // Copper line draws in
+        if (line) {
+          tl.fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.inOut" }, 0.1);
+          tl.to(line, { scaleX: 0, transformOrigin: "right", duration: 0.2 }, 0.7);
         }
       });
     }, sectionRef);
@@ -66,7 +119,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "90px 0 128px" }}>
+    <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
       <div className="wrap">
         {/* Header */}
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
@@ -75,52 +128,76 @@ export default function Services() {
         </div>
 
         {/* Intro with word blur */}
-        <p ref={descRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.35, letterSpacing: "-0.02em", maxWidth: "800px", marginBottom: "6rem" }}>
+        <p ref={descRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.35, letterSpacing: "-0.02em", maxWidth: "800px", marginBottom: "4rem" }}>
           We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
         </p>
+      </div>
 
-        {/* Services — giant words stacked with descriptions */}
-        <div>
-          {services.map((s, i) => (
-            <div key={s.name} className="svc-block" style={{ position: "relative", padding: "0 0 2rem 0" }}>
-              {/* Giant service word */}
-              <div className="svc-word" style={{ display: "flex", alignItems: "baseline", gap: "clamp(1rem, 2vw, 2rem)", marginBottom: "0.75rem" }}>
-                <span style={{
+      {/* Animated service words — full width, each takes scroll space */}
+      <div style={{ position: "relative" }}>
+        {services.map((s, i) => (
+          <div
+            key={s.name}
+            className="svc-block"
+            style={{
+              minHeight: "70vh",
+              display: "flex",
+              alignItems: "center",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            {/* Copper accent line */}
+            <div className="svc-line" style={{ position: "absolute", top: 0, left: "40px", right: "40px", height: "1px", background: "var(--copper)", opacity: 0.3, transformOrigin: "left" }} />
+
+            {/* Big number background */}
+            <div className="svc-num" style={{
+              position: "absolute",
+              right: "5%",
+              top: "50%",
+              transform: "translateY(-50%)",
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(15rem, 25vw, 22rem)",
+              fontWeight: 400,
+              color: "var(--limestone)",
+              opacity: 0,
+              lineHeight: 0.85,
+              letterSpacing: "-0.05em",
+              pointerEvents: "none",
+              userSelect: "none",
+            }}>
+              {String(i + 1).padStart(2, "0")}
+            </div>
+
+            <div className="wrap" style={{ position: "relative", zIndex: 1, width: "100%" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "2rem" }}>
+                {/* Giant word */}
+                <div className="svc-word" style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(3rem, 8vw, 7rem)",
+                  fontSize: "clamp(4rem, 10vw, 9rem)",
                   fontWeight: 400,
-                  letterSpacing: "-0.03em",
+                  letterSpacing: "-0.04em",
                   color: "var(--limestone)",
-                  lineHeight: 1,
-                  transition: "color 0.3s",
-                  cursor: "default",
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.color = "var(--copper)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = "var(--limestone)"; }}
-                >
+                  lineHeight: 0.9,
+                  whiteSpace: "nowrap" as const,
+                }}>
                   {s.name}
-                </span>
-                <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--white-15)" }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
+                </div>
 
-              {/* Description — appears on the right side */}
-              <div className="svc-desc" style={{ maxWidth: "420px", marginLeft: "auto", paddingBottom: "2rem", borderBottom: i < services.length - 1 ? "1px solid var(--border-dark)" : "none" }}>
-                <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-30)", lineHeight: 1.85, transition: "color 0.3s" }}
-                  onMouseEnter={e => { e.currentTarget.style.color = "var(--white-70)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = "var(--white-30)"; }}
-                >
-                  {s.desc}
-                </p>
+                {/* Description — right aligned */}
+                <div className="svc-desc" style={{ maxWidth: "380px", paddingBottom: "0.5rem", opacity: 0 }}>
+                  <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--white-70)", lineHeight: 1.85 }}>
+                    {s.desc}
+                  </p>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
-        <div style={{ marginTop: "3rem", textAlign: "center" }}>
-          <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
-        </div>
+      <div className="wrap" style={{ padding: "4rem 40px", textAlign: "center" }}>
+        <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
       </div>
     </section>
   );
