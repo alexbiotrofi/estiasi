@@ -63,7 +63,7 @@ export default function Pricing() {
   return (
     <section id="pricing" style={{ padding: "8rem 0", background: "var(--limestone)", position: "relative", overflow: "hidden" }}>
       <div className="absolute inset-0 z-0">
-        <img src="/textures/marble-1.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.06 }} />
+        <img src="/textures/marble-1.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.2 }} />
       </div>
 
       <div className="wrap relative z-10">

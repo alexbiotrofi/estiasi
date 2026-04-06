@@ -70,7 +70,7 @@ export default function Process() {
   return (
     <section id="process" ref={ref} style={{ padding: "8rem 0", position: "relative", overflow: "hidden" }}>
       <div className="absolute inset-0 z-0">
-        <img src="/textures/marble-3.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.05 }} />
+        <img src="/textures/marble-3.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.15 }} />
       </div>
 
       <div className="wrap-wide relative z-10">
