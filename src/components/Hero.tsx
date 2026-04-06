@@ -19,11 +19,6 @@ export default function Hero() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Entrance animation for wordmark + label together
-      gsap.fromTo(wordmarkRef.current, { opacity: 0, y: 20 }, {
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.4,
-      });
-
       // Scroll-driven timeline
       const words = document.querySelectorAll(".tagline-word");
       const tl = gsap.timeline({
