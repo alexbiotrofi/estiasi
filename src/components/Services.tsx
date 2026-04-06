@@ -48,13 +48,14 @@ export default function Services() {
       const slides = gsap.utils.toArray<HTMLElement>(".svc-slide");
       const totalSlides = slides.length;
 
-      // Master timeline pinned for totalSlides * 100vh of scroll
+      // Master timeline — 300vh per slide for heavy, slow pacing
+      const scrollPerSlide = 300;
       const master = gsap.timeline({
         scrollTrigger: {
           trigger: pinnedRef.current,
           start: "top top",
-          end: () => `+=${totalSlides * 100}%`,
-          scrub: 0.8,
+          end: () => `+=${totalSlides * scrollPerSlide}%`,
+          scrub: 2, // higher = slower, heavier response
           pin: true,
           anticipatePin: 1,
         },
@@ -69,76 +70,78 @@ export default function Services() {
         const segStart = i / totalSlides;
         const segDur = 1 / totalSlides;
 
-        // ENTER: word comes from right, scaled down, blurred, rotated slightly
+        // ENTER: word fades in from below, slow and heavy
+        // No flying from right — just a slow, weighty emergence
         master.fromTo(word, {
-          xPercent: 120,
-          scale: 0.4,
+          y: 80,
           opacity: 0,
-          filter: "blur(12px)",
-          rotation: 3,
+          filter: "blur(6px)",
+          scale: 0.92,
         }, {
-          xPercent: 0,
-          scale: 1,
+          y: 0,
           opacity: 1,
           filter: "blur(0px)",
-          rotation: 0,
-          duration: segDur * 0.35,
-          ease: "power3.out",
+          scale: 1,
+          duration: segDur * 0.25,
+          ease: "power2.out",
         }, segStart);
 
-        // Number fades in
-        master.fromTo(num, { opacity: 0 }, {
+        // Number slowly materialises
+        master.fromTo(num, { opacity: 0, scale: 0.95 }, {
           opacity: 0.03,
+          scale: 1,
           duration: segDur * 0.3,
-        }, segStart + segDur * 0.05);
+          ease: "none",
+        }, segStart);
 
-        // Copper line scales in
+        // Copper line draws in slowly
         master.fromTo(copper, { scaleX: 0 }, {
           scaleX: 1,
           duration: segDur * 0.2,
-          ease: "power2.inOut",
-        }, segStart + segDur * 0.1);
+          ease: "none",
+        }, segStart + segDur * 0.05);
 
-        // Description: each word blur-reveals
+        // Description: each word blur-reveals — slow stagger
         const descWords = desc?.querySelectorAll("span");
         if (descWords) {
           descWords.forEach((dw, j) => {
             master.fromTo(dw, {
-              filter: "blur(6px)",
+              filter: "blur(4px)",
               opacity: 0,
             }, {
               filter: "blur(0px)",
               opacity: 1,
-              duration: segDur * 0.03,
-              ease: "power2.out",
-            }, segStart + segDur * 0.25 + j * segDur * 0.015);
+              duration: segDur * 0.02,
+              ease: "none",
+            }, segStart + segDur * 0.2 + j * segDur * 0.01);
           });
         }
 
-        // HOLD — word sits at centre (natural gap from enter→exit timing)
+        // LONG HOLD — word sits visible for a large portion of the segment
+        // (the gap between enter ending ~0.45 and exit starting ~0.75 IS the hold)
 
-        // EXIT: word flies off to the left, scales up, blurs
+        // EXIT: slow dissolve upward — heavy, not punchy
         if (i < totalSlides - 1) {
           master.to(word, {
-            xPercent: -120,
-            scale: 1.2,
+            y: -60,
             opacity: 0,
-            filter: "blur(8px)",
-            rotation: -2,
-            duration: segDur * 0.3,
-            ease: "power3.in",
-          }, segStart + segDur * 0.65);
+            filter: "blur(4px)",
+            scale: 1.03,
+            duration: segDur * 0.2,
+            ease: "power2.in",
+          }, segStart + segDur * 0.78);
 
-          master.to(num, { opacity: 0, duration: segDur * 0.15 }, segStart + segDur * 0.7);
-          master.to(copper, { scaleX: 0, transformOrigin: "right", duration: segDur * 0.15 }, segStart + segDur * 0.7);
+          master.to(num, { opacity: 0, duration: segDur * 0.15, ease: "none" }, segStart + segDur * 0.8);
+          master.to(copper, { scaleX: 0, transformOrigin: "right", duration: segDur * 0.12, ease: "none" }, segStart + segDur * 0.82);
 
           if (descWords) {
             master.to(descWords, {
-              filter: "blur(4px)",
+              filter: "blur(3px)",
               opacity: 0,
-              duration: segDur * 0.1,
-              stagger: 0.001,
-            }, segStart + segDur * 0.65);
+              duration: segDur * 0.08,
+              stagger: segDur * 0.002,
+              ease: "none",
+            }, segStart + segDur * 0.75);
           }
         }
       });
