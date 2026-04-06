@@ -104,8 +104,17 @@ export default function Hero() {
           <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.5em", textTransform: "uppercase" as const, color: "var(--copper-light)" }}>Culinary Consulting · Cyprus</span>
         </div>
 
-        {/* Big wordmark */}
-        <div className="flex items-baseline justify-center">
+        {/* Big wordmark — marble texture flowing through letters */}
+        <div
+          className="flex items-baseline justify-center"
+          style={{
+            backgroundImage: "url(/textures/marble-1.jpg)",
+            backgroundSize: "300% 300%",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            animation: "marbleFlow 20s ease-in-out infinite alternate",
+          }}
+        >
           {"estιasι".split("").map((char, i) => (
             <span
               key={i}
@@ -115,7 +124,8 @@ export default function Hero() {
                 fontSize: "clamp(5rem, 14vw, 11rem)",
                 fontWeight: 400,
                 letterSpacing: "0.0618em",
-                color: "#fff",
+                color: "transparent",
+                WebkitTextFillColor: "transparent",
                 lineHeight: 0.85,
                 opacity: 0,
               }}
@@ -124,6 +134,15 @@ export default function Hero() {
             </span>
           ))}
         </div>
+        <style>{`
+          @keyframes marbleFlow {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 100% 30%; }
+            50% { background-position: 60% 100%; }
+            75% { background-position: 30% 60%; }
+            100% { background-position: 100% 100%; }
+          }
+        `}</style>
 
         {/* Copper line */}
         <div style={{ width: 48, height: 2, background: "var(--copper)", marginTop: "2rem" }} />
