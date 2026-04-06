@@ -5,44 +5,54 @@ import gsap from "gsap";
 
 export default function Hero() {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const subRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!headingRef.current) return;
-    gsap.fromTo(headingRef.current, { opacity: 0, y: 25 }, {
-      opacity: 1, y: 0, duration: 1.2, ease: "power3.out", delay: 0.3,
+    if (!headingRef.current || !subRef.current) return;
+    const tl = gsap.timeline({ delay: 0.3 });
+    tl.fromTo(headingRef.current, { opacity: 0, y: 30 }, {
+      opacity: 1, y: 0, duration: 1.2, ease: "power3.out",
     });
+    tl.fromTo(subRef.current, { opacity: 0, y: 15 }, {
+      opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+    }, "-=0.6");
   }, []);
 
   return (
-    <section className="relative" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-      {/* Video bg with gradient mask at bottom */}
-      <div className="absolute inset-0 z-0" style={{ mask: "linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)", WebkitMask: "linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)" }}>
-        <video autoPlay muted loop playsInline className="w-full h-full object-cover" style={{ opacity: 0.35 }}>
+    <section className="relative" style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+      {/* Video with gradient mask */}
+      <div className="absolute inset-0 z-0" style={{ mask: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)", WebkitMask: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)" }}>
+        <video autoPlay muted loop playsInline className="w-full h-full object-cover" style={{ opacity: 0.4 }}>
           <source src="/video/hero.mp4" type="video/mp4" />
         </video>
       </div>
 
       {/* Marble texture overlay */}
-      <div className="absolute inset-0 z-0" style={{ mixBlendMode: "overlay", opacity: 0.08 }}>
+      <div className="absolute inset-0 z-0" style={{ mixBlendMode: "overlay", opacity: 0.06 }}>
         <img src="/textures/marble-hero.jpg" alt="" className="w-full h-full object-cover" />
       </div>
 
-      <div className="wrap relative z-10" style={{ paddingBottom: "clamp(4rem, 10vh, 8rem)" }}>
+      <div className="wrap relative z-10" style={{ paddingBottom: "clamp(3rem, 8vh, 6rem)" }}>
         <h1
           ref={headingRef}
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(4rem, 10vw, 120px)",
+            fontSize: "clamp(3.5rem, 9vw, 120px)",
             fontWeight: 400,
             color: "var(--limestone)",
             lineHeight: 0.95,
-            letterSpacing: "-0.02em",
+            letterSpacing: "-0.03em",
             maxWidth: "14ch",
             opacity: 0,
           }}
         >
           We bring restaurants to life
         </h1>
+        <div ref={subRef} style={{ marginTop: "2rem", opacity: 0 }}>
+          <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-30)", lineHeight: 1.8, maxWidth: "44ch" }}>
+            End-to-end culinary consulting for the hospitality sector. From concept to grand opening — and everything between.
+          </p>
+        </div>
       </div>
     </section>
   );

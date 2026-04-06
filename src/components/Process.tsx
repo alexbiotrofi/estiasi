@@ -30,8 +30,12 @@ export default function Process() {
   }, []);
 
   return (
-    <section ref={ref} style={{ padding: "128px 0" }}>
-      <div className="wrap">
+    <section ref={ref} style={{ padding: "128px 0", position: "relative" }}>
+      {/* Copper glow top */}
+      <div style={{ position: "absolute", left: "50%", top: "-100px", transform: "translateX(-50%)", width: "2000px", height: "300px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+      {/* Copper glow bottom */}
+      <div style={{ position: "absolute", left: "50%", bottom: "-100px", transform: "translateX(-50%)", width: "2000px", height: "300px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div className="wrap" style={{ position: "relative" }}>
         <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "5rem" }}>
           <div>
             <span className="label">How We Work</span>
