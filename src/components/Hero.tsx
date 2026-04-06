@@ -36,25 +36,19 @@ export default function Hero() {
       tl.to(wordmarkRef.current, { opacity: 0, scale: 0.95, duration: 0.3, ease: "power2.in" }, 0);
       tl.to(videoRef.current, { filter: "brightness(0.15)", duration: 0.3 }, 0);
 
-      // Phase 2: All words visible but dim, then highlight one by one
-      tl.set(words, { opacity: 0.15, y: 0 }, 0.2);
-
-      words.forEach((word, i) => {
-        const startTime = 0.25 + i * 0.1;
-        tl.to(word, {
+      // Phase 2: Intro paragraph fades in
+      words.forEach((el, i) => {
+        tl.to(el, {
           opacity: 1,
-          color: "#fff",
-          duration: 0.1,
+          duration: 0.15,
           ease: "power2.out",
-        }, startTime);
+        }, 0.25 + i * 0.08);
       });
 
-      const allWordsTime = 0.25 + words.length * 0.1 + 0.08;
-
-      // Phase 4: CTA fades in
-      tl.fromTo(ctaRef.current, { opacity: 0, y: 20 }, {
+      // Phase 3: CTA fades in
+      tl.fromTo(ctaRef.current, { opacity: 0, y: 15 }, {
         opacity: 1, y: 0, duration: 0.1, ease: "power2.out",
-      }, allWordsTime + 0.05);
+      }, 0.55);
 
     }, sectionRef);
 
@@ -126,42 +120,52 @@ export default function Hero() {
         <div style={{ width: 48, height: 2, background: "var(--copper)", marginTop: "2rem" }} />
       </div>
 
-      {/* Layer 2: Tagline — scroll-revealed, word by word */}
-      <div ref={taglineRef} className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center pointer-events-none" style={{ padding: "0 2rem" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1.5rem, 4vw, 3rem)" }}>
-          {/* Line 1: We Bring */}
-          <div className="flex items-baseline justify-center" style={{ gap: "0 1em" }}>
-            {["We", "Bring"].map((word, i) => (
-              <span key={i} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0.15, color: "rgba(255,255,255,0.15)", willChange: "opacity, color" }}>{word}</span>
-            ))}
-          </div>
-          {/* Line 2: Restaurants */}
-          <div className="flex items-baseline justify-center">
-            <span className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0.15, color: "rgba(255,255,255,0.15)", willChange: "opacity, color" }}>Restaurants</span>
-          </div>
-          {/* Line 3: to Life. */}
-          <div className="flex items-baseline justify-center" style={{ gap: "0 0.8em" }}>
-            {["to", "Life."].map((word, i) => (
-              <span key={i + 3} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: word === "to" ? "clamp(2rem, 6vw, 5rem)" : "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0.15, color: "rgba(255,255,255,0.15)", willChange: "opacity, color" }}>{word}</span>
-            ))}
-          </div>
-        </div>
+      {/* Layer 2: Intro paragraph — left aligned, body font, revealed on scroll */}
+      <div ref={taglineRef} className="absolute inset-0 z-20 flex items-center pointer-events-none" style={{ padding: "0" }}>
+        <div className="wrap">
+          <div style={{ maxWidth: "540px" }}>
+            <p className="tagline-word" style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(1.05rem, 1.8vw, 1.35rem)",
+              fontWeight: 300,
+              color: "rgba(255,255,255,0.8)",
+              lineHeight: 1.9,
+              opacity: 0,
+            }}>
+              Estιasι is a culinary consultancy that brings restaurants to life. We take your vision — from the first sketch on a napkin to a fully operational venue — and build every system, every menu, every team that makes it run.
+            </p>
 
-        {/* CTA — appears after tagline */}
-        <div ref={ctaRef} className="pointer-events-auto" style={{ marginTop: "3.5rem", opacity: 0 }}>
-          <a
-            href="#work"
-            className="btn"
-            style={{
-              background: "var(--copper)",
-              color: "#fff",
-              padding: "1.1rem 3rem",
-              fontSize: "0.65rem",
-              letterSpacing: "0.25em",
-            }}
-          >
-            See Our Work
-          </a>
+            <div style={{ width: 32, height: 2, background: "var(--copper)", margin: "2rem 0", opacity: 0 }} className="tagline-word" />
+
+            <p className="tagline-word" style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.9rem",
+              fontWeight: 300,
+              color: "rgba(255,255,255,0.45)",
+              lineHeight: 1.85,
+              maxWidth: "44ch",
+              opacity: 0,
+            }}>
+              End-to-end advisory and operational consulting for the hospitality sector. Based in Cyprus, operating across Europe.
+            </p>
+
+            {/* CTA */}
+            <div ref={ctaRef} className="pointer-events-auto" style={{ marginTop: "2rem", opacity: 0 }}>
+              <a
+                href="#work"
+                className="btn"
+                style={{
+                  background: "var(--copper)",
+                  color: "#fff",
+                  padding: "1rem 2.5rem",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.2em",
+                }}
+              >
+                See Our Work
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
