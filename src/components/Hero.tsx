@@ -118,7 +118,6 @@ export default function Hero() {
             WebkitBackgroundClip: "text",
             filter: "brightness(1.3) contrast(1.1)",
             animation: "marbleFlow 40s linear infinite alternate",
-            opacity: 0,
           }}
         >
           estιasι
