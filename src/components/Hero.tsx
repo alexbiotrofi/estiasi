@@ -32,7 +32,7 @@ export default function Hero() {
         <img src="/textures/marble-hero.jpg" alt="" className="w-full h-full object-cover" />
       </div>
 
-      <div className="wrap relative z-10" style={{ paddingBottom: "clamp(3rem, 8vh, 6rem)" }}>
+      <div className="wrap relative z-10" style={{ paddingBottom: "clamp(3rem, 8vh, 6rem)", paddingLeft: "clamp(2rem, 4vw, 40px)" }}>
         <h1
           ref={headingRef}
           style={{
@@ -42,11 +42,11 @@ export default function Hero() {
             color: "var(--limestone)",
             lineHeight: 0.95,
             letterSpacing: "-0.03em",
-            maxWidth: "12ch",
+            maxWidth: "100%",
             opacity: 0,
           }}
         >
-          We bring restaurants to life
+          We bring<br />restaurants to life
         </h1>
         <div ref={subRef} style={{ opacity: 0 }} />
       </div>
