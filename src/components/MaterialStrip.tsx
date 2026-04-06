@@ -1,18 +1,7 @@
-interface MaterialStripProps {
-  src: string;
-  alt?: string;
-  height?: string;
-}
-
-export default function MaterialStrip({ src, alt = "", height = "120px" }: MaterialStripProps) {
+export default function MaterialStrip({ src, height = "80px" }: { src: string; height?: string }) {
   return (
-    <div style={{ height, overflow: "hidden", position: "relative" }}>
-      <img
-        src={src}
-        alt={alt}
-        className="w-full h-full object-cover"
-        style={{ display: "block" }}
-      />
+    <div style={{ height, overflow: "hidden" }}>
+      <img src={src} alt="" className="w-full h-full object-cover" style={{ display: "block" }} />
     </div>
   );
 }

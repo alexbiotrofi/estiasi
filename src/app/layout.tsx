@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import { Libre_Caslon_Display, Libre_Caslon_Text } from "next/font/google";
+import { Libre_Caslon_Display } from "next/font/google";
 import "./globals.css";
 
-const caslonDisplay = Libre_Caslon_Display({
+const caslon = Libre_Caslon_Display({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-caslon-display",
-});
-
-const caslonText = Libre_Caslon_Text({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-caslon-text",
+  variable: "--font-caslon",
 });
 
 export const metadata: Metadata = {
@@ -25,9 +18,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${caslonDisplay.variable} ${caslonText.variable}`}>
+    <html lang="en" className={caslon.variable}>
       <head>
-        <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600&f[]=zodiak@400,500,600&display=swap" rel="stylesheet" />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,100i,200i,300i,400i,500i,600i,700i&f[]=boska@400,500&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body>{children}</body>
     </html>

@@ -13,14 +13,14 @@ export default function Home() {
     <>
       <Navigation />
       <Hero />
-      <MaterialStrip src="/textures/marble-1.jpg" height="90px" />
+      <MaterialStrip src="/textures/marble-3.jpg" height="80px" />
       <About />
       <Philosophy />
-      <MaterialStrip src="/textures/marble-3.jpg" height="90px" />
+      <MaterialStrip src="/textures/marble-1.jpg" height="80px" />
       <Services />
-      <MaterialStrip src="/textures/dark-stone.jpg" height="70px" />
+      <MaterialStrip src="/textures/dark-stone.jpg" height="60px" />
       <Projects />
-      <MaterialStrip src="/textures/marble-2.jpg" height="90px" />
+      <MaterialStrip src="/textures/marble-3.jpg" height="80px" />
       <Contact />
       <Footer />
     </>
