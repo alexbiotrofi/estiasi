@@ -1,23 +1,15 @@
 export default function CTA() {
   return (
-    <section style={{ padding: "8rem 0", position: "relative", overflow: "hidden" }}>
-      {/* Dark stone background — full texture, not subtle */}
-      <div className="absolute inset-0 z-0">
-        <img src="/textures/dark-stone.jpg" alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0" style={{ background: "rgba(28,28,26,0.5)" }} />
-      </div>
-
-      <div className="wrap relative z-10 text-center">
-        <div className="reveal">
-          <span style={{ fontFamily: "var(--font-logo)", fontSize: "clamp(3rem, 8vw, 5rem)", fontWeight: 400, letterSpacing: "0.0618em", color: "var(--limestone)", display: "block", lineHeight: 0.9, marginBottom: "2rem" }}>
-            estιasι
-          </span>
-          <div style={{ width: 32, height: 2, background: "var(--copper)", margin: "0 auto 2rem" }} />
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 400, color: "var(--stone-light)", lineHeight: 1.5, maxWidth: "30ch", margin: "0 auto 3rem" }}>
-            Ready to build something that lasts?
-          </p>
-          <a href="#contact" className="btn btn-copper btn-lg">Book a Discovery Call</a>
-        </div>
+    <section className="rounded-section" style={{ margin: "0 40px", background: "var(--copper)", padding: "clamp(4rem, 10vw, 8rem) 0" }}>
+      <div className="wrap text-center">
+        <span style={{ fontFamily: "var(--font-logo)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 400, letterSpacing: "0.0618em", color: "#fff", display: "block", lineHeight: 0.9, marginBottom: "2rem" }}>
+          estιasι
+        </span>
+        <div style={{ width: 32, height: 2, background: "rgba(255,255,255,0.3)", margin: "0 auto 2rem" }} />
+        <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 400, color: "rgba(255,255,255,0.85)", lineHeight: 1.5, maxWidth: "28ch", margin: "0 auto 3rem" }}>
+          Ready to build something that lasts?
+        </p>
+        <a href="#contact" className="btn" style={{ background: "#fff", borderColor: "#fff", color: "var(--copper)", fontSize: "0.65rem" }}>Book a Discovery Call</a>
       </div>
     </section>
   );
