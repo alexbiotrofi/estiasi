@@ -133,21 +133,21 @@ export default function Hero() {
 
       {/* Layer 2: Tagline — scroll-revealed, word by word */}
       <div ref={taglineRef} className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center pointer-events-none" style={{ padding: "0 2rem" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1rem, 3vw, 2rem)" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1.5rem, 4vw, 3rem)" }}>
           {/* Line 1: We Bring */}
-          <div className="flex items-baseline justify-center" style={{ gap: "0 0.7em" }}>
+          <div className="flex items-baseline justify-center" style={{ gap: "0 1em" }}>
             {["We", "Bring"].map((word, i) => (
-              <span key={i} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8.5rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.06em", opacity: 0, willChange: "transform, opacity" }}>{word}</span>
+              <span key={i} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0, willChange: "transform, opacity" }}>{word}</span>
             ))}
           </div>
           {/* Line 2: Restaurants */}
           <div className="flex items-baseline justify-center">
-            <span className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8.5rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.06em", opacity: 0, willChange: "transform, opacity" }}>Restaurants</span>
+            <span className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0, willChange: "transform, opacity" }}>Restaurants</span>
           </div>
           {/* Line 3: to Life. */}
-          <div className="flex items-baseline justify-center" style={{ gap: "0 0.6em" }}>
+          <div className="flex items-baseline justify-center" style={{ gap: "0 0.8em" }}>
             {["to", "Life."].map((word, i) => (
-              <span key={i + 3} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: word === "to" ? "clamp(2rem, 6vw, 5.5rem)" : "clamp(3.5rem, 10vw, 8.5rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.06em", opacity: 0, willChange: "transform, opacity" }}>{word}</span>
+              <span key={i + 3} className="tagline-word inline-block" style={{ fontFamily: "var(--font-display)", fontSize: word === "to" ? "clamp(2rem, 6vw, 5rem)" : "clamp(3.5rem, 10vw, 8rem)", fontWeight: 400, color: "#fff", lineHeight: 1, letterSpacing: "0.12em", opacity: 0, willChange: "transform, opacity" }}>{word}</span>
             ))}
           </div>
         </div>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>estiasi — Greek Character Options</title>
+<link href="https://api.fontshare.com/v2/css?f[]=boska@400,500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,sans-serif; background:#1C1C1A; color:#F4F1EC; -webkit-font-smoothing:antialiased; }
+
+.wrap { max-width:900px; margin:0 auto; padding:4rem 2.5rem; }
+.hdr { text-align:center; margin-bottom:4rem; }
+.hdr h1 { font-size:0.55rem; font-weight:500; letter-spacing:0.5em; text-transform:uppercase; color:#B07340; margin-bottom:1rem; }
+.hdr p { font-size:0.85rem; font-weight:300; color:#7A7368; line-height:1.7; max-width:50ch; margin:0 auto; }
+
+.opt { padding:3rem 0; border-bottom:1px solid rgba(255,255,255,0.06); text-align:center; }
+.opt:last-child { border-bottom:none; }
+.opt-num { font-size:0.42rem; font-weight:500; letter-spacing:0.4em; text-transform:uppercase; color:#B07340; opacity:0.5; margin-bottom:1.5rem; }
+.opt-word { font-family:'Boska',serif; font-size:clamp(5rem,14vw,9rem); font-weight:400; letter-spacing:0.0618em; color:#F4F1EC; line-height:0.9; margin-bottom:1rem; }
+.opt-desc { font-size:0.8rem; font-weight:300; color:#7A7368; line-height:1.7; max-width:45ch; margin:0 auto; }
+.opt-chars { font-size:0.55rem; font-weight:500; letter-spacing:0.2em; color:#A8A196; margin-top:0.75rem; font-family:monospace; }
+
+/* Marble bg version */
+.opt-marble { position:relative; padding:4rem 2rem; border-radius:8px; overflow:hidden; margin-top:1rem; }
+.opt-marble img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.15; }
+.opt-marble-content { position:relative; z-index:1; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <h1>Greek Character Options</h1>
+    <p>Testing Greek letter substitutions in the "estiasi" wordmark. The word comes from Εστίαση (Estíasi). Some Greek letters have similar shapes but add subtle foreignness.</p>
+  </div>
+
+  <div class="opt">
+    <div class="opt-num">Original — No Greek</div>
+    <div class="opt-word">estiasi</div>
+    <div class="opt-desc">Current wordmark. All Latin characters.</div>
+    <div class="opt-chars">e-s-t-i-a-s-i</div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-num">Option A — Greek ε (epsilon) for e</div>
+    <div class="opt-word">εstiasi</div>
+    <div class="opt-desc">Only the opening letter swapped. Epsilon (ε) is visually distinct from Latin "e" — rounder, more open. Signals the Greek root immediately.</div>
+    <div class="opt-chars">ε-s-t-i-a-s-i</div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-num">Option B — Greek ι (iota) for both i's</div>
+    <div class="opt-word">estιasι</div>
+    <div class="opt-desc">Both i's replaced with iota (ι) — no dot above. Cleaner, more minimal. The missing dots give it a subtle uniqueness without being obvious.</div>
+    <div class="opt-chars">e-s-t-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-num">Option C — Greek ε + ι (epsilon + both iotas)</div>
+    <div class="opt-word">εstιasι</div>
+    <div class="opt-desc">The opening epsilon plus dotless iotas. Three Greek characters woven in. Most distinctive — clearly signals Greek origin while remaining readable.</div>
+    <div class="opt-chars">ε-s-t-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-num">Option D — Greek τ (tau) for t + ι for i's</div>
+    <div class="opt-word">esτιasι</div>
+    <div class="opt-desc">Tau (τ) replaces t — very similar shape in this font but the crossbar may differ slightly. Combined with dotless iotas.</div>
+    <div class="opt-chars">e-s-τ-ι-a-s-ι</div>
+  </div>
+
+  <div class="opt">
+    <div class="opt-num">Option E — Full Greek transliteration</div>
+    <div class="opt-word">εστιασι</div>
+    <div class="opt-desc">All characters replaced with Greek equivalents. Fully Greek but may not render correctly in Boska if the font doesn't include Greek glyphs. Also might be unreadable to non-Greek speakers.</div>
+    <div class="opt-chars">ε-σ-τ-ι-α-σ-ι</div>
+  </div>
+
+  <!-- Show on marble -->
+  <div class="opt">
+    <div class="opt-num">Favourites on Marble</div>
+    <div class="opt-marble">
+      <img src="/textures/marble-1.jpg" alt="">
+      <div class="opt-marble-content" style="text-align:center">
+        <div style="font-family:'Boska',serif;font-size:clamp(3rem,8vw,5rem);font-weight:400;letter-spacing:0.0618em;color:#F4F1EC;margin-bottom:2rem">εstiasi</div>
+        <div style="width:32px;height:2px;background:#B07340;margin:0 auto 2rem"></div>
+        <div style="font-family:'Boska',serif;font-size:clamp(3rem,8vw,5rem);font-weight:400;letter-spacing:0.0618em;color:#F4F1EC">εstιasι</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
