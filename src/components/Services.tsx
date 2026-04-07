@@ -19,13 +19,13 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+  const pinnedRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !listRef.current || !introRef.current) return;
+    if (!sectionRef.current || !pinnedRef.current || !introRef.current) return;
     const ctx = gsap.context(() => {
-      // Intro text: starts copper, highlights to white word by word on scroll
+      // Intro text: copper → white word by word on scroll
       const text = introRef.current!.textContent || "";
       const words = text.split(" ");
       introRef.current!.innerHTML = words.map(w =>
@@ -39,156 +39,144 @@ export default function Services() {
         end: "bottom 40%",
         scrub: 1,
         onUpdate: (self) => {
-          const progress = self.progress;
           introSpans.forEach((span, i) => {
-            const wordProgress = i / introSpans.length;
-            const revealed = progress > wordProgress;
+            const revealed = self.progress > i / introSpans.length;
             (span as HTMLElement).style.color = revealed ? "var(--limestone)" : "var(--copper)";
             (span as HTMLElement).style.opacity = revealed ? "1" : "0.4";
           });
         },
       });
 
-      // Pin the service list so it can't be skipped
+      // Pin the whole service viewport and scroll the active item through it
       const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
       const names = gsap.utils.toArray<HTMLElement>(".svc-name");
       const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
+      const total = rows.length;
 
-      ScrollTrigger.create({
-        trigger: listRef.current,
-        start: "top 20%",
-        end: () => `+=${rows.length * 120}%`,
-        pin: true,
-        scrub: 1.5,
-        onUpdate: () => {
-          const viewportCenter = window.innerHeight / 2;
+      // Create a master timeline that scrolls the list upward through the pinned viewport
+      const listInner = pinnedRef.current!.querySelector<HTMLElement>(".svc-list-inner");
+      if (!listInner) return;
 
-          rows.forEach((row, i) => {
-            const rect = row.getBoundingClientRect();
-            const rowCenter = rect.top + rect.height / 2;
-            const distance = Math.abs(rowCenter - viewportCenter);
-            const maxDist = window.innerHeight * 0.3;
-            const proximity = Math.max(0, 1 - distance / maxDist);
-            const eased = proximity * proximity;
-
-            const scale = 0.8 + eased * 0.45;
-            const opacity = 0.1 + eased * 0.9;
-            const fontSize = 1 + eased * 0.5;
-            const blur = (1 - eased) * 4;
-            const descOpacity = eased > 0.5 ? (eased - 0.5) * 2 * 0.8 : 0;
-
-            // Lerp for heaviness
-            const cs = parseFloat(row.dataset.cs || String(scale));
-            const co = parseFloat(row.dataset.co || String(opacity));
-            const lf = 0.06;
-            const ls = cs + (scale - cs) * lf;
-            const lo = co + (opacity - co) * lf;
-            row.dataset.cs = String(ls);
-            row.dataset.co = String(lo);
-
-            gsap.set(row, { opacity: lo, scale: ls, transformOrigin: "left center" });
-            gsap.set(names[i], {
-              fontSize: `${fontSize * 1.5}rem`,
-              filter: `blur(${blur}px)`,
-              color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.25 + eased * 0.75})`,
-            });
-            gsap.set(descs[i], { opacity: descOpacity });
-          });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinnedRef.current,
+          start: "top top",
+          end: () => `+=${total * 200}vh`,
+          scrub: 1.5,
+          pin: true,
         },
       });
+
+      // Scroll the list upward so each item passes through the centre
+      tl.to(listInner, {
+        y: () => -(listInner.scrollHeight - window.innerHeight * 0.4),
+        ease: "none",
+        duration: 1,
+      });
+
+      // Continuous proximity update
+      function update() {
+        const viewportCenter = window.innerHeight / 2;
+
+        rows.forEach((row, i) => {
+          const rect = row.getBoundingClientRect();
+          const rowCenter = rect.top + rect.height / 2;
+          const distance = Math.abs(rowCenter - viewportCenter);
+          const maxDist = window.innerHeight * 0.25;
+          const proximity = Math.max(0, 1 - distance / maxDist);
+          const eased = proximity * proximity;
+
+          const scale = 0.82 + eased * 0.38;
+          const opacity = 0.1 + eased * 0.9;
+          const fontSize = 1 + eased * 0.5;
+          const blur = (1 - eased) * 4;
+          const descOpacity = eased > 0.4 ? (eased - 0.4) / 0.6 * 0.8 : 0;
+
+          const cs = parseFloat(row.dataset.cs || String(scale));
+          const co = parseFloat(row.dataset.co || String(opacity));
+          const lf = 0.07;
+          const ls = cs + (scale - cs) * lf;
+          const lo = co + (opacity - co) * lf;
+          row.dataset.cs = String(ls);
+          row.dataset.co = String(lo);
+
+          gsap.set(row, { opacity: lo, scale: ls, transformOrigin: "left center" });
+          gsap.set(names[i], {
+            fontSize: `${fontSize * 1.5}rem`,
+            filter: `blur(${blur}px)`,
+            color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
+          });
+          gsap.set(descs[i], { opacity: descOpacity });
+        });
+
+        requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "90px 0 64px" }}>
+    <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
 
-        {/* Intro text + image side by side */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8" style={{ marginBottom: "5rem", alignItems: "start" }}>
-          <div className="md:col-span-7">
+        {/* Intro text + image */}
+        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "5rem" }}>
+          <div style={{ flex: "1 1 0" }}>
             <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
               We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
             </p>
           </div>
-          {/* Honey-style glass image */}
-          <div className="md:col-span-5 reveal" style={{ position: "relative" }}>
+          {/* Image — height matches text naturally via align-self stretch */}
+          <div className="reveal hidden md:block" style={{ width: "280px", flexShrink: 0, alignSelf: "stretch" }}>
             <div style={{
+              height: "100%",
+              minHeight: "200px",
               borderRadius: "20px",
               overflow: "hidden",
               position: "relative",
-              aspectRatio: "3/4",
               border: "1px solid rgba(255,255,255,0.08)",
               boxShadow: "0 0 0 1px rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.2), 0 8px 80px rgba(176,115,64,0.08), inset 0 4px 12px rgba(176,115,64,0.06)",
             }}>
               <img src="/photos/chef-plating.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.85 }} />
-              {/* Glass overlay at bottom */}
-              <div style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: "40%",
-                background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
-                backdropFilter: "blur(2px)",
-              }} />
-              <div style={{ position: "absolute", bottom: "1.25rem", left: "1.25rem" }}>
-                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Culinary Consulting</span>
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)", backdropFilter: "blur(2px)" }} />
+              <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
+                <span style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Culinary Consulting</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Pinned service list */}
-      <div ref={listRef} className="wrap">
-        {services.map((s) => (
-          <div key={s.name}>
-            <div
-              className="svc-row flex items-center justify-between"
-              style={{
-                padding: "0.85rem 0",
-                cursor: "default",
-                willChange: "transform, opacity",
-                transformOrigin: "left center",
-              }}
-            >
-              <span
-                className="svc-name"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.5rem",
-                  fontWeight: 400,
-                  color: "var(--limestone)",
-                  letterSpacing: "-0.01em",
-                  willChange: "font-size, filter, color",
-                  whiteSpace: "nowrap" as const,
-                }}
+      {/* Pinned service scroll viewport */}
+      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
+        {/* Copper glow */}
+        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "800px", height: "400px", background: "radial-gradient(50% 50%, rgba(176,115,64,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+        <div className="svc-list-inner wrap" style={{ paddingTop: "40vh" }}>
+          {services.map((s) => (
+            <div key={s.name}>
+              <div
+                className="svc-row flex items-center justify-between"
+                style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}
               >
-                {s.name}
-              </span>
-              <span
-                className="svc-desc"
-                style={{
-                  fontSize: "0.78rem",
-                  fontWeight: 300,
-                  color: "var(--white-50)",
-                  maxWidth: "32ch",
-                  textAlign: "right" as const,
-                  opacity: 0,
-                  willChange: "opacity",
-                }}
-              >
-                {s.desc}
-              </span>
+                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const }}>
+                  {s.name}
+                </span>
+                <span className="svc-desc" style={{ fontSize: "0.78rem", fontWeight: 300, color: "var(--white-50)", maxWidth: "32ch", textAlign: "right" as const, opacity: 0, willChange: "opacity" }}>
+                  {s.desc}
+                </span>
+              </div>
+              <div className="divider-dark" />
             </div>
-            <div className="divider-dark" />
-          </div>
-        ))}
+          ))}
+          {/* Bottom spacer */}
+          <div style={{ height: "40vh" }} />
+        </div>
       </div>
 
       <div className="wrap" style={{ padding: "3rem 40px", textAlign: "center" }}>
