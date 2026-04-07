@@ -51,6 +51,7 @@ export default function Services() {
       const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
       const names = gsap.utils.toArray<HTMLElement>(".svc-name");
       const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
+      const lines = gsap.utils.toArray<HTMLElement>(".svc-line");
       const total = rows.length;
 
       // Create a master timeline that scrolls the list upward through the pinned viewport
@@ -61,7 +62,7 @@ export default function Services() {
         scrollTrigger: {
           trigger: pinnedRef.current,
           start: "top top",
-          end: () => `+=${total * 100}vh`,
+          end: () => `+=${total * 60}vh`,
           scrub: 1.5,
           pin: true,
         },
@@ -107,6 +108,7 @@ export default function Services() {
             color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
           });
           gsap.set(descs[i], { opacity: descOpacity });
+          if (lines[i]) gsap.set(lines[i], { opacity: descOpacity * 0.4 });
         });
 
         requestAnimationFrame(update);
@@ -157,17 +159,18 @@ export default function Services() {
         {/* Copper glow */}
         <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "800px", height: "400px", background: "radial-gradient(50% 50%, rgba(176,115,64,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-        <div className="svc-list-inner wrap" style={{ paddingTop: "20vh" }}>
+        <div className="svc-list-inner wrap" style={{ paddingTop: "35vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div
-                className="svc-row flex items-center justify-between"
+                className="svc-row flex items-center gap-4"
                 style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}
               >
-                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const }}>
+                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                   {s.name}
                 </span>
-                <span className="svc-desc" style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--white-70)", maxWidth: "32ch", textAlign: "right" as const, opacity: 0, willChange: "opacity" }}>
+                <span className="svc-line" style={{ flex: 1, height: "1px", background: "var(--border-dark)", opacity: 0, willChange: "opacity" }} />
+                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 300, color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
                   {s.desc}
                 </span>
               </div>
@@ -175,7 +178,7 @@ export default function Services() {
             </div>
           ))}
           {/* Bottom spacer */}
-          <div style={{ height: "20vh" }} />
+          <div style={{ height: "10vh" }} />
         </div>
       </div>
 
