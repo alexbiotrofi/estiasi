@@ -59,7 +59,7 @@ export default function Services() {
           scrollTrigger: {
             trigger: pinnedRef.current,
             start: "top top",
-            end: () => `+=${window.innerHeight * 5}px`,
+            end: () => `+=${window.innerHeight * 2.5}px`,
             scrub: 3,
             pin: true,
           },
