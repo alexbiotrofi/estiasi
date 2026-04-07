@@ -120,7 +120,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
+    <section ref={sectionRef} style={{ padding: "40px 0 0" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
@@ -160,7 +160,7 @@ export default function Services() {
         {/* Copper glow */}
         <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "800px", height: "400px", background: "radial-gradient(50% 50%, rgba(176,115,64,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-        <div className="svc-list-inner wrap" style={{ paddingTop: "30vh" }}>
+        <div className="svc-list-inner wrap" style={{ paddingTop: "25vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div
@@ -170,7 +170,7 @@ export default function Services() {
                 <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                   {s.name}
                 </span>
-                <span className="svc-line" style={{ width: "120px", height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
+                <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
                 <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
                   {s.desc}
                 </span>
@@ -183,7 +183,7 @@ export default function Services() {
         </div>
       </div>
 
-      <div className="wrap" style={{ padding: "1.5rem 40px", textAlign: "center" }}>
+      <div className="wrap" style={{ padding: "0.5rem 40px", textAlign: "center" }}>
         <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
       </div>
     </section>
