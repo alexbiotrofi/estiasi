@@ -20,10 +20,11 @@ const services = [
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinnedRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !pinnedRef.current || !introRef.current) return;
+    if (!sectionRef.current || !pinnedRef.current || !listRef.current || !introRef.current) return;
     const ctx = gsap.context(() => {
       // Copper-to-white intro
       const text = introRef.current!.textContent || "";
@@ -46,53 +47,69 @@ export default function Services() {
         },
       });
 
-      // Pinned scroll — timeline drives each item's focus
-      const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
-      const names = gsap.utils.toArray<HTMLElement>(".svc-name");
-      const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
-      const lineEls = gsap.utils.toArray<HTMLElement>(".svc-line");
-      const total = rows.length;
+      // Pin and scroll the list upward
+      const listInner = listRef.current!;
+      const listHeight = listInner.scrollHeight;
 
-      // Set initial state — all dim
-      rows.forEach((row, i) => {
-        gsap.set(row, { opacity: 0.06, scale: 0.75, transformOrigin: "left center" });
-        gsap.set(names[i], { fontSize: "1.5rem", filter: "blur(6px)", color: "rgba(244,241,236,0.2)" });
-        gsap.set(descs[i], { opacity: 0 });
-        if (lineEls[i]) gsap.set(lineEls[i], { opacity: 0 });
-      });
+      const st = ScrollTrigger.create({
+        trigger: pinnedRef.current,
+        start: "top top",
+        end: () => `+=${listHeight * 2}px`,
+        scrub: 2,
+        pin: true,
+        onUpdate: (self) => {
+          // Scroll the list upward
+          const maxY = listHeight - window.innerHeight * 0.6;
+          gsap.set(listInner, { y: -self.progress * maxY });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinnedRef.current,
-          start: "top top",
-          end: `+=${total * 150}vh`,
-          scrub: 2,
-          pin: true,
-          pinSpacing: "margin",
+          // Proximity depth wave
+          const viewportCenter = window.innerHeight * 0.45;
+          const rows = listInner.querySelectorAll<HTMLElement>(".svc-row");
+          const names = listInner.querySelectorAll<HTMLElement>(".svc-name");
+          const descs = listInner.querySelectorAll<HTMLElement>(".svc-desc");
+          const lineEls = listInner.querySelectorAll<HTMLElement>(".svc-line");
+
+          rows.forEach((row, i) => {
+            const rect = row.getBoundingClientRect();
+            const rowCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(rowCenter - viewportCenter);
+            const maxDist = window.innerHeight * 0.22;
+            const proximity = Math.max(0, 1 - distance / maxDist);
+            const eased = proximity * proximity;
+
+            const scale = 0.75 + eased * 0.5;
+            const opacity = 0.06 + eased * 0.94;
+            const fontSize = 1 + eased * 0.6;
+            const blur = (1 - eased) * 6;
+            const descOpacity = Math.min(1, eased * 1.5);
+
+            gsap.set(row, { opacity, scale, transformOrigin: "left center" });
+            gsap.set(names[i], {
+              fontSize: `${fontSize * 1.5}rem`,
+              filter: `blur(${blur}px)`,
+              color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
+            });
+            gsap.set(descs[i], { opacity: descOpacity });
+            if (lineEls[i]) gsap.set(lineEls[i], { opacity: descOpacity * 0.6 });
+          });
+        },
+        onLeave: () => {
+          // Remove the spacer that ScrollTrigger creates
+          const spacer = pinnedRef.current?.nextElementSibling;
+          if (spacer && spacer.classList.contains("pin-spacer")) {
+            (spacer as HTMLElement).style.height = "0px";
+            (spacer as HTMLElement).style.padding = "0px";
+          }
         },
       });
 
-      // Each item gets a focus-in, hold, focus-out sequence
-      rows.forEach((row, i) => {
-        const pos = i / total;
-        const dur = 1 / total;
-        const enterEnd = dur * 0.25;
-        const exitStart = dur * 0.75;
-
-        // ENTER — grow, sharpen, brighten
-        tl.to(row, { opacity: 1, scale: 1.25, duration: enterEnd, ease: "power2.out" }, pos);
-        tl.to(names[i], { fontSize: "2.4rem", filter: "blur(0px)", color: "#ffffff", duration: enterEnd, ease: "power2.out" }, pos);
-        tl.to(descs[i], { opacity: 1, duration: enterEnd * 0.8, ease: "power2.out" }, pos + enterEnd * 0.3);
-        if (lineEls[i]) tl.to(lineEls[i], { opacity: 0.5, duration: enterEnd * 0.6 }, pos + enterEnd * 0.2);
-
-        // EXIT — shrink, blur, dim (except last item stays)
-        if (i < total - 1) {
-          tl.to(row, { opacity: 0.06, scale: 0.75, duration: dur - exitStart, ease: "power2.in" }, pos + exitStart);
-          tl.to(names[i], { fontSize: "1.5rem", filter: "blur(6px)", color: "rgba(244,241,236,0.2)", duration: dur - exitStart, ease: "power2.in" }, pos + exitStart);
-          tl.to(descs[i], { opacity: 0, duration: (dur - exitStart) * 0.5 }, pos + exitStart);
-          if (lineEls[i]) tl.to(lineEls[i], { opacity: 0, duration: (dur - exitStart) * 0.5 }, pos + exitStart);
+      // Also try to reduce spacer on creation
+      setTimeout(() => {
+        const spacer = pinnedRef.current?.parentElement;
+        if (spacer && spacer.classList.contains("pin-spacer")) {
+          spacer.style.marginBottom = `-${parseFloat(spacer.style.paddingBottom || "0") * 0.85}px`;
         }
-      });
+      }, 100);
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -123,9 +140,9 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Pinned service list */}
-      <div ref={pinnedRef} style={{ height: "auto", overflow: "hidden", position: "relative", padding: "2rem 0" }}>
-        <div className="wrap">
+      {/* Pinned viewport */}
+      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
+        <div ref={listRef} className="wrap" style={{ paddingTop: "40vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div className="svc-row flex items-center gap-4" style={{ padding: "0.85rem 0", cursor: "default", transformOrigin: "left center" }}>
@@ -140,6 +157,7 @@ export default function Services() {
               <div className="divider-dark" />
             </div>
           ))}
+          <div style={{ height: "30vh" }} />
         </div>
       </div>
     </section>
