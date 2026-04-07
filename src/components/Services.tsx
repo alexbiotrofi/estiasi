@@ -7,22 +7,27 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { name: "Concept & Positioning", desc: "Market research, competitor analysis, brand positioning" },
-  { name: "Menu Engineering", desc: "Recipe development, costing, profitability optimisation" },
-  { name: "Kitchen Design", desc: "Equipment specification, workflow, layout planning" },
-  { name: "Staff Training", desc: "Service standards, kitchen procedures, team development" },
-  { name: "HACCP & Compliance", desc: "Food safety frameworks, documentation, audits" },
-  { name: "Operations & Systems", desc: "SOPs, booking systems, CRM, stock management" },
-  { name: "Brand & Digital", desc: "Identity, website, SEO, photography direction" },
-  { name: "Launch Management", desc: "Soft opening, adjustment, grand opening, handover" },
+  "Concept & Positioning",
+  "Menu Engineering",
+  "Kitchen Design",
+  "Staff Training",
+  "HACCP & Compliance",
+  "Operations & Systems",
+  "Brand & Digital",
+  "Launch Management",
 ];
+
+// Repeat for seamless loop
+const repeated = [...services, ...services, ...services];
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !introRef.current) return;
+    if (!sectionRef.current || !row1Ref.current || !row2Ref.current || !introRef.current) return;
     const ctx = gsap.context(() => {
       // Copper-to-white intro
       const text = introRef.current!.textContent || "";
@@ -45,88 +50,40 @@ export default function Services() {
         },
       });
 
-      // Each service row: clip-path reveal + slide from below
-      gsap.utils.toArray<HTMLElement>(".svc-row").forEach((row) => {
-        const name = row.querySelector<HTMLElement>(".svc-name");
-        const desc = row.querySelector<HTMLElement>(".svc-desc");
-        const line = row.querySelector<HTMLElement>(".svc-line");
+      // Continuous horizontal scroll — row 1 moves left, row 2 moves right
+      const row1 = row1Ref.current!;
+      const row2 = row2Ref.current!;
 
-        // Row clip-path: starts fully hidden (clipped at top), reveals downward
-        gsap.fromTo(row, {
-          clipPath: "inset(100% 0 0 0)",
-          opacity: 0,
-        }, {
-          clipPath: "inset(0% 0 0 0)",
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: row,
-            start: "top 90%",
-            end: "top 50%",
-            scrub: 1,
-          },
-        });
+      // Base animation — always running
+      gsap.to(row1, { x: "-33.333%", duration: 40, ease: "none", repeat: -1 });
+      gsap.to(row2, { x: "0%", duration: 45, ease: "none", repeat: -1 });
+      gsap.set(row2, { x: "-33.333%" });
 
-        // Name slides up slightly
-        if (name) {
-          gsap.fromTo(name, { y: 20 }, {
-            y: 0,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 88%",
-              end: "top 55%",
-              scrub: 1,
-            },
-          });
-        }
-
-        // Description fades in slightly later
-        if (desc) {
-          gsap.fromTo(desc, { opacity: 0, x: 20 }, {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 82%",
-              end: "top 50%",
-              scrub: 1,
-            },
-          });
-        }
-
-        // Copper line scales in
-        if (line) {
-          gsap.fromTo(line, { scaleX: 0 }, {
-            scaleX: 1,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 85%",
-              end: "top 52%",
-              scrub: 1,
-            },
-          });
-        }
+      // Scroll-driven speed boost — scrolling makes it move faster
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: (self) => {
+          const velocity = self.getVelocity();
+          const boost = Math.min(Math.abs(velocity) / 500, 3);
+          gsap.to(row1, { timeScale: 1 + boost, duration: 0.3, overwrite: "auto" });
+          gsap.to(row2, { timeScale: 1 + boost, duration: 0.3, overwrite: "auto" });
+        },
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "40px 0 60px" }}>
+    <section ref={sectionRef} style={{ padding: "40px 0 60px", overflow: "hidden" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "3rem" }}>
+        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "4rem" }}>
           <div style={{ flex: "1 1 0" }}>
             <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
               We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
@@ -142,22 +99,62 @@ export default function Services() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Service list */}
-        {services.map((s) => (
-          <div key={s.name}>
-            <div className="svc-row flex items-center gap-4" style={{ padding: "1.2rem 0", cursor: "default", overflow: "hidden" }}>
-              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.2rem, 2.2vw, 1.7rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
-                {s.name}
+      {/* Horizontal ticker rows */}
+      <div style={{ position: "relative" }}>
+        {/* Fade edges */}
+        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: "15%", background: "linear-gradient(to right, #000, transparent)", zIndex: 2, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: "15%", background: "linear-gradient(to left, #000, transparent)", zIndex: 2, pointerEvents: "none" }} />
+
+        {/* Row 1 — moves left */}
+        <div style={{ overflow: "hidden", marginBottom: "0" }}>
+          <div ref={row1Ref} className="flex items-center" style={{ width: "max-content" }}>
+            {repeated.map((name, i) => (
+              <span key={`r1-${i}`} className="flex items-center shrink-0">
+                <span style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                  fontWeight: 400,
+                  color: "var(--limestone)",
+                  letterSpacing: "-0.02em",
+                  whiteSpace: "nowrap",
+                  padding: "0 1.5rem",
+                  opacity: 0.8,
+                }}>
+                  {name}
+                </span>
+                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--copper)", opacity: 0.4, flexShrink: 0 }} />
               </span>
-              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", flexShrink: 0, alignSelf: "center", transformOrigin: "left" }} />
-              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
-                {s.desc}
-              </span>
-            </div>
-            <div className="divider-dark" />
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Copper line */}
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.3, margin: "1rem 0" }} />
+
+        {/* Row 2 — moves right, dimmer, slightly smaller */}
+        <div style={{ overflow: "hidden" }}>
+          <div ref={row2Ref} className="flex items-center" style={{ width: "max-content" }}>
+            {[...repeated].reverse().map((name, i) => (
+              <span key={`r2-${i}`} className="flex items-center shrink-0">
+                <span style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                  fontWeight: 400,
+                  color: "var(--limestone)",
+                  letterSpacing: "-0.02em",
+                  whiteSpace: "nowrap",
+                  padding: "0 1.5rem",
+                  opacity: 0.25,
+                }}>
+                  {name}
+                </span>
+                <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "var(--copper)", opacity: 0.2, flexShrink: 0 }} />
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
