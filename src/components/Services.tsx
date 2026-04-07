@@ -19,20 +19,18 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const pinnedRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !pinnedRef.current || !introRef.current) return;
+    if (!sectionRef.current || !introRef.current) return;
     const ctx = gsap.context(() => {
-      // Intro text: copper → white word by word on scroll
+      // Copper-to-white intro
       const text = introRef.current!.textContent || "";
       const words = text.split(" ");
       introRef.current!.innerHTML = words.map(w =>
         `<span style="display:inline-block;margin-right:0.25em;color:var(--copper);opacity:0.5;transition:color 0.4s ease-out, opacity 0.4s ease-out">${w}</span>`
       ).join("");
       const introSpans = introRef.current!.querySelectorAll("span");
-
       ScrollTrigger.create({
         trigger: introRef.current,
         start: "top 80%",
@@ -47,6 +45,7 @@ export default function Services() {
         },
       });
 
+      // Proximity depth wave on rAF
       const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
       const names = gsap.utils.toArray<HTMLElement>(".svc-name");
       const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
@@ -54,7 +53,6 @@ export default function Services() {
 
       function update() {
         const viewportCenter = window.innerHeight / 2;
-
         rows.forEach((row, i) => {
           const rect = row.getBoundingClientRect();
           const rowCenter = rect.top + rect.height / 2;
@@ -69,15 +67,7 @@ export default function Services() {
           const blur = (1 - eased) * 6;
           const descOpacity = Math.min(1, eased * 1.5);
 
-          const cs = parseFloat(row.dataset.cs || String(scale));
-          const co = parseFloat(row.dataset.co || String(opacity));
-          const lf = 0.06;
-          const ls = cs + (scale - cs) * lf;
-          const lo = co + (opacity - co) * lf;
-          row.dataset.cs = String(ls);
-          row.dataset.co = String(lo);
-
-          gsap.set(row, { opacity: lo, scale: ls, transformOrigin: "left center" });
+          gsap.set(row, { opacity, scale, transformOrigin: "left center" });
           gsap.set(names[i], {
             fontSize: `${fontSize * 1.5}rem`,
             filter: `blur(${blur}px)`,
@@ -86,7 +76,6 @@ export default function Services() {
           gsap.set(descs[i], { opacity: descOpacity });
           if (lines[i]) gsap.set(lines[i], { opacity: descOpacity * 0.6 });
         });
-
         requestAnimationFrame(update);
       }
       requestAnimationFrame(update);
@@ -102,24 +91,14 @@ export default function Services() {
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
 
-        {/* Intro text + image */}
-        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "5rem" }}>
+        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "3rem" }}>
           <div style={{ flex: "1 1 0" }}>
             <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
               We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
             </p>
           </div>
-          {/* Image — height matches text naturally via align-self stretch */}
           <div className="reveal hidden md:block" style={{ width: "280px", flexShrink: 0, alignSelf: "stretch" }}>
-            <div style={{
-              height: "100%",
-              minHeight: "200px",
-              borderRadius: "20px",
-              overflow: "hidden",
-              position: "relative",
-              border: "1px solid rgba(255,255,255,0.08)",
-              boxShadow: "0 0 0 1px rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.2), 0 8px 80px rgba(176,115,64,0.08), inset 0 4px 12px rgba(176,115,64,0.06)",
-            }}>
+            <div style={{ height: "100%", minHeight: "200px", borderRadius: "20px", overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 0 0 1px rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.2), 0 8px 80px rgba(176,115,64,0.08), inset 0 4px 12px rgba(176,115,64,0.06)" }}>
               <img src="/photos/chef-plating.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.85 }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)", backdropFilter: "blur(2px)" }} />
               <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
@@ -130,27 +109,22 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Service list — tall section with sticky inner */}
-      <div ref={pinnedRef} style={{ height: "250vh", position: "relative" }}>
-        <div className="wrap" style={{ position: "sticky", top: "25vh" }}>
-          {services.map((s) => (
-            <div key={s.name}>
-              <div
-                className="svc-row flex items-center gap-4"
-                style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}
-              >
-                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
-                  {s.name}
-                </span>
-                <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
-                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
-                  {s.desc}
-                </span>
-              </div>
-              <div className="divider-dark" />
+      {/* Service list — just a normal list, no pin, no sticky */}
+      <div className="wrap" style={{ paddingBottom: "3rem" }}>
+        {services.map((s) => (
+          <div key={s.name}>
+            <div className="svc-row flex items-center gap-4" style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}>
+              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+                {s.name}
+              </span>
+              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
+              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
+                {s.desc}
+              </span>
             </div>
-          ))}
-        </div>
+            <div className="divider-dark" />
+          </div>
+        ))}
       </div>
     </section>
   );
