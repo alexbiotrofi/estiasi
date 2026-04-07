@@ -7,22 +7,23 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { name: "Concept & Positioning", desc: "Market research, competitor analysis, brand positioning" },
-  { name: "Menu Engineering", desc: "Recipe development, costing, profitability optimisation" },
-  { name: "Kitchen Design", desc: "Equipment specification, workflow, layout planning" },
-  { name: "Staff Training", desc: "Service standards, kitchen procedures, team development" },
-  { name: "HACCP & Compliance", desc: "Food safety frameworks, documentation, audits" },
-  { name: "Operations & Systems", desc: "SOPs, booking systems, CRM, stock management" },
-  { name: "Brand & Digital", desc: "Identity, website, SEO, photography direction" },
-  { name: "Launch Management", desc: "Soft opening, adjustment, grand opening, handover" },
+  "Concept & Positioning",
+  "Menu Engineering",
+  "Kitchen Design",
+  "Staff Training",
+  "HACCP & Compliance",
+  "Operations & Systems",
+  "Brand & Digital",
+  "Launch Management",
 ];
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !introRef.current) return;
+    if (!sectionRef.current || !introRef.current || !listRef.current) return;
     const ctx = gsap.context(() => {
       // Copper-to-white intro
       const text = introRef.current!.textContent || "";
@@ -45,78 +46,38 @@ export default function Services() {
         },
       });
 
-      // 3D perspective card rotation for each service
-      gsap.utils.toArray<HTMLElement>(".svc-card").forEach((card) => {
-        const name = card.querySelector<HTMLElement>(".svc-name");
-        const desc = card.querySelector<HTMLElement>(".svc-desc");
-        const line = card.querySelector<HTMLElement>(".svc-line");
-
-        // Scroll-driven: rotateX from tilted → flat → tilted the other way
-        gsap.fromTo(card, {
-          rotateX: 45,
+      // Stagger reveal the service words
+      const items = gsap.utils.toArray<HTMLElement>(".svc-word");
+      items.forEach((item, i) => {
+        gsap.fromTo(item, {
           opacity: 0,
-          scale: 0.9,
-          transformOrigin: "center bottom",
-          filter: "blur(3px)",
+          y: 30,
         }, {
-          rotateX: 0,
           opacity: 1,
-          scale: 1,
-          filter: "blur(0px)",
-          ease: "none",
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          delay: i * 0.06,
           scrollTrigger: {
-            trigger: card,
-            start: "top 95%",
-            end: "top 45%",
-            scrub: 1.5,
+            trigger: listRef.current,
+            start: "top 80%",
+            once: true,
           },
         });
-
-        // Exit: rotate the other way
-        gsap.to(card, {
-          rotateX: -30,
-          opacity: 0.15,
-          scale: 0.95,
-          filter: "blur(2px)",
-          transformOrigin: "center top",
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 25%",
-            end: "top -10%",
-            scrub: 1.5,
-          },
-        });
-
-        // Description slides in from right
-        if (desc) {
-          gsap.fromTo(desc, { x: 40, opacity: 0 }, {
-            x: 0, opacity: 1, ease: "none",
-            scrollTrigger: { trigger: card, start: "top 80%", end: "top 45%", scrub: 1.5 },
-          });
-        }
-
-        // Copper line scales in
-        if (line) {
-          gsap.fromTo(line, { scaleX: 0 }, {
-            scaleX: 1, ease: "none",
-            scrollTrigger: { trigger: card, start: "top 85%", end: "top 50%", scrub: 1.5 },
-          });
-        }
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "40px 0 60px", perspective: "1200px" }}>
+    <section ref={sectionRef} style={{ padding: "40px 0 80px" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "3rem" }}>
+        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "4rem" }}>
           <div style={{ flex: "1 1 0" }}>
             <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
               We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
@@ -133,53 +94,46 @@ export default function Services() {
           </div>
         </div>
 
-        {/* 3D service cards */}
-        <div style={{ perspective: "1200px" }}>
-          {services.map((s) => (
-            <div key={s.name}>
-              <div
-                className="svc-card"
-                style={{
-                  padding: "1.4rem 0",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  transformStyle: "preserve-3d",
-                  willChange: "transform, opacity, filter",
-                }}
-              >
-                <span className="svc-name" style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)",
-                  fontWeight: 400,
-                  color: "var(--limestone)",
-                  letterSpacing: "-0.01em",
-                  whiteSpace: "nowrap" as const,
-                  flexShrink: 0,
-                }}>
-                  {s.name}
-                </span>
-                <span className="svc-line" style={{
-                  width: "200px",
-                  height: "1px",
-                  background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)",
-                  flexShrink: 0,
-                  alignSelf: "center",
-                  transformOrigin: "left",
-                }} />
-                <span className="svc-desc" style={{
-                  fontSize: "0.88rem",
-                  fontWeight: 400,
-                  color: "rgba(255,255,255,0.8)",
-                  whiteSpace: "nowrap" as const,
-                  flexShrink: 0,
-                }}>
-                  {s.desc}
-                </span>
-              </div>
-              <div className="divider-dark" />
-            </div>
+        {/* Service words — Honey style: big, blurred, hover to reveal */}
+        <div ref={listRef} style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem 1.5rem", alignItems: "baseline" }}>
+          {services.map((name, i) => (
+            <span
+              key={name}
+              className="svc-word"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                fontWeight: 400,
+                letterSpacing: "-0.02em",
+                color: "var(--limestone)",
+                lineHeight: 1.15,
+                filter: "blur(1.5px)",
+                opacity: 0.3,
+                transition: "filter 0.2s ease-out, opacity 0.2s ease-out, color 0.2s ease-out",
+                cursor: "default",
+                whiteSpace: "nowrap" as const,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.filter = "blur(0px)";
+                e.currentTarget.style.opacity = "1";
+                e.currentTarget.style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.filter = "blur(1.5px)";
+                e.currentTarget.style.opacity = "0.3";
+                e.currentTarget.style.color = "var(--limestone)";
+              }}
+            >
+              {name}
+              {i < services.length - 1 && (
+                <span style={{ color: "var(--copper)", opacity: 0.3, margin: "0 0.2rem", fontSize: "0.6em" }}>,</span>
+              )}
+            </span>
           ))}
+        </div>
+
+        <div style={{ marginTop: "3rem" }}>
+          <a href="#contact" className="btn" style={{ fontSize: "0.55rem" }}>Enquire</a>
         </div>
       </div>
     </section>
