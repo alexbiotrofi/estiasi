@@ -151,7 +151,7 @@ export default function Services() {
 
       {/* Pinned service viewport */}
       <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        <div className="svc-list-inner wrap" style={{ paddingTop: "70vh" }}>
+        <div className="svc-list-inner wrap" style={{ paddingTop: "45vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div
