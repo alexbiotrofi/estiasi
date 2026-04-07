@@ -62,7 +62,7 @@ export default function Services() {
         scrollTrigger: {
           trigger: pinnedRef.current,
           start: "top top",
-          end: () => `+=${total * 40}vh`,
+          end: () => `+=${total * 30}vh`,
           scrub: 1.5,
           pin: true,
         },
@@ -108,7 +108,7 @@ export default function Services() {
             color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
           });
           gsap.set(descs[i], { opacity: descOpacity });
-          if (lines[i]) gsap.set(lines[i], { opacity: descOpacity * 0.5, background: eased > 0.5 ? "var(--copper)" : "var(--border-dark)" });
+          if (lines[i]) gsap.set(lines[i], { opacity: descOpacity * 0.6 });
         });
 
         requestAnimationFrame(update);
@@ -119,7 +119,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
+    <section ref={sectionRef} style={{ padding: "90px 0 0", marginBottom: "-2rem" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
@@ -169,7 +169,7 @@ export default function Services() {
                 <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                   {s.name}
                 </span>
-                <span className="svc-line" style={{ flex: 1, height: "1px", background: "var(--copper)", opacity: 0, willChange: "opacity, background", minWidth: "20px" }} />
+                <span className="svc-line" style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
                 <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
                   {s.desc}
                 </span>
@@ -178,11 +178,11 @@ export default function Services() {
             </div>
           ))}
           {/* Bottom spacer */}
-          <div style={{ height: "5vh" }} />
+          <div style={{ height: "2vh" }} />
         </div>
       </div>
 
-      <div className="wrap" style={{ padding: "3rem 40px", textAlign: "center" }}>
+      <div className="wrap" style={{ padding: "1.5rem 40px", textAlign: "center" }}>
         <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
       </div>
     </section>
