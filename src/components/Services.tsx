@@ -59,13 +59,13 @@ export default function Services() {
           scrollTrigger: {
             trigger: pinnedRef.current,
             start: "top top",
-            end: () => `+=${listInner.scrollHeight}px`,
-            scrub: 1,
+            end: () => `+=${listInner.scrollHeight * 0.6}px`,
+            scrub: 2.5,
             pin: true,
           },
         });
         tl.to(listInner, {
-          y: () => -(listInner.scrollHeight - window.innerHeight * 0.5),
+          y: () => -(listInner.scrollHeight - window.innerHeight * 0.35),
           ease: "none",
           duration: 1,
         });
@@ -82,15 +82,15 @@ export default function Services() {
           const proximity = Math.max(0, 1 - distance / maxDist);
           const eased = proximity * proximity;
 
-          const scale = 0.82 + eased * 0.38;
-          const opacity = 0.1 + eased * 0.9;
-          const fontSize = 1 + eased * 0.5;
-          const blur = (1 - eased) * 4;
+          const scale = 0.75 + eased * 0.5;
+          const opacity = 0.06 + eased * 0.94;
+          const fontSize = 1 + eased * 0.6;
+          const blur = (1 - eased) * 6;
           const descOpacity = Math.min(1, eased * 1.5);
 
           const cs = parseFloat(row.dataset.cs || String(scale));
           const co = parseFloat(row.dataset.co || String(opacity));
-          const lf = 0.07;
+          const lf = 0.04;
           const ls = cs + (scale - cs) * lf;
           const lo = co + (opacity - co) * lf;
           row.dataset.cs = String(ls);
