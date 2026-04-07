@@ -59,7 +59,7 @@ export default function Services() {
           scrollTrigger: {
             trigger: pinnedRef.current,
             start: "top top",
-            end: () => `+=${window.innerHeight * 4}px`,
+            end: () => `+=${window.innerHeight * 5}px`,
             scrub: 3,
             pin: true,
           },
@@ -151,7 +151,7 @@ export default function Services() {
 
       {/* Pinned service viewport */}
       <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        <div className="svc-list-inner wrap" style={{ paddingTop: "30vh" }}>
+        <div className="svc-list-inner wrap" style={{ paddingTop: "70vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div
