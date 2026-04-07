@@ -19,11 +19,12 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const drumRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
+  const progressRef = useRef<{ value: number }>({ value: 0 });
 
   useEffect(() => {
-    if (!sectionRef.current || !carouselRef.current || !descRef.current) return;
+    if (!sectionRef.current || !drumRef.current || !descRef.current) return;
     const ctx = gsap.context(() => {
       // Word blur on intro
       const text = descRef.current!.textContent || "";
@@ -46,32 +47,44 @@ export default function Services() {
         },
       });
 
-      // 3D Carousel — pinned, scroll drives rotation
-      const items = gsap.utils.toArray<HTMLElement>(".carousel-item");
+      // Drum rotation — manual transform in onUpdate for precise control
+      const items = gsap.utils.toArray<HTMLElement>(".drum-item");
       const total = items.length;
-      const angleStep = 360 / total;
+      const itemAngle = 360 / total;
+      const radius = 220; // tighter radius = items closer together
 
-      // Set initial 3D positions
-      items.forEach((item, i) => {
-        const angle = i * angleStep;
-        gsap.set(item, {
-          rotationX: angle,
-          transformOrigin: "center center -400px",
-          z: 0,
-        });
-      });
+      ScrollTrigger.create({
+        trigger: sectionRef.current!.querySelector(".drum-pinned"),
+        start: "top top",
+        end: () => `+=${total * 120}%`,
+        scrub: 1.5,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const rotation = self.progress * 360;
+          items.forEach((item, i) => {
+            const angle = (i * itemAngle + rotation) % 360;
+            // Convert to radians
+            const rad = (angle * Math.PI) / 180;
+            // Y position on the drum surface
+            const y = Math.sin(rad) * radius;
+            // Z position (depth)
+            const z = Math.cos(rad) * radius;
+            // Scale based on depth (front = 1, back = smaller)
+            const normalizedZ = (z + radius) / (2 * radius); // 0 = back, 1 = front
+            const scale = 0.6 + normalizedZ * 0.4;
+            const opacity = 0.05 + normalizedZ * 0.95;
+            const blur = (1 - normalizedZ) * 4;
 
-      // Scroll drives the carousel rotation
-      gsap.to(carouselRef.current, {
-        rotationX: -360,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current!.querySelector(".carousel-pinned"),
-          start: "top top",
-          end: () => `+=${total * 150}%`,
-          scrub: 1.5,
-          pin: true,
-          anticipatePin: 1,
+            gsap.set(item, {
+              y: y,
+              z: z,
+              scale: scale,
+              opacity: opacity,
+              filter: `blur(${blur}px)`,
+              zIndex: Math.round(normalizedZ * 100),
+            });
+          });
         },
       });
     }, sectionRef);
@@ -90,69 +103,75 @@ export default function Services() {
         </p>
       </div>
 
-      {/* 3D Carousel — pinned */}
-      <div className="carousel-pinned" style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
+      {/* Drum — pinned */}
+      <div className="drum-pinned" style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
         {/* Copper glow */}
-        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "1000px", height: "500px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
+        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "1000px", height: "400px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.05) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
-        {/* Perspective container */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", perspective: "1200px", perspectiveOrigin: "50% 50%" }}>
-          {/* Rotating carousel */}
+        {/* Drum container */}
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div
-            ref={carouselRef}
+            ref={drumRef}
             style={{
               position: "relative",
               width: "100%",
-              maxWidth: "900px",
-              height: "80px",
+              maxWidth: "1000px",
+              height: "500px",
               transformStyle: "preserve-3d",
+              perspective: "none",
             }}
           >
-            {services.map((s, i) => {
-              const angle = i * (360 / services.length);
-              return (
-                <div
-                  key={s.name}
-                  className="carousel-item"
-                  style={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "80px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "0 40px",
-                    backfaceVisibility: "hidden",
-                    transform: `rotateX(${angle}deg) translateZ(400px)`,
-                    borderBottom: "1px solid var(--border-dark)",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)",
-                      fontWeight: 400,
-                      color: "var(--limestone)",
-                      letterSpacing: "-0.01em",
-                    }}
-                  >
-                    {s.name}
-                  </span>
-                  <span style={{ fontSize: "0.75rem", fontWeight: 300, color: "var(--white-50)", maxWidth: "35ch", textAlign: "right" }}>
-                    {s.desc}
-                  </span>
-                </div>
-              );
-            })}
+            {services.map((s) => (
+              <div
+                key={s.name}
+                className="drum-item"
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  left: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0 40px",
+                  willChange: "transform, opacity, filter",
+                  pointerEvents: "none",
+                }}
+              >
+                <span style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
+                  fontWeight: 400,
+                  color: "var(--limestone)",
+                  letterSpacing: "-0.01em",
+                  whiteSpace: "nowrap" as const,
+                }}>
+                  {s.name}
+                </span>
+                <span style={{
+                  fontSize: "0.78rem",
+                  fontWeight: 300,
+                  color: "var(--white-50)",
+                  maxWidth: "35ch",
+                  textAlign: "right" as const,
+                }}>
+                  {s.desc}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Fade edges — top and bottom gradient masks */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "35%", background: "linear-gradient(to bottom, #000000 0%, transparent 100%)", pointerEvents: "none", zIndex: 1 }} />
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "35%", background: "linear-gradient(to top, #000000 0%, transparent 100%)", pointerEvents: "none", zIndex: 1 }} />
+        {/* Top/bottom fades */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "30%", background: "linear-gradient(to bottom, #000 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: "linear-gradient(to top, #000 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
 
-        {/* Scroll hint */}
-        <div style={{ position: "absolute", bottom: "3rem", left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
+        {/* Centre highlight line */}
+        <div style={{ position: "absolute", top: "50%", left: "40px", right: "40px", height: "1px", background: "var(--copper)", opacity: 0.15, transform: "translateY(-30px)", zIndex: 1 }} />
+        <div style={{ position: "absolute", top: "50%", left: "40px", right: "40px", height: "1px", background: "var(--copper)", opacity: 0.15, transform: "translateY(30px)", zIndex: 1 }} />
+
+        <div style={{ position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)", zIndex: 3 }}>
           <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>Scroll to explore</span>
         </div>
       </div>
