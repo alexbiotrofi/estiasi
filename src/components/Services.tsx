@@ -46,53 +46,51 @@ export default function Services() {
         },
       });
 
-      // Wave animation on the service list
-      const rows = gsap.utils.toArray<HTMLElement>(".svc-wave-row");
-      const names = gsap.utils.toArray<HTMLElement>(".svc-wave-name");
-      const descs = gsap.utils.toArray<HTMLElement>(".svc-wave-desc");
-      const total = rows.length;
+      // Proximity-based depth wave
+      const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
+      const names = gsap.utils.toArray<HTMLElement>(".svc-name");
+      const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
 
-      // Quicksetters for performance
-      const xSetters = names.map(n => gsap.quickTo(n, "x", { duration: 0.6, ease: "power4.out" }));
-      const opacitySetters = rows.map(r => gsap.quickTo(r, "opacity", { duration: 0.3, ease: "power2.out" }));
-      const scaleSetters = names.map(n => gsap.quickTo(n, "scale", { duration: 0.4, ease: "power2.out" }));
-      const descOpacitySetters = descs.map(d => gsap.quickTo(d, "opacity", { duration: 0.3, ease: "power2.out" }));
+      function update() {
+        const viewportCenter = window.innerHeight / 2;
 
-      ScrollTrigger.create({
-        trigger: listRef.current,
-        start: "top 70%",
-        end: "bottom 30%",
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const viewportCenter = window.innerHeight / 2;
+        rows.forEach((row, i) => {
+          const rect = row.getBoundingClientRect();
+          const rowCenter = rect.top + rect.height / 2;
+          const distance = Math.abs(rowCenter - viewportCenter);
+          const maxDist = window.innerHeight * 0.35;
+          const proximity = Math.max(0, 1 - distance / maxDist); // 1 = centre, 0 = far
+          const eased = proximity * proximity; // quadratic easing for snappier falloff
 
-          rows.forEach((row, i) => {
-            const rect = row.getBoundingClientRect();
-            const rowCenter = rect.top + rect.height / 2;
-            const distance = Math.abs(rowCenter - viewportCenter);
-            const maxDist = window.innerHeight * 0.4;
-            const proximity = Math.max(0, 1 - distance / maxDist); // 1 = at centre, 0 = far away
+          // Scale: items at centre are bigger (1.15x), far items smaller (0.85x)
+          const scale = 0.85 + eased * 0.3;
 
-            // Sine wave on X — flows through the list based on scroll progress
-            const waveNumber = 2;
-            const phase = waveNumber * i + progress * Math.PI * 4 - Math.PI / 2;
-            const wave = Math.sin(phase);
-            const xOffset = wave * 60 * proximity; // max 60px offset, scaled by proximity
+          // Opacity: centre = 1, far = 0.2
+          const opacity = 0.2 + eased * 0.8;
 
-            xSetters[i](xOffset);
-            opacitySetters[i](0.25 + proximity * 0.75); // 0.25 → 1.0
-            scaleSetters[i](0.95 + proximity * 0.05); // 0.95 → 1.0
-            descOpacitySetters[i](proximity * 0.7); // 0 → 0.7
+          // Font size boost for the focused item
+          const fontSize = 1 + eased * 0.4; // 1rem → 1.4rem multiplier
 
-            // Colour change — copper when focused
-            if (proximity > 0.8) {
-              (names[i] as HTMLElement).style.color = "var(--copper)";
-            } else {
-              (names[i] as HTMLElement).style.color = "var(--limestone)";
-            }
+          // Blur: far items slightly blurred
+          const blur = (1 - eased) * 2;
+
+          // Description visibility
+          const descOpacity = eased * 0.8;
+
+          // Apply
+          gsap.set(row, { opacity, scale, transformOrigin: "left center" });
+          gsap.set(names[i], {
+            fontSize: `${fontSize * 1.5}rem`,
+            filter: `blur(${blur}px)`,
+            color: eased > 0.7 ? "var(--copper)" : "var(--limestone)",
           });
-        },
-      });
+          gsap.set(descs[i], { opacity: descOpacity });
+        });
+
+        requestAnimationFrame(update);
+      }
+
+      requestAnimationFrame(update);
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -108,45 +106,44 @@ export default function Services() {
           We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
         </p>
 
-        {/* Service list with wave animation */}
         <div ref={listRef}>
-          <div className="divider-dark" />
           {services.map((s) => (
             <div key={s.name}>
               <div
-                className="svc-wave-row flex items-center justify-between"
+                className="svc-row flex items-center justify-between"
                 style={{
-                  padding: "1.1rem 0",
+                  padding: "0.9rem 0",
                   cursor: "default",
-                  opacity: 0.25,
-                  willChange: "opacity",
+                  willChange: "transform, opacity",
+                  transformOrigin: "left center",
                 }}
               >
                 <span
-                  className="svc-wave-name"
+                  className="svc-name"
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontSize: "clamp(1.2rem, 2.2vw, 1.7rem)",
+                    fontSize: "1.5rem",
                     fontWeight: 400,
                     color: "var(--limestone)",
                     letterSpacing: "-0.01em",
-                    transition: "color 0.3s ease-out",
-                    willChange: "transform",
-                    transformOrigin: "left center",
+                    willChange: "font-size, filter, color",
+                    transition: "color 0.25s ease-out",
+                    whiteSpace: "nowrap" as const,
                   }}
                 >
                   {s.name}
                 </span>
                 <span
-                  className="svc-wave-desc"
+                  className="svc-desc"
                   style={{
-                    fontSize: "0.75rem",
+                    fontSize: "0.78rem",
                     fontWeight: 300,
                     color: "var(--white-50)",
                     maxWidth: "32ch",
                     textAlign: "right" as const,
                     opacity: 0,
                     willChange: "opacity",
+                    transition: "opacity 0.2s ease-out",
                   }}
                 >
                   {s.desc}
