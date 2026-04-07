@@ -62,7 +62,7 @@ export default function Services() {
         scrollTrigger: {
           trigger: pinnedRef.current,
           start: "top top",
-          end: () => `+=${total * 60}vh`,
+          end: () => `+=${total * 40}vh`,
           scrub: 1.5,
           pin: true,
         },
@@ -91,7 +91,7 @@ export default function Services() {
           const opacity = 0.1 + eased * 0.9;
           const fontSize = 1 + eased * 0.5;
           const blur = (1 - eased) * 4;
-          const descOpacity = eased > 0.2 ? Math.min(1, (eased - 0.2) / 0.4) : 0;
+          const descOpacity = Math.min(1, eased * 1.5);
 
           const cs = parseFloat(row.dataset.cs || String(scale));
           const co = parseFloat(row.dataset.co || String(opacity));
@@ -108,7 +108,7 @@ export default function Services() {
             color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
           });
           gsap.set(descs[i], { opacity: descOpacity });
-          if (lines[i]) gsap.set(lines[i], { opacity: descOpacity * 0.4 });
+          if (lines[i]) gsap.set(lines[i], { opacity: descOpacity * 0.5, background: eased > 0.5 ? "var(--copper)" : "var(--border-dark)" });
         });
 
         requestAnimationFrame(update);
@@ -159,7 +159,7 @@ export default function Services() {
         {/* Copper glow */}
         <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "800px", height: "400px", background: "radial-gradient(50% 50%, rgba(176,115,64,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-        <div className="svc-list-inner wrap" style={{ paddingTop: "35vh" }}>
+        <div className="svc-list-inner wrap" style={{ paddingTop: "30vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div
@@ -169,8 +169,8 @@ export default function Services() {
                 <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                   {s.name}
                 </span>
-                <span className="svc-line" style={{ flex: 1, height: "1px", background: "var(--border-dark)", opacity: 0, willChange: "opacity" }} />
-                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 300, color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
+                <span className="svc-line" style={{ flex: 1, height: "1px", background: "var(--copper)", opacity: 0, willChange: "opacity, background", minWidth: "20px" }} />
+                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
                   {s.desc}
                 </span>
               </div>
@@ -178,7 +178,7 @@ export default function Services() {
             </div>
           ))}
           {/* Bottom spacer */}
-          <div style={{ height: "10vh" }} />
+          <div style={{ height: "5vh" }} />
         </div>
       </div>
 
