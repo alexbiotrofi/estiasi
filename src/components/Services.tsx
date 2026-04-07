@@ -65,6 +65,7 @@ export default function Services() {
           end: () => `+=${total * 30}vh`,
           scrub: 1.5,
           pin: true,
+          pinSpacing: false,
         },
       });
 
@@ -119,7 +120,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "90px 0 0", marginBottom: "-2rem" }}>
+    <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
@@ -169,7 +170,7 @@ export default function Services() {
                 <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                   {s.name}
                 </span>
-                <span className="svc-line" style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
+                <span className="svc-line" style={{ width: "120px", height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
                 <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
                   {s.desc}
                 </span>
