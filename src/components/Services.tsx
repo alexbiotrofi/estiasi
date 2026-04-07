@@ -52,25 +52,6 @@ export default function Services() {
       const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
       const lines = gsap.utils.toArray<HTMLElement>(".svc-line");
 
-      // Pin the viewport, scroll list through it
-      const listInner = pinnedRef.current!.querySelector<HTMLElement>(".svc-list-inner");
-      if (listInner) {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: pinnedRef.current,
-            start: "top top",
-            end: () => `+=${window.innerHeight * 1.5}px`,
-            scrub: 3,
-            pin: true,
-          },
-        });
-        tl.to(listInner, {
-          y: () => -(listInner.scrollHeight - window.innerHeight * 0.15),
-          ease: "none",
-          duration: 1,
-        });
-      }
-
       function update() {
         const viewportCenter = window.innerHeight / 2;
 
@@ -149,9 +130,9 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Pinned service viewport */}
-      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        <div className="svc-list-inner wrap" style={{ paddingTop: "45vh" }}>
+      {/* Service list — tall section with sticky inner */}
+      <div ref={pinnedRef} style={{ height: "250vh", position: "relative" }}>
+        <div className="wrap" style={{ position: "sticky", top: "25vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div
