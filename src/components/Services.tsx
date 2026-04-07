@@ -47,11 +47,29 @@ export default function Services() {
         },
       });
 
-      // No pin — just natural scroll with proximity detection
       const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
       const names = gsap.utils.toArray<HTMLElement>(".svc-name");
       const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
       const lines = gsap.utils.toArray<HTMLElement>(".svc-line");
+
+      // Pin the viewport, scroll list through it
+      const listInner = pinnedRef.current!.querySelector<HTMLElement>(".svc-list-inner");
+      if (listInner) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinnedRef.current,
+            start: "top top",
+            end: () => `+=${listInner.scrollHeight}px`,
+            scrub: 1,
+            pin: true,
+          },
+        });
+        tl.to(listInner, {
+          y: () => -(listInner.scrollHeight - window.innerHeight * 0.5),
+          ease: "none",
+          duration: 1,
+        });
+      }
 
       function update() {
         const viewportCenter = window.innerHeight / 2;
@@ -131,25 +149,27 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Service list — natural scroll, no pin */}
-      <div ref={pinnedRef} className="wrap">
-        {services.map((s) => (
-          <div key={s.name}>
-            <div
-              className="svc-row flex items-center gap-4"
-              style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}
-            >
-              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
-                {s.name}
-              </span>
-              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
-              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
-                {s.desc}
-              </span>
+      {/* Pinned service viewport */}
+      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
+        <div className="svc-list-inner wrap" style={{ paddingTop: "30vh" }}>
+          {services.map((s) => (
+            <div key={s.name}>
+              <div
+                className="svc-row flex items-center gap-4"
+                style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}
+              >
+                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+                  {s.name}
+                </span>
+                <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
+                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
+                  {s.desc}
+                </span>
+              </div>
+              <div className="divider-dark" />
             </div>
-            <div className="divider-dark" />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
