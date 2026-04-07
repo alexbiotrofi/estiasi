@@ -45,14 +45,14 @@ export default function Services() {
         },
       });
 
-      // Proximity depth wave — runs on rAF, works with sticky
+      // Depth wave on rAF
+      const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
+      const names = gsap.utils.toArray<HTMLElement>(".svc-name");
+      const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
+      const lineEls = gsap.utils.toArray<HTMLElement>(".svc-line");
+
       function update() {
         const viewportCenter = window.innerHeight * 0.45;
-        const rows = document.querySelectorAll<HTMLElement>(".svc-row");
-        const names = document.querySelectorAll<HTMLElement>(".svc-name");
-        const descs = document.querySelectorAll<HTMLElement>(".svc-desc");
-        const lineEls = document.querySelectorAll<HTMLElement>(".svc-line");
-
         rows.forEach((row, i) => {
           const rect = row.getBoundingClientRect();
           const rowCenter = rect.top + rect.height / 2;
@@ -61,20 +61,14 @@ export default function Services() {
           const proximity = Math.max(0, 1 - distance / maxDist);
           const eased = proximity * proximity;
 
-          const scale = 0.75 + eased * 0.5;
-          const opacity = 0.06 + eased * 0.94;
-          const fontSize = 1 + eased * 0.6;
-          const blur = (1 - eased) * 6;
-          const descOpacity = Math.min(1, eased * 1.5);
-
-          gsap.set(row, { opacity, scale, transformOrigin: "left center" });
+          gsap.set(row, { opacity: 0.06 + eased * 0.94, scale: 0.75 + eased * 0.5, transformOrigin: "left center" });
           gsap.set(names[i], {
-            fontSize: `${fontSize * 1.5}rem`,
-            filter: `blur(${blur}px)`,
+            fontSize: `${(1 + eased * 0.6) * 1.5}rem`,
+            filter: `blur(${(1 - eased) * 6}px)`,
             color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
           });
-          gsap.set(descs[i], { opacity: descOpacity });
-          if (lineEls[i]) gsap.set(lineEls[i], { opacity: descOpacity * 0.6 });
+          gsap.set(descs[i], { opacity: Math.min(1, eased * 1.5) });
+          if (lineEls[i]) gsap.set(lineEls[i], { opacity: Math.min(1, eased * 1.5) * 0.6 });
         });
         requestAnimationFrame(update);
       }
@@ -83,13 +77,8 @@ export default function Services() {
     return () => ctx.revert();
   }, []);
 
-  // Height = enough to scroll through all items with the sticky list visible
-  // Each item ~50px, 8 items = ~400px of list. We want ~150vh so each item
-  // gets time in the spotlight as the sticky container scrolls past
-  const stickyHeight = "180vh";
-
   return (
-    <section ref={sectionRef} style={{ padding: "40px 0 0" }}>
+    <section ref={sectionRef} style={{ padding: "40px 0 60px" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
@@ -112,26 +101,22 @@ export default function Services() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Tall wrapper — the sticky list stays visible while you scroll through this height */}
-      <div style={{ height: stickyHeight, position: "relative" }}>
-        <div className="wrap" style={{ position: "sticky", top: "30vh" }}>
-          {services.map((s) => (
-            <div key={s.name}>
-              <div className="svc-row flex items-center gap-4" style={{ padding: "0.85rem 0", cursor: "default", transformOrigin: "left center" }}>
-                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
-                  {s.name}
-                </span>
-                <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, flexShrink: 0, alignSelf: "center" }} />
-                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, flexShrink: 0 }}>
-                  {s.desc}
-                </span>
-              </div>
-              <div className="divider-dark" />
+        {/* Simple list — natural scroll */}
+        {services.map((s) => (
+          <div key={s.name}>
+            <div className="svc-row flex items-center gap-4" style={{ padding: "0.85rem 0", cursor: "default", transformOrigin: "left center" }}>
+              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+                {s.name}
+              </span>
+              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, flexShrink: 0, alignSelf: "center" }} />
+              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, flexShrink: 0 }}>
+                {s.desc}
+              </span>
             </div>
-          ))}
-        </div>
+            <div className="divider-dark" />
+          </div>
+        ))}
       </div>
     </section>
   );
