@@ -62,27 +62,35 @@ export default function Services() {
           const proximity = Math.max(0, 1 - distance / maxDist); // 1 = centre, 0 = far
           const eased = proximity * proximity; // quadratic easing for snappier falloff
 
-          // Scale: items at centre are bigger (1.15x), far items smaller (0.85x)
-          const scale = 0.85 + eased * 0.3;
+          // Scale: centre = 1.25x, far = 0.8x (heavier range)
+          const scale = 0.8 + eased * 0.45;
 
-          // Opacity: centre = 1, far = 0.2
-          const opacity = 0.2 + eased * 0.8;
+          // Opacity: centre = 1, far = 0.12 (dimmer when unfocused)
+          const opacity = 0.12 + eased * 0.88;
 
-          // Font size boost for the focused item
-          const fontSize = 1 + eased * 0.4; // 1rem → 1.4rem multiplier
+          // Font size boost
+          const fontSize = 1 + eased * 0.5;
 
-          // Blur: far items slightly blurred
-          const blur = (1 - eased) * 2;
+          // Blur: far items heavily blurred (like Honey)
+          const blur = (1 - eased) * 4;
 
           // Description visibility
           const descOpacity = eased * 0.8;
 
-          // Apply
-          gsap.set(row, { opacity, scale, transformOrigin: "left center" });
+          // Apply — using lerp for heavier, lagging feel
+          const currentScale = parseFloat(row.dataset.currentScale || String(scale));
+          const currentOpacity = parseFloat(row.dataset.currentOpacity || String(opacity));
+          const lerpFactor = 0.08; // lower = heavier/laggier
+          const lerpedScale = currentScale + (scale - currentScale) * lerpFactor;
+          const lerpedOpacity = currentOpacity + (opacity - currentOpacity) * lerpFactor;
+          row.dataset.currentScale = String(lerpedScale);
+          row.dataset.currentOpacity = String(lerpedOpacity);
+
+          gsap.set(row, { opacity: lerpedOpacity, scale: lerpedScale, transformOrigin: "left center" });
           gsap.set(names[i], {
             fontSize: `${fontSize * 1.5}rem`,
             filter: `blur(${blur}px)`,
-            color: eased > 0.7 ? "var(--copper)" : "var(--limestone)",
+            color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.3 + eased * 0.7})`,
           });
           gsap.set(descs[i], { opacity: descOpacity });
         });
