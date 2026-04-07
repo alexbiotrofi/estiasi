@@ -61,20 +61,40 @@ export default function Services() {
           const proximity = Math.max(0, 1 - distance / maxDist);
           const eased = proximity * proximity;
 
-          const scale = 0.75 + eased * 0.5;
-          const opacity = 0.06 + eased * 0.94;
-          const fontSize = 1 + eased * 0.6;
-          const blur = (1 - eased) * 6;
-          const descOpacity = Math.min(1, eased * 1.5);
+          const targetScale = 0.75 + eased * 0.5;
+          const targetOpacity = 0.06 + eased * 0.94;
+          const targetFontSize = 1 + eased * 0.6;
+          const targetBlur = (1 - eased) * 6;
+          const targetDescOpacity = Math.min(1, eased * 1.5);
 
-          gsap.set(row, { opacity, scale, transformOrigin: "left center" });
+          // Lerp for heaviness
+          const lf = 0.035;
+          const cs = parseFloat(row.dataset.cs || String(targetScale));
+          const co = parseFloat(row.dataset.co || String(targetOpacity));
+          const cf = parseFloat(row.dataset.cf || String(targetFontSize));
+          const cb = parseFloat(row.dataset.cb || String(targetBlur));
+          const cd = parseFloat(row.dataset.cd || String(targetDescOpacity));
+
+          const ls = cs + (targetScale - cs) * lf;
+          const lo = co + (targetOpacity - co) * lf;
+          const lfz = cf + (targetFontSize - cf) * lf;
+          const lb = cb + (targetBlur - cb) * lf;
+          const ld = cd + (targetDescOpacity - cd) * lf;
+
+          row.dataset.cs = String(ls);
+          row.dataset.co = String(lo);
+          row.dataset.cf = String(lfz);
+          row.dataset.cb = String(lb);
+          row.dataset.cd = String(ld);
+
+          gsap.set(row, { opacity: lo, scale: ls, transformOrigin: "left center" });
           gsap.set(names[i], {
-            fontSize: `${fontSize * 1.5}rem`,
-            filter: `blur(${blur}px)`,
+            fontSize: `${lfz * 1.5}rem`,
+            filter: `blur(${lb}px)`,
             color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
           });
-          gsap.set(descs[i], { opacity: descOpacity });
-          if (lines[i]) gsap.set(lines[i], { opacity: descOpacity * 0.6 });
+          gsap.set(descs[i], { opacity: ld });
+          if (lines[i]) gsap.set(lines[i], { opacity: ld * 0.6 });
         });
         requestAnimationFrame(update);
       }
