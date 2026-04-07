@@ -59,8 +59,8 @@ export default function Services() {
           scrollTrigger: {
             trigger: pinnedRef.current,
             start: "top top",
-            end: () => `+=${listInner.scrollHeight * 0.6}px`,
-            scrub: 2.5,
+            end: () => `+=${window.innerHeight * 4}px`,
+            scrub: 3,
             pin: true,
           },
         });
@@ -90,7 +90,7 @@ export default function Services() {
 
           const cs = parseFloat(row.dataset.cs || String(scale));
           const co = parseFloat(row.dataset.co || String(opacity));
-          const lf = 0.04;
+          const lf = 0.025;
           const ls = cs + (scale - cs) * lf;
           const lo = co + (opacity - co) * lf;
           row.dataset.cs = String(ls);
