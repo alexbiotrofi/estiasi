@@ -19,12 +19,11 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const drumRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
-  const progressRef = useRef<{ value: number }>({ value: 0 });
 
   useEffect(() => {
-    if (!sectionRef.current || !drumRef.current || !descRef.current) return;
+    if (!sectionRef.current || !listRef.current || !descRef.current) return;
     const ctx = gsap.context(() => {
       // Word blur on intro
       const text = descRef.current!.textContent || "";
@@ -47,43 +46,50 @@ export default function Services() {
         },
       });
 
-      // Drum rotation — manual transform in onUpdate for precise control
-      const items = gsap.utils.toArray<HTMLElement>(".drum-item");
-      const total = items.length;
-      const itemAngle = 360 / total;
-      const radius = 220; // tighter radius = items closer together
+      // Wave animation on the service list
+      const rows = gsap.utils.toArray<HTMLElement>(".svc-wave-row");
+      const names = gsap.utils.toArray<HTMLElement>(".svc-wave-name");
+      const descs = gsap.utils.toArray<HTMLElement>(".svc-wave-desc");
+      const total = rows.length;
+
+      // Quicksetters for performance
+      const xSetters = names.map(n => gsap.quickTo(n, "x", { duration: 0.6, ease: "power4.out" }));
+      const opacitySetters = rows.map(r => gsap.quickTo(r, "opacity", { duration: 0.3, ease: "power2.out" }));
+      const scaleSetters = names.map(n => gsap.quickTo(n, "scale", { duration: 0.4, ease: "power2.out" }));
+      const descOpacitySetters = descs.map(d => gsap.quickTo(d, "opacity", { duration: 0.3, ease: "power2.out" }));
 
       ScrollTrigger.create({
-        trigger: sectionRef.current!.querySelector(".drum-pinned"),
-        start: "top top",
-        end: () => `+=${total * 120}%`,
-        scrub: 1.5,
-        pin: true,
-        anticipatePin: 1,
+        trigger: listRef.current,
+        start: "top 70%",
+        end: "bottom 30%",
         onUpdate: (self) => {
-          const rotation = self.progress * 360;
-          items.forEach((item, i) => {
-            const angle = (i * itemAngle + rotation) % 360;
-            // Convert to radians
-            const rad = (angle * Math.PI) / 180;
-            // Y position on the drum surface
-            const y = Math.sin(rad) * radius;
-            // Z position (depth)
-            const z = Math.cos(rad) * radius;
-            // Scale based on depth (front = 1, back = smaller)
-            const normalizedZ = (z + radius) / (2 * radius); // 0 = back, 1 = front
-            const scale = 0.6 + normalizedZ * 0.4;
-            const opacity = 0.05 + normalizedZ * 0.95;
-            const blur = (1 - normalizedZ) * 4;
+          const progress = self.progress;
+          const viewportCenter = window.innerHeight / 2;
 
-            gsap.set(item, {
-              y: y,
-              z: z,
-              scale: scale,
-              opacity: opacity,
-              filter: `blur(${blur}px)`,
-              zIndex: Math.round(normalizedZ * 100),
-            });
+          rows.forEach((row, i) => {
+            const rect = row.getBoundingClientRect();
+            const rowCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(rowCenter - viewportCenter);
+            const maxDist = window.innerHeight * 0.4;
+            const proximity = Math.max(0, 1 - distance / maxDist); // 1 = at centre, 0 = far away
+
+            // Sine wave on X — flows through the list based on scroll progress
+            const waveNumber = 2;
+            const phase = waveNumber * i + progress * Math.PI * 4 - Math.PI / 2;
+            const wave = Math.sin(phase);
+            const xOffset = wave * 60 * proximity; // max 60px offset, scaled by proximity
+
+            xSetters[i](xOffset);
+            opacitySetters[i](0.25 + proximity * 0.75); // 0.25 → 1.0
+            scaleSetters[i](0.95 + proximity * 0.05); // 0.95 → 1.0
+            descOpacitySetters[i](proximity * 0.7); // 0 → 0.7
+
+            // Colour change — copper when focused
+            if (proximity > 0.8) {
+              (names[i] as HTMLElement).style.color = "var(--copper)";
+            } else {
+              (names[i] as HTMLElement).style.color = "var(--limestone)";
+            }
           });
         },
       });
@@ -92,92 +98,68 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
+    <section ref={sectionRef} style={{ padding: "90px 0 128px" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
-        <p ref={descRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.35, letterSpacing: "-0.02em", maxWidth: "800px", marginBottom: "4rem" }}>
+        <p ref={descRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.35, letterSpacing: "-0.02em", maxWidth: "800px", marginBottom: "5rem" }}>
           We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
         </p>
-      </div>
 
-      {/* Drum — pinned */}
-      <div className="drum-pinned" style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        {/* Copper glow */}
-        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "1000px", height: "400px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.05) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
-
-        {/* Drum container */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div
-            ref={drumRef}
-            style={{
-              position: "relative",
-              width: "100%",
-              maxWidth: "1000px",
-              height: "500px",
-              transformStyle: "preserve-3d",
-              perspective: "none",
-            }}
-          >
-            {services.map((s) => (
+        {/* Service list with wave animation */}
+        <div ref={listRef}>
+          <div className="divider-dark" />
+          {services.map((s) => (
+            <div key={s.name}>
               <div
-                key={s.name}
-                className="drum-item"
+                className="svc-wave-row flex items-center justify-between"
                 style={{
-                  position: "absolute",
-                  width: "100%",
-                  left: 0,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 40px",
-                  willChange: "transform, opacity, filter",
-                  pointerEvents: "none",
+                  padding: "1.1rem 0",
+                  cursor: "default",
+                  opacity: 0.25,
+                  willChange: "opacity",
                 }}
               >
-                <span style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
-                  fontWeight: 400,
-                  color: "var(--limestone)",
-                  letterSpacing: "-0.01em",
-                  whiteSpace: "nowrap" as const,
-                }}>
+                <span
+                  className="svc-wave-name"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(1.2rem, 2.2vw, 1.7rem)",
+                    fontWeight: 400,
+                    color: "var(--limestone)",
+                    letterSpacing: "-0.01em",
+                    transition: "color 0.3s ease-out",
+                    willChange: "transform",
+                    transformOrigin: "left center",
+                  }}
+                >
                   {s.name}
                 </span>
-                <span style={{
-                  fontSize: "0.78rem",
-                  fontWeight: 300,
-                  color: "var(--white-50)",
-                  maxWidth: "35ch",
-                  textAlign: "right" as const,
-                }}>
+                <span
+                  className="svc-wave-desc"
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 300,
+                    color: "var(--white-50)",
+                    maxWidth: "32ch",
+                    textAlign: "right" as const,
+                    opacity: 0,
+                    willChange: "opacity",
+                  }}
+                >
                   {s.desc}
                 </span>
               </div>
-            ))}
-          </div>
+              <div className="divider-dark" />
+            </div>
+          ))}
         </div>
 
-        {/* Top/bottom fades */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "30%", background: "linear-gradient(to bottom, #000 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: "linear-gradient(to top, #000 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
-
-        {/* Centre highlight line */}
-        <div style={{ position: "absolute", top: "50%", left: "40px", right: "40px", height: "1px", background: "var(--copper)", opacity: 0.15, transform: "translateY(-30px)", zIndex: 1 }} />
-        <div style={{ position: "absolute", top: "50%", left: "40px", right: "40px", height: "1px", background: "var(--copper)", opacity: 0.15, transform: "translateY(30px)", zIndex: 1 }} />
-
-        <div style={{ position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)", zIndex: 3 }}>
-          <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>Scroll to explore</span>
+        <div className="reveal" style={{ marginTop: "3rem", textAlign: "center" }}>
+          <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
         </div>
-      </div>
-
-      <div className="wrap" style={{ padding: "4rem 40px", textAlign: "center" }}>
-        <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
       </div>
     </section>
   );
