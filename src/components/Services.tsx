@@ -51,10 +51,10 @@ export default function Services() {
       const listInner = listRef.current!;
       const listHeight = listInner.scrollHeight;
 
-      const st = ScrollTrigger.create({
+      ScrollTrigger.create({
         trigger: pinnedRef.current,
         start: "top top",
-        end: () => `+=${listHeight * 2}px`,
+        end: () => `+=${listHeight * 1.2}px`,
         scrub: 2,
         pin: true,
         onUpdate: (self) => {
@@ -93,23 +93,7 @@ export default function Services() {
             if (lineEls[i]) gsap.set(lineEls[i], { opacity: descOpacity * 0.6 });
           });
         },
-        onLeave: () => {
-          // Remove the spacer that ScrollTrigger creates
-          const spacer = pinnedRef.current?.nextElementSibling;
-          if (spacer && spacer.classList.contains("pin-spacer")) {
-            (spacer as HTMLElement).style.height = "0px";
-            (spacer as HTMLElement).style.padding = "0px";
-          }
-        },
       });
-
-      // Also try to reduce spacer on creation
-      setTimeout(() => {
-        const spacer = pinnedRef.current?.parentElement;
-        if (spacer && spacer.classList.contains("pin-spacer")) {
-          spacer.style.marginBottom = `-${parseFloat(spacer.style.paddingBottom || "0") * 0.85}px`;
-        }
-      }, 100);
     }, sectionRef);
     return () => ctx.revert();
   }, []);
