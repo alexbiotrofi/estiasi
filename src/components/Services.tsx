@@ -19,10 +19,11 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const pinnedRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !introRef.current) return;
+    if (!sectionRef.current || !pinnedRef.current || !introRef.current) return;
     const ctx = gsap.context(() => {
       // Copper-to-white intro
       const text = introRef.current!.textContent || "";
@@ -45,60 +46,53 @@ export default function Services() {
         },
       });
 
-      // Proximity depth wave on rAF
+      // Pinned scroll — timeline drives each item's focus
       const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
       const names = gsap.utils.toArray<HTMLElement>(".svc-name");
       const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
-      const lines = gsap.utils.toArray<HTMLElement>(".svc-line");
+      const lineEls = gsap.utils.toArray<HTMLElement>(".svc-line");
+      const total = rows.length;
 
-      function update() {
-        const viewportCenter = window.innerHeight / 2;
-        rows.forEach((row, i) => {
-          const rect = row.getBoundingClientRect();
-          const rowCenter = rect.top + rect.height / 2;
-          const distance = Math.abs(rowCenter - viewportCenter);
-          const maxDist = window.innerHeight * 0.25;
-          const proximity = Math.max(0, 1 - distance / maxDist);
-          const eased = proximity * proximity;
+      // Set initial state — all dim
+      rows.forEach((row, i) => {
+        gsap.set(row, { opacity: 0.06, scale: 0.75, transformOrigin: "left center" });
+        gsap.set(names[i], { fontSize: "1.5rem", filter: "blur(6px)", color: "rgba(244,241,236,0.2)" });
+        gsap.set(descs[i], { opacity: 0 });
+        if (lineEls[i]) gsap.set(lineEls[i], { opacity: 0 });
+      });
 
-          const targetScale = 0.75 + eased * 0.5;
-          const targetOpacity = 0.06 + eased * 0.94;
-          const targetFontSize = 1 + eased * 0.6;
-          const targetBlur = (1 - eased) * 6;
-          const targetDescOpacity = Math.min(1, eased * 1.5);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinnedRef.current,
+          start: "top top",
+          end: `+=${total * 150}vh`,
+          scrub: 2,
+          pin: true,
+          pinSpacing: "margin",
+        },
+      });
 
-          // Lerp for heaviness
-          const lf = 0.035;
-          const cs = parseFloat(row.dataset.cs || String(targetScale));
-          const co = parseFloat(row.dataset.co || String(targetOpacity));
-          const cf = parseFloat(row.dataset.cf || String(targetFontSize));
-          const cb = parseFloat(row.dataset.cb || String(targetBlur));
-          const cd = parseFloat(row.dataset.cd || String(targetDescOpacity));
+      // Each item gets a focus-in, hold, focus-out sequence
+      rows.forEach((row, i) => {
+        const pos = i / total;
+        const dur = 1 / total;
+        const enterEnd = dur * 0.25;
+        const exitStart = dur * 0.75;
 
-          const ls = cs + (targetScale - cs) * lf;
-          const lo = co + (targetOpacity - co) * lf;
-          const lfz = cf + (targetFontSize - cf) * lf;
-          const lb = cb + (targetBlur - cb) * lf;
-          const ld = cd + (targetDescOpacity - cd) * lf;
+        // ENTER — grow, sharpen, brighten
+        tl.to(row, { opacity: 1, scale: 1.25, duration: enterEnd, ease: "power2.out" }, pos);
+        tl.to(names[i], { fontSize: "2.4rem", filter: "blur(0px)", color: "#ffffff", duration: enterEnd, ease: "power2.out" }, pos);
+        tl.to(descs[i], { opacity: 1, duration: enterEnd * 0.8, ease: "power2.out" }, pos + enterEnd * 0.3);
+        if (lineEls[i]) tl.to(lineEls[i], { opacity: 0.5, duration: enterEnd * 0.6 }, pos + enterEnd * 0.2);
 
-          row.dataset.cs = String(ls);
-          row.dataset.co = String(lo);
-          row.dataset.cf = String(lfz);
-          row.dataset.cb = String(lb);
-          row.dataset.cd = String(ld);
-
-          gsap.set(row, { opacity: lo, scale: ls, transformOrigin: "left center" });
-          gsap.set(names[i], {
-            fontSize: `${lfz * 1.5}rem`,
-            filter: `blur(${lb}px)`,
-            color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
-          });
-          gsap.set(descs[i], { opacity: ld });
-          if (lines[i]) gsap.set(lines[i], { opacity: ld * 0.6 });
-        });
-        requestAnimationFrame(update);
-      }
-      requestAnimationFrame(update);
+        // EXIT — shrink, blur, dim (except last item stays)
+        if (i < total - 1) {
+          tl.to(row, { opacity: 0.06, scale: 0.75, duration: dur - exitStart, ease: "power2.in" }, pos + exitStart);
+          tl.to(names[i], { fontSize: "1.5rem", filter: "blur(6px)", color: "rgba(244,241,236,0.2)", duration: dur - exitStart, ease: "power2.in" }, pos + exitStart);
+          tl.to(descs[i], { opacity: 0, duration: (dur - exitStart) * 0.5 }, pos + exitStart);
+          if (lineEls[i]) tl.to(lineEls[i], { opacity: 0, duration: (dur - exitStart) * 0.5 }, pos + exitStart);
+        }
+      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -129,22 +123,24 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Service list — just a normal list, no pin, no sticky */}
-      <div className="wrap" style={{ paddingBottom: "3rem" }}>
-        {services.map((s) => (
-          <div key={s.name}>
-            <div className="svc-row flex items-center gap-4" style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}>
-              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
-                {s.name}
-              </span>
-              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
-              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
-                {s.desc}
-              </span>
+      {/* Pinned service list */}
+      <div ref={pinnedRef} style={{ height: "auto", overflow: "hidden", position: "relative", padding: "2rem 0" }}>
+        <div className="wrap">
+          {services.map((s) => (
+            <div key={s.name}>
+              <div className="svc-row flex items-center gap-4" style={{ padding: "0.85rem 0", cursor: "default", transformOrigin: "left center" }}>
+                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+                  {s.name}
+                </span>
+                <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, flexShrink: 0, alignSelf: "center" }} />
+                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, flexShrink: 0 }}>
+                  {s.desc}
+                </span>
+              </div>
+              <div className="divider-dark" />
             </div>
-            <div className="divider-dark" />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
