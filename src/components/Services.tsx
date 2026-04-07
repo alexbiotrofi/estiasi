@@ -47,36 +47,12 @@ export default function Services() {
         },
       });
 
-      // Pin the whole service viewport and scroll the active item through it
+      // No pin — just natural scroll with proximity detection
       const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
       const names = gsap.utils.toArray<HTMLElement>(".svc-name");
       const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
       const lines = gsap.utils.toArray<HTMLElement>(".svc-line");
-      const total = rows.length;
 
-      // Create a master timeline that scrolls the list upward through the pinned viewport
-      const listInner = pinnedRef.current!.querySelector<HTMLElement>(".svc-list-inner");
-      if (!listInner) return;
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinnedRef.current,
-          start: "top top",
-          end: () => `+=${total * 30}vh`,
-          scrub: 1.5,
-          pin: true,
-          pinSpacing: false,
-        },
-      });
-
-      // Scroll the list upward so each item passes through the centre
-      tl.to(listInner, {
-        y: () => -(listInner.scrollHeight - window.innerHeight * 0.4),
-        ease: "none",
-        duration: 1,
-      });
-
-      // Continuous proximity update
       function update() {
         const viewportCenter = window.innerHeight / 2;
 
@@ -155,36 +131,25 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Pinned service scroll viewport */}
-      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        {/* Copper glow */}
-        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "800px", height: "400px", background: "radial-gradient(50% 50%, rgba(176,115,64,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
-
-        <div className="svc-list-inner wrap" style={{ paddingTop: "25vh" }}>
-          {services.map((s) => (
-            <div key={s.name}>
-              <div
-                className="svc-row flex items-center gap-4"
-                style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}
-              >
-                <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
-                  {s.name}
-                </span>
-                <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
-                <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
-                  {s.desc}
-                </span>
-              </div>
-              <div className="divider-dark" />
+      {/* Service list — natural scroll, no pin */}
+      <div ref={pinnedRef} className="wrap">
+        {services.map((s) => (
+          <div key={s.name}>
+            <div
+              className="svc-row flex items-center gap-4"
+              style={{ padding: "0.85rem 0", cursor: "default", willChange: "transform, opacity", transformOrigin: "left center" }}
+            >
+              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", willChange: "font-size, filter, color", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+                {s.name}
+              </span>
+              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, willChange: "opacity", flexShrink: 0, alignSelf: "center" }} />
+              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, willChange: "opacity", flexShrink: 0 }}>
+                {s.desc}
+              </span>
             </div>
-          ))}
-          {/* Bottom spacer */}
-          <div style={{ height: "2vh" }} />
-        </div>
-      </div>
-
-      <div className="wrap" style={{ padding: "0.5rem 40px", textAlign: "center" }}>
-        <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
+            <div className="divider-dark" />
+          </div>
+        ))}
       </div>
     </section>
   );
