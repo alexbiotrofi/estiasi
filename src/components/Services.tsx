@@ -7,27 +7,22 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  "Concept & Positioning",
-  "Menu Engineering",
-  "Kitchen Design",
-  "Staff Training",
-  "HACCP & Compliance",
-  "Operations & Systems",
-  "Brand & Digital",
-  "Launch Management",
+  { name: "Concept & Positioning", desc: "Market research, competitor analysis, brand positioning" },
+  { name: "Menu Engineering", desc: "Recipe development, costing, profitability optimisation" },
+  { name: "Kitchen Design", desc: "Equipment specification, workflow, layout planning" },
+  { name: "Staff Training", desc: "Service standards, kitchen procedures, team development" },
+  { name: "HACCP & Compliance", desc: "Food safety frameworks, documentation, audits" },
+  { name: "Operations & Systems", desc: "SOPs, booking systems, CRM, stock management" },
+  { name: "Brand & Digital", desc: "Identity, website, SEO, photography direction" },
+  { name: "Launch Management", desc: "Soft opening, adjustment, grand opening, handover" },
 ];
-
-// Repeat for seamless loop
-const repeated = [...services, ...services, ...services];
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const row1Ref = useRef<HTMLDivElement>(null);
-  const row2Ref = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !row1Ref.current || !row2Ref.current || !introRef.current) return;
+    if (!sectionRef.current || !introRef.current) return;
     const ctx = gsap.context(() => {
       // Copper-to-white intro
       const text = introRef.current!.textContent || "";
@@ -50,40 +45,78 @@ export default function Services() {
         },
       });
 
-      // Continuous horizontal scroll — row 1 moves left, row 2 moves right
-      const row1 = row1Ref.current!;
-      const row2 = row2Ref.current!;
+      // 3D perspective card rotation for each service
+      gsap.utils.toArray<HTMLElement>(".svc-card").forEach((card) => {
+        const name = card.querySelector<HTMLElement>(".svc-name");
+        const desc = card.querySelector<HTMLElement>(".svc-desc");
+        const line = card.querySelector<HTMLElement>(".svc-line");
 
-      // Base animation — always running
-      gsap.to(row1, { x: "-33.333%", duration: 40, ease: "none", repeat: -1 });
-      gsap.to(row2, { x: "0%", duration: 45, ease: "none", repeat: -1 });
-      gsap.set(row2, { x: "-33.333%" });
+        // Scroll-driven: rotateX from tilted → flat → tilted the other way
+        gsap.fromTo(card, {
+          rotateX: 45,
+          opacity: 0,
+          scale: 0.9,
+          transformOrigin: "center bottom",
+          filter: "blur(3px)",
+        }, {
+          rotateX: 0,
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 95%",
+            end: "top 45%",
+            scrub: 1.5,
+          },
+        });
 
-      // Scroll-driven speed boost — scrolling makes it move faster
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        onUpdate: (self) => {
-          const velocity = self.getVelocity();
-          const boost = Math.min(Math.abs(velocity) / 500, 3);
-          gsap.to(row1, { timeScale: 1 + boost, duration: 0.3, overwrite: "auto" });
-          gsap.to(row2, { timeScale: 1 + boost, duration: 0.3, overwrite: "auto" });
-        },
+        // Exit: rotate the other way
+        gsap.to(card, {
+          rotateX: -30,
+          opacity: 0.15,
+          scale: 0.95,
+          filter: "blur(2px)",
+          transformOrigin: "center top",
+          ease: "none",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 25%",
+            end: "top -10%",
+            scrub: 1.5,
+          },
+        });
+
+        // Description slides in from right
+        if (desc) {
+          gsap.fromTo(desc, { x: 40, opacity: 0 }, {
+            x: 0, opacity: 1, ease: "none",
+            scrollTrigger: { trigger: card, start: "top 80%", end: "top 45%", scrub: 1.5 },
+          });
+        }
+
+        // Copper line scales in
+        if (line) {
+          gsap.fromTo(line, { scaleX: 0 }, {
+            scaleX: 1, ease: "none",
+            scrollTrigger: { trigger: card, start: "top 85%", end: "top 50%", scrub: 1.5 },
+          });
+        }
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "40px 0 60px", overflow: "hidden" }}>
+    <section ref={sectionRef} style={{ padding: "40px 0 60px", perspective: "1200px" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "4rem" }}>
+        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "3rem" }}>
           <div style={{ flex: "1 1 0" }}>
             <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
               We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
@@ -99,61 +132,54 @@ export default function Services() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Horizontal ticker rows */}
-      <div style={{ position: "relative" }}>
-        {/* Fade edges */}
-        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: "15%", background: "linear-gradient(to right, #000, transparent)", zIndex: 2, pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: "15%", background: "linear-gradient(to left, #000, transparent)", zIndex: 2, pointerEvents: "none" }} />
-
-        {/* Row 1 — moves left */}
-        <div style={{ overflow: "hidden", marginBottom: "0" }}>
-          <div ref={row1Ref} className="flex items-center" style={{ width: "max-content" }}>
-            {repeated.map((name, i) => (
-              <span key={`r1-${i}`} className="flex items-center shrink-0">
-                <span style={{
+        {/* 3D service cards */}
+        <div style={{ perspective: "1200px" }}>
+          {services.map((s) => (
+            <div key={s.name}>
+              <div
+                className="svc-card"
+                style={{
+                  padding: "1.4rem 0",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  transformStyle: "preserve-3d",
+                  willChange: "transform, opacity, filter",
+                }}
+              >
+                <span className="svc-name" style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                  fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)",
                   fontWeight: 400,
                   color: "var(--limestone)",
-                  letterSpacing: "-0.02em",
-                  whiteSpace: "nowrap",
-                  padding: "0 1.5rem",
-                  opacity: 0.8,
+                  letterSpacing: "-0.01em",
+                  whiteSpace: "nowrap" as const,
+                  flexShrink: 0,
                 }}>
-                  {name}
+                  {s.name}
                 </span>
-                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--copper)", opacity: 0.4, flexShrink: 0 }} />
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Copper line */}
-        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.3, margin: "1rem 0" }} />
-
-        {/* Row 2 — moves right, dimmer, slightly smaller */}
-        <div style={{ overflow: "hidden" }}>
-          <div ref={row2Ref} className="flex items-center" style={{ width: "max-content" }}>
-            {[...repeated].reverse().map((name, i) => (
-              <span key={`r2-${i}`} className="flex items-center shrink-0">
-                <span style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                <span className="svc-line" style={{
+                  width: "200px",
+                  height: "1px",
+                  background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)",
+                  flexShrink: 0,
+                  alignSelf: "center",
+                  transformOrigin: "left",
+                }} />
+                <span className="svc-desc" style={{
+                  fontSize: "0.88rem",
                   fontWeight: 400,
-                  color: "var(--limestone)",
-                  letterSpacing: "-0.02em",
-                  whiteSpace: "nowrap",
-                  padding: "0 1.5rem",
-                  opacity: 0.25,
+                  color: "rgba(255,255,255,0.8)",
+                  whiteSpace: "nowrap" as const,
+                  flexShrink: 0,
                 }}>
-                  {name}
+                  {s.desc}
                 </span>
-                <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "var(--copper)", opacity: 0.2, flexShrink: 0 }} />
-              </span>
-            ))}
-          </div>
+              </div>
+              <div className="divider-dark" />
+            </div>
+          ))}
         </div>
       </div>
     </section>
