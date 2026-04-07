@@ -105,7 +105,7 @@ export default function Services() {
         {/* Simple list — natural scroll */}
         {services.map((s) => (
           <div key={s.name}>
-            <div className="svc-row flex items-center gap-4" style={{ padding: "2.5rem 0", cursor: "default", transformOrigin: "left center" }}>
+            <div className="svc-row flex items-center gap-4" style={{ padding: "12vh 0", cursor: "default", transformOrigin: "left center" }}>
               <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                 {s.name}
               </span>
