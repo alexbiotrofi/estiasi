@@ -7,21 +7,22 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { name: "Concept", desc: "Market research. Competitor analysis. Brand positioning. We define what your venue is before you open the door." },
-  { name: "Menu", desc: "Every dish engineered for flavour and margin. Recipe development, food costing, pricing strategy." },
-  { name: "Kitchen", desc: "Design, equipment specs, workflow, SOPs for every station, HACCP. The machine that runs your food." },
-  { name: "Team", desc: "Recruitment. Structure. Service standards. Kitchen procedures. We build the team — then make them exceptional." },
-  { name: "Launch", desc: "Soft opening. Adjustment. Grand opening. We're on-site until it runs clean. Then we hand it over." },
-  { name: "Brand", desc: "Identity, website, SEO, photography, Google Business. The presence that fills tables before word-of-mouth." },
+  { name: "Concept & Positioning", desc: "Market research, competitor analysis, brand positioning" },
+  { name: "Menu Engineering", desc: "Recipe development, costing, profitability optimisation" },
+  { name: "Kitchen Design", desc: "Equipment specification, workflow, layout planning" },
+  { name: "Staff Training", desc: "Service standards, kitchen procedures, team development" },
+  { name: "HACCP & Compliance", desc: "Food safety frameworks, documentation, audits" },
+  { name: "Operations & Systems", desc: "SOPs, booking systems, CRM, stock management" },
+  { name: "Brand & Digital", desc: "Identity, website, SEO, photography direction" },
+  { name: "Launch Management", desc: "Soft opening, adjustment, grand opening, handover" },
 ];
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const pinnedRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !pinnedRef.current || !descRef.current) return;
+    if (!sectionRef.current || !descRef.current) return;
     const ctx = gsap.context(() => {
       // Word blur on intro
       const text = descRef.current!.textContent || "";
@@ -44,209 +45,75 @@ export default function Services() {
         },
       });
 
-      // Pinned section — each service cycles through with dramatic transforms
-      const slides = gsap.utils.toArray<HTMLElement>(".svc-slide");
-      const totalSlides = slides.length;
-
-      // Master timeline — 300vh per slide for heavy, slow pacing
-      const scrollPerSlide = 300;
-      const master = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinnedRef.current,
-          start: "top top",
-          end: () => `+=${totalSlides * scrollPerSlide}%`,
-          scrub: 2, // higher = slower, heavier response
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
-
-      slides.forEach((slide, i) => {
-        const word = slide.querySelector<HTMLElement>(".svc-giant");
-        const desc = slide.querySelector<HTMLElement>(".svc-slide-desc");
-        const num = slide.querySelector<HTMLElement>(".svc-slide-num");
-        const copper = slide.querySelector<HTMLElement>(".svc-copper-line");
-
-        const segStart = i / totalSlides;
-        const segDur = 1 / totalSlides;
-
-        // ENTER: word fades in from below, slow and heavy
-        // No flying from right — just a slow, weighty emergence
-        master.fromTo(word, {
-          y: 80,
+      // Service rows — wave from below, staggered
+      gsap.utils.toArray<HTMLElement>(".svc-row").forEach((row, i) => {
+        gsap.fromTo(row, {
+          y: 40,
           opacity: 0,
-          filter: "blur(6px)",
-          scale: 0.92,
+          skewY: 1.5,
         }, {
           y: 0,
           opacity: 1,
-          filter: "blur(0px)",
-          scale: 1,
-          duration: segDur * 0.25,
-          ease: "power2.out",
-        }, segStart);
-
-        // Number slowly materialises
-        master.fromTo(num, { opacity: 0, scale: 0.95 }, {
-          opacity: 0.03,
-          scale: 1,
-          duration: segDur * 0.3,
-          ease: "none",
-        }, segStart);
-
-        // Copper line draws in slowly
-        master.fromTo(copper, { scaleX: 0 }, {
-          scaleX: 1,
-          duration: segDur * 0.2,
-          ease: "none",
-        }, segStart + segDur * 0.05);
-
-        // Description: each word blur-reveals — slow stagger
-        const descWords = desc?.querySelectorAll("span");
-        if (descWords) {
-          descWords.forEach((dw, j) => {
-            master.fromTo(dw, {
-              filter: "blur(4px)",
-              opacity: 0,
-            }, {
-              filter: "blur(0px)",
-              opacity: 1,
-              duration: segDur * 0.02,
-              ease: "none",
-            }, segStart + segDur * 0.2 + j * segDur * 0.01);
-          });
-        }
-
-        // LONG HOLD — word sits visible for a large portion of the segment
-        // (the gap between enter ending ~0.45 and exit starting ~0.75 IS the hold)
-
-        // EXIT: slow dissolve upward — heavy, not punchy
-        if (i < totalSlides - 1) {
-          master.to(word, {
-            y: -60,
-            opacity: 0,
-            filter: "blur(4px)",
-            scale: 1.03,
-            duration: segDur * 0.2,
-            ease: "power2.in",
-          }, segStart + segDur * 0.78);
-
-          master.to(num, { opacity: 0, duration: segDur * 0.15, ease: "none" }, segStart + segDur * 0.8);
-          master.to(copper, { scaleX: 0, transformOrigin: "right", duration: segDur * 0.12, ease: "none" }, segStart + segDur * 0.82);
-
-          if (descWords) {
-            master.to(descWords, {
-              filter: "blur(3px)",
-              opacity: 0,
-              duration: segDur * 0.08,
-              stagger: segDur * 0.002,
-              ease: "none",
-            }, segStart + segDur * 0.75);
-          }
-        }
+          skewY: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: row,
+            start: "top 92%",
+            once: true,
+          },
+          delay: i * 0.04,
+        });
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "90px 0 0" }}>
+    <section ref={sectionRef} style={{ padding: "90px 0 128px" }}>
       <div className="wrap">
+        {/* Header */}
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
           <span className="sect-num">[ 02 / 07 ]</span>
         </div>
+
+        {/* Intro with word blur */}
         <p ref={descRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.35, letterSpacing: "-0.02em", maxWidth: "800px", marginBottom: "4rem" }}>
           We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
         </p>
-      </div>
 
-      {/* Pinned viewport — words cycle through */}
-      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        {/* Copper glow */}
-        <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: "1200px", height: "600px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.07) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
-
-        {/* All slides stacked on top of each other — only one visible at a time via GSAP */}
-        {services.map((s, i) => (
-          <div
-            key={s.name}
-            className="svc-slide"
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 1,
-            }}
-          >
-            {/* Giant number */}
-            <div className="svc-slide-num" style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(18rem, 35vw, 30rem)",
-              fontWeight: 400,
-              color: "var(--limestone)",
-              opacity: 0,
-              lineHeight: 0.85,
-              letterSpacing: "-0.05em",
-              pointerEvents: "none",
-              userSelect: "none",
-            }}>
-              {String(i + 1).padStart(2, "0")}
-            </div>
-
-            <div style={{ textAlign: "center", position: "relative", zIndex: 1, padding: "0 2rem" }}>
-              {/* Copper line */}
-              <div className="svc-copper-line" style={{ width: "48px", height: "2px", background: "var(--copper)", margin: "0 auto 2rem", opacity: 0.6, transformOrigin: "left" }} />
-
-              {/* THE WORD */}
-              <div className="svc-giant" style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(5rem, 15vw, 13rem)",
-                fontWeight: 400,
-                letterSpacing: "-0.04em",
-                color: "var(--limestone)",
-                lineHeight: 0.85,
-                marginBottom: "2.5rem",
-                whiteSpace: "nowrap" as const,
-                willChange: "transform, opacity, filter",
-                opacity: 0,
-              }}>
+        {/* Service list */}
+        <div className="divider-dark" style={{ marginBottom: "0" }} />
+        {services.map((s) => (
+          <div key={s.name}>
+            <div
+              className="svc-row flex items-center justify-between"
+              style={{ padding: "1.25rem 0", cursor: "default", opacity: 0, transformOrigin: "bottom left" }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.15rem, 2vw, 1.55rem)",
+                  fontWeight: 400,
+                  color: "var(--limestone)",
+                  letterSpacing: "-0.01em",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = "var(--copper)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "var(--limestone)"; }}
+              >
                 {s.name}
-              </div>
-
-              {/* Description — pre-split into spans for blur animation */}
-              <div className="svc-slide-desc" style={{ maxWidth: "440px", margin: "0 auto" }}>
-                {s.desc.split(" ").map((w, j) => (
-                  <span key={j} style={{
-                    display: "inline-block",
-                    marginRight: "0.25em",
-                    fontSize: "0.95rem",
-                    fontWeight: 300,
-                    color: "var(--white-70)",
-                    lineHeight: 1.9,
-                    opacity: 0,
-                    filter: "blur(6px)",
-                    willChange: "opacity, filter",
-                  }}>{w}</span>
-                ))}
-              </div>
+              </span>
+              <span style={{ fontSize: "0.72rem", fontWeight: 300, color: "var(--white-30)", maxWidth: "32ch", textAlign: "right", transition: "color 0.2s" }}>{s.desc}</span>
             </div>
+            <div className="divider-dark" />
           </div>
         ))}
 
-        {/* Counter at bottom */}
-        <div style={{ position: "absolute", bottom: "3rem", left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
-          <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>Scroll to explore</span>
+        <div className="reveal" style={{ marginTop: "3rem", textAlign: "center" }}>
+          <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
         </div>
-      </div>
-
-      <div className="wrap" style={{ padding: "4rem 40px", textAlign: "center" }}>
-        <a href="#pricing" className="btn" style={{ fontSize: "0.55rem" }}>See Pricing</a>
       </div>
     </section>
   );
