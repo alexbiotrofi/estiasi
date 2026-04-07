@@ -65,7 +65,7 @@ export default function Services() {
           },
         });
         tl.to(listInner, {
-          y: () => -(listInner.scrollHeight - window.innerHeight * 0.35),
+          y: () => -(listInner.scrollHeight - window.innerHeight * 0.15),
           ease: "none",
           duration: 1,
         });
