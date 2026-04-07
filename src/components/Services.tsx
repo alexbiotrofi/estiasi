@@ -45,34 +45,75 @@ export default function Services() {
         },
       });
 
-      // Depth wave on rAF
-      const rows = gsap.utils.toArray<HTMLElement>(".svc-row");
-      const names = gsap.utils.toArray<HTMLElement>(".svc-name");
-      const descs = gsap.utils.toArray<HTMLElement>(".svc-desc");
-      const lineEls = gsap.utils.toArray<HTMLElement>(".svc-line");
+      // Each service row: clip-path reveal + slide from below
+      gsap.utils.toArray<HTMLElement>(".svc-row").forEach((row) => {
+        const name = row.querySelector<HTMLElement>(".svc-name");
+        const desc = row.querySelector<HTMLElement>(".svc-desc");
+        const line = row.querySelector<HTMLElement>(".svc-line");
 
-      function update() {
-        const viewportCenter = window.innerHeight * 0.45;
-        rows.forEach((row, i) => {
-          const rect = row.getBoundingClientRect();
-          const rowCenter = rect.top + rect.height / 2;
-          const distance = Math.abs(rowCenter - viewportCenter);
-          const maxDist = window.innerHeight * 0.22;
-          const proximity = Math.max(0, 1 - distance / maxDist);
-          const eased = proximity * proximity;
-
-          gsap.set(row, { opacity: 0.06 + eased * 0.94, scale: 0.75 + eased * 0.5, transformOrigin: "left center" });
-          gsap.set(names[i], {
-            fontSize: `${(1 + eased * 0.6) * 1.5}rem`,
-            filter: `blur(${(1 - eased) * 6}px)`,
-            color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
-          });
-          gsap.set(descs[i], { opacity: Math.min(1, eased * 1.5) });
-          if (lineEls[i]) gsap.set(lineEls[i], { opacity: Math.min(1, eased * 1.5) * 0.6 });
+        // Row clip-path: starts fully hidden (clipped at top), reveals downward
+        gsap.fromTo(row, {
+          clipPath: "inset(100% 0 0 0)",
+          opacity: 0,
+        }, {
+          clipPath: "inset(0% 0 0 0)",
+          opacity: 1,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: row,
+            start: "top 90%",
+            end: "top 50%",
+            scrub: 1,
+          },
         });
-        requestAnimationFrame(update);
-      }
-      requestAnimationFrame(update);
+
+        // Name slides up slightly
+        if (name) {
+          gsap.fromTo(name, { y: 20 }, {
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 88%",
+              end: "top 55%",
+              scrub: 1,
+            },
+          });
+        }
+
+        // Description fades in slightly later
+        if (desc) {
+          gsap.fromTo(desc, { opacity: 0, x: 20 }, {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 82%",
+              end: "top 50%",
+              scrub: 1,
+            },
+          });
+        }
+
+        // Copper line scales in
+        if (line) {
+          gsap.fromTo(line, { scaleX: 0 }, {
+            scaleX: 1,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 85%",
+              end: "top 52%",
+              scrub: 1,
+            },
+          });
+        }
+      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -102,15 +143,15 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Simple list — natural scroll */}
+        {/* Service list */}
         {services.map((s) => (
           <div key={s.name}>
-            <div className="svc-row flex items-center gap-4" style={{ padding: "12vh 0", cursor: "default", transformOrigin: "left center" }}>
-              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+            <div className="svc-row flex items-center gap-4" style={{ padding: "1.2rem 0", cursor: "default", overflow: "hidden" }}>
+              <span className="svc-name" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.2rem, 2.2vw, 1.7rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                 {s.name}
               </span>
-              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", opacity: 0, flexShrink: 0, alignSelf: "center" }} />
-              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "#fff", whiteSpace: "nowrap" as const, opacity: 0, flexShrink: 0 }}>
+              <span className="svc-line" style={{ width: "200px", height: "1px", background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)", flexShrink: 0, alignSelf: "center", transformOrigin: "left" }} />
+              <span className="svc-desc" style={{ fontSize: "0.88rem", fontWeight: 400, color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                 {s.desc}
               </span>
             </div>
