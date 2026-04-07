@@ -19,12 +19,10 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const pinnedRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !pinnedRef.current || !listRef.current || !introRef.current) return;
+    if (!sectionRef.current || !introRef.current) return;
     const ctx = gsap.context(() => {
       // Copper-to-white intro
       const text = introRef.current!.textContent || "";
@@ -47,56 +45,48 @@ export default function Services() {
         },
       });
 
-      // Pin and scroll the list upward
-      const listInner = listRef.current!;
-      const listHeight = listInner.scrollHeight;
+      // Proximity depth wave — runs on rAF, works with sticky
+      function update() {
+        const viewportCenter = window.innerHeight * 0.45;
+        const rows = document.querySelectorAll<HTMLElement>(".svc-row");
+        const names = document.querySelectorAll<HTMLElement>(".svc-name");
+        const descs = document.querySelectorAll<HTMLElement>(".svc-desc");
+        const lineEls = document.querySelectorAll<HTMLElement>(".svc-line");
 
-      ScrollTrigger.create({
-        trigger: pinnedRef.current,
-        start: "top top",
-        end: () => `+=${listHeight * 1.2}px`,
-        scrub: 2,
-        pin: true,
-        onUpdate: (self) => {
-          // Scroll the list upward
-          const maxY = listHeight - window.innerHeight * 0.6;
-          gsap.set(listInner, { y: -self.progress * maxY });
+        rows.forEach((row, i) => {
+          const rect = row.getBoundingClientRect();
+          const rowCenter = rect.top + rect.height / 2;
+          const distance = Math.abs(rowCenter - viewportCenter);
+          const maxDist = window.innerHeight * 0.22;
+          const proximity = Math.max(0, 1 - distance / maxDist);
+          const eased = proximity * proximity;
 
-          // Proximity depth wave
-          const viewportCenter = window.innerHeight * 0.45;
-          const rows = listInner.querySelectorAll<HTMLElement>(".svc-row");
-          const names = listInner.querySelectorAll<HTMLElement>(".svc-name");
-          const descs = listInner.querySelectorAll<HTMLElement>(".svc-desc");
-          const lineEls = listInner.querySelectorAll<HTMLElement>(".svc-line");
+          const scale = 0.75 + eased * 0.5;
+          const opacity = 0.06 + eased * 0.94;
+          const fontSize = 1 + eased * 0.6;
+          const blur = (1 - eased) * 6;
+          const descOpacity = Math.min(1, eased * 1.5);
 
-          rows.forEach((row, i) => {
-            const rect = row.getBoundingClientRect();
-            const rowCenter = rect.top + rect.height / 2;
-            const distance = Math.abs(rowCenter - viewportCenter);
-            const maxDist = window.innerHeight * 0.22;
-            const proximity = Math.max(0, 1 - distance / maxDist);
-            const eased = proximity * proximity;
-
-            const scale = 0.75 + eased * 0.5;
-            const opacity = 0.06 + eased * 0.94;
-            const fontSize = 1 + eased * 0.6;
-            const blur = (1 - eased) * 6;
-            const descOpacity = Math.min(1, eased * 1.5);
-
-            gsap.set(row, { opacity, scale, transformOrigin: "left center" });
-            gsap.set(names[i], {
-              fontSize: `${fontSize * 1.5}rem`,
-              filter: `blur(${blur}px)`,
-              color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
-            });
-            gsap.set(descs[i], { opacity: descOpacity });
-            if (lineEls[i]) gsap.set(lineEls[i], { opacity: descOpacity * 0.6 });
+          gsap.set(row, { opacity, scale, transformOrigin: "left center" });
+          gsap.set(names[i], {
+            fontSize: `${fontSize * 1.5}rem`,
+            filter: `blur(${blur}px)`,
+            color: eased > 0.6 ? "#ffffff" : `rgba(244,241,236,${0.2 + eased * 0.8})`,
           });
-        },
-      });
+          gsap.set(descs[i], { opacity: descOpacity });
+          if (lineEls[i]) gsap.set(lineEls[i], { opacity: descOpacity * 0.6 });
+        });
+        requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
     }, sectionRef);
     return () => ctx.revert();
   }, []);
+
+  // Height = enough to scroll through all items with the sticky list visible
+  // Each item ~50px, 8 items = ~400px of list. We want ~150vh so each item
+  // gets time in the spotlight as the sticky container scrolls past
+  const stickyHeight = "180vh";
 
   return (
     <section ref={sectionRef} style={{ padding: "40px 0 0" }}>
@@ -124,9 +114,9 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Pinned viewport */}
-      <div ref={pinnedRef} style={{ height: "100vh", overflow: "hidden", position: "relative" }}>
-        <div ref={listRef} className="wrap" style={{ paddingTop: "40vh" }}>
+      {/* Tall wrapper — the sticky list stays visible while you scroll through this height */}
+      <div style={{ height: stickyHeight, position: "relative" }}>
+        <div className="wrap" style={{ position: "sticky", top: "30vh" }}>
           {services.map((s) => (
             <div key={s.name}>
               <div className="svc-row flex items-center gap-4" style={{ padding: "0.85rem 0", cursor: "default", transformOrigin: "left center" }}>
@@ -141,7 +131,6 @@ export default function Services() {
               <div className="divider-dark" />
             </div>
           ))}
-          <div style={{ height: "30vh" }} />
         </div>
       </div>
     </section>
