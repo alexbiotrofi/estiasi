@@ -58,7 +58,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "40px 0 80px" }}>
+    <section ref={sectionRef} style={{ padding: "64px 0 80px" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
