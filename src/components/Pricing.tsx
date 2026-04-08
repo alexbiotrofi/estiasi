@@ -16,7 +16,11 @@ const tiers = [
   {
     id: "full", name: "Full Package", price: "€9,500",
     desc: "The complete build. Culinary, operations, and the brand that fills the room.",
-    items: ["Everything in Complete Operations", "Brand identity & visual design", "Website design & development", "SEO & digital visibility", "Google Business Profile", "Social media foundations", "Photography direction", "Ongoing brand consultation"],
+    sections: [
+      { label: "Culinary", items: ["Concept creation & positioning", "Menu creation & engineering", "Food cost control frameworks", "Kitchen design consultancy", "HACCP & food safety compliance", "Staff training programmes", "Standard Operating Procedures", "Opening support"] },
+      { label: "Operations", items: ["Booking & reservation systems", "Lead tracking & CRM", "Staff scheduling & management", "Stock management systems", "Invoicing & payment workflows", "Supplier management", "Performance tracking & reporting"] },
+      { label: "Brand & Digital", items: ["Brand identity & visual design", "Website design & development", "SEO & digital visibility", "Google Business Profile", "Social media foundations", "Photography direction", "Ongoing brand consultation"] },
+    ],
     highlight: true,
   },
 ];
@@ -82,16 +86,38 @@ export default function Pricing() {
               </div>
 
               {/* Items */}
-              <div className="divider-dark" />
-              {t.items.map((item) => (
-                <div key={item}>
-                  <div className="flex items-center gap-3" style={{ padding: "1rem 0" }}>
-                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--copper)", opacity: 0.5, flexShrink: 0 }} />
-                    <span style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--limestone)" }}>{item}</span>
+              {"sections" in t && t.sections ? (
+                // Full Package — show grouped sections
+                t.sections.map((section: { label: string; items: string[] }) => (
+                  <div key={section.label} style={{ marginBottom: "1.5rem" }}>
+                    <div style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "0.5rem", marginTop: "1.5rem" }}>{section.label}</div>
+                    <div className="divider-dark" />
+                    {section.items.map((item: string) => (
+                      <div key={item}>
+                        <div className="flex items-center gap-3" style={{ padding: "0.75rem 0" }}>
+                          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--copper)", opacity: 0.5, flexShrink: 0 }} />
+                          <span style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--limestone)" }}>{item}</span>
+                        </div>
+                        <div className="divider-dark" />
+                      </div>
+                    ))}
                   </div>
+                ))
+              ) : (
+                // Other tiers — flat list
+                <>
                   <div className="divider-dark" />
-                </div>
-              ))}
+                  {t.items.map((item: string) => (
+                    <div key={item}>
+                      <div className="flex items-center gap-3" style={{ padding: "1rem 0" }}>
+                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--copper)", opacity: 0.5, flexShrink: 0 }} />
+                        <span style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--limestone)" }}>{item}</span>
+                      </div>
+                      <div className="divider-dark" />
+                    </div>
+                  ))}
+                </>
+              )}
 
               <div style={{ marginTop: "2.5rem" }}>
                 <a href="#contact" className="btn btn-copper" style={{ width: "100%", justifyContent: "center" }}>Book a Discovery Call</a>
