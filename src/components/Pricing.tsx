@@ -39,44 +39,22 @@ export default function Pricing() {
 
   useEffect(() => {
     if (!gridRef.current) return;
-    const newCount = t.sections.length;
-    const prevCount = prevCountRef.current;
     const cards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
 
-    if (prevCount !== newCount) {
-      // Animate cards in
-      cards.forEach((card, i) => {
-        // Existing cards (inherited) — scale from compressed
-        if (i < Math.min(prevCount, newCount)) {
-          gsap.fromTo(card, {
-            scaleX: newCount < prevCount ? 1 / (prevCount / newCount) : prevCount / newCount,
-            opacity: 0.5,
-          }, {
-            scaleX: 1,
-            opacity: 1,
-            duration: 0.7,
-            ease: "power3.out",
-            delay: i * 0.05,
-          });
-        } else {
-          // New card — splits out from the edge of the previous card
-          gsap.fromTo(card, {
-            scaleX: 0,
-            opacity: 0,
-            transformOrigin: "left center",
-          }, {
-            scaleX: 1,
-            opacity: 1,
-            duration: 0.6,
-            ease: "power3.out",
-            delay: 0.15 + i * 0.08,
-          });
-        }
+    // Every card fades + slides up on tier change
+    cards.forEach((card, i) => {
+      gsap.fromTo(card, {
+        opacity: 0,
+        y: 20,
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        delay: i * 0.1,
       });
-    }
-
-    prevCountRef.current = newCount;
-  }, [active, t.sections.length]);
+    });
+  }, [active]);
 
   return (
     <section style={{ padding: "128px 0" }}>
