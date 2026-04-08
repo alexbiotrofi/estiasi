@@ -29,18 +29,23 @@ export default function Dimitris() {
               </p>
 
               <div className="reveal" style={{ display: "flex", gap: "3rem", marginBottom: "2rem" }}>
-                {[{ n: "15+", l: "Years" }, { n: "40+", l: "Venues" }, { n: "3", l: "Michelin Kitchens" }].map(s => (
+                {[{ n: "3", l: "Michelin Kitchens" }, { n: "FR · ES · UK", l: "Countries" }, { n: "10+", l: "Years in Kitchens" }].map(s => (
                   <div key={s.l}>
-                    <div style={{ fontFamily: "var(--font-display)", fontSize: "2rem", color: "var(--copper)" }}>{s.n}</div>
+                    <div style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", color: "var(--copper)" }}>{s.n}</div>
                     <div style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>{s.l}</div>
                   </div>
                 ))}
               </div>
 
               <div className="divider-dark reveal" style={{ marginBottom: "1.5rem" }} />
-              <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <span style={{ fontFamily: "var(--font-logo)", fontSize: "1rem", letterSpacing: "0.0618em", color: "var(--white-30)" }}>Alex Apostolides</span>
-                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Strategy & Client Experience</span>
+              <div className="reveal" style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                  <span style={{ fontFamily: "var(--font-logo)", fontSize: "1rem", letterSpacing: "0.0618em", color: "var(--white-30)" }}>Alex Apostolides</span>
+                  <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Strategy & Client Experience</span>
+                </div>
+                <p style={{ fontSize: "0.78rem", fontWeight: 300, color: "var(--white-30)", lineHeight: 1.7, maxWidth: "50ch" }}>
+                  Background in strategy, service design, and operations. Oversees client experience, internal systems, brand direction, and digital presence.
+                </p>
               </div>
             </div>
           </div>
