@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
 import gsap from "gsap";
 
 const tiers = [
@@ -34,25 +34,106 @@ const tiers = [
 export default function Pricing() {
   const [active, setActive] = useState("full");
   const gridRef = useRef<HTMLDivElement>(null);
-  const prevCountRef = useRef(3);
+  const isAnimating = useRef(false);
   const t = tiers.find(t => t.id === active)!;
 
-  useEffect(() => {
-    if (!gridRef.current) return;
-    const cards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
+  const switchTier = useCallback((newId: string) => {
+    if (newId === active || isAnimating.current || !gridRef.current) {
+      setActive(newId);
+      return;
+    }
 
-    // Every card fades + slides up on tier change
-    cards.forEach((card, i) => {
-      gsap.fromTo(card, {
+    isAnimating.current = true;
+    const oldCards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
+    const oldCount = oldCards.length;
+    const newTier = tiers.find(t => t.id === newId)!;
+    const newCount = newTier.sections.length;
+
+    // Phase 1: Current cards compress toward center and fade
+    const tl = gsap.timeline({
+      onComplete: () => {
+        // Phase 2: Switch content
+        setActive(newId);
+
+        // Phase 3: Animate new cards in after React re-renders
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (!gridRef.current) { isAnimating.current = false; return; }
+            const newCards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
+
+            if (newCount > oldCount) {
+              // EXPANDING: existing cards slide left, new ones burst out from right
+              newCards.forEach((card, i) => {
+                if (i < oldCount) {
+                  // Existing — compress then expand
+                  gsap.fromTo(card, {
+                    width: `${100 / oldCount}%`,
+                    opacity: 0.7,
+                    scale: 0.96,
+                  }, {
+                    width: "100%",
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.6,
+                    ease: "power2.out",
+                    delay: i * 0.04,
+                    clearProps: "width",
+                  });
+                } else {
+                  // New card — emerges from behind the last existing card
+                  gsap.fromTo(card, {
+                    clipPath: "inset(0 100% 0 0)",
+                    opacity: 0,
+                    scale: 0.95,
+                  }, {
+                    clipPath: "inset(0 0% 0 0)",
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.7,
+                    ease: "power3.out",
+                    delay: 0.15 + (i - oldCount) * 0.1,
+                    clearProps: "clipPath",
+                  });
+                }
+              });
+            } else if (newCount < oldCount) {
+              // CONTRACTING: cards merge together
+              newCards.forEach((card, i) => {
+                gsap.fromTo(card, {
+                  opacity: 0,
+                  scale: 1.04,
+                }, {
+                  opacity: 1,
+                  scale: 1,
+                  duration: 0.5,
+                  ease: "power2.out",
+                  delay: i * 0.06,
+                });
+              });
+            } else {
+              // Same count — just crossfade
+              newCards.forEach((card, i) => {
+                gsap.fromTo(card, { opacity: 0, y: 10 }, {
+                  opacity: 1, y: 0, duration: 0.4, ease: "power2.out", delay: i * 0.06,
+                });
+              });
+            }
+
+            setTimeout(() => { isAnimating.current = false; }, 800);
+          });
+        });
+      },
+    });
+
+    // Fade out current cards
+    oldCards.forEach((card, i) => {
+      tl.to(card, {
         opacity: 0,
-        y: 20,
-      }, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out",
-        delay: i * 0.1,
-      });
+        scale: 0.97,
+        y: -8,
+        duration: 0.25,
+        ease: "power2.in",
+      }, i * 0.03);
     });
   }, [active]);
 
@@ -74,10 +155,9 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* Tier tabs */}
         <div className="flex gap-2" style={{ marginBottom: "2rem" }}>
           {tiers.map(tier => (
-            <button key={tier.id} onClick={() => setActive(tier.id)} className="btn" style={{
+            <button key={tier.id} onClick={() => switchTier(tier.id)} className="btn" style={{
               padding: "0.6rem 1.5rem", fontSize: "0.55rem",
               background: active === tier.id ? "var(--copper)" : "transparent",
               borderColor: active === tier.id ? "var(--copper)" : "var(--border-dark)",
@@ -89,7 +169,6 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Active tier */}
         <div className="rounded-section" style={{ background: t.highlight ? "var(--dark-2)" : "var(--dark-3)", overflow: "hidden", position: "relative" }}>
           {t.highlight && (
             <div className="absolute inset-0 z-0" style={{ opacity: 0.04 }}>
@@ -98,7 +177,6 @@ export default function Pricing() {
           )}
 
           <div className="relative z-10" style={{ padding: "clamp(2rem, 4vw, 4rem)" }}>
-            {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6" style={{ marginBottom: "2.5rem" }}>
               <div>
                 <div className="flex items-center gap-3" style={{ marginBottom: "0.75rem" }}>
@@ -111,10 +189,8 @@ export default function Pricing() {
               <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.8, maxWidth: "38ch" }}>{t.desc}</p>
             </div>
 
-            {/* Glass cards grid — animates on tier switch */}
             <div
               ref={gridRef}
-              key={t.id}
               style={{
                 display: "grid",
                 gridTemplateColumns: `repeat(${t.sections.length}, 1fr)`,
@@ -124,7 +200,7 @@ export default function Pricing() {
               {t.sections.map((section, si) => {
                 const isNew = si === t.sections.length - 1 && t.sections.length > 1;
                 return (
-                  <div key={section.label} className="price-card" style={{
+                  <div key={`${t.id}-${section.label}`} className="price-card" style={{
                     borderRadius: "16px",
                     padding: "1.5rem",
                     border: isNew ? "1px solid rgba(176,115,64,0.3)" : "1px solid var(--border-dark)",
@@ -132,6 +208,7 @@ export default function Pricing() {
                     background: isNew ? "rgba(176,115,64,0.04)" : "rgba(255,255,255,0.02)",
                     backdropFilter: "blur(12px)",
                     WebkitBackdropFilter: "blur(12px)",
+                    overflow: "hidden",
                   }}>
                     <div className="flex items-center justify-between" style={{ marginBottom: "1.25rem" }}>
                       <span style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 400, color: "var(--limestone)" }}>{section.label}</span>
