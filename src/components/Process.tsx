@@ -19,30 +19,12 @@ export default function Process() {
   useEffect(() => {
     if (!ref.current) return;
     const ctx = gsap.context(() => {
-      const items = gsap.utils.toArray<HTMLElement>(".proc-item");
-      // Set all hidden initially
-      gsap.set(items, { opacity: 0, y: 60, scale: 0.95 });
-
-      // Reveal one at a time with stagger, triggered when the grid enters
-      ScrollTrigger.create({
-        trigger: ref.current!.querySelector(".proc-grid"),
-        start: "top 90%",
-        end: "bottom -20%",
-        scrub: 1.5,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          items.forEach((item, i) => {
-            const itemStart = i / items.length;
-            const itemEnd = (i + 0.7) / items.length;
-            const itemProgress = Math.max(0, Math.min(1, (progress - itemStart) / (itemEnd - itemStart)));
-
-            gsap.set(item, {
-              opacity: itemProgress,
-              y: 60 * (1 - itemProgress),
-              scale: 0.95 + 0.05 * itemProgress,
-            });
-          });
-        },
+      gsap.utils.toArray<HTMLElement>(".proc-item").forEach((el, i) => {
+        gsap.fromTo(el, { opacity: 0, y: 50 }, {
+          opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+          delay: (i % 2) * 0.15,
+          scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        });
       });
     }, ref);
     return () => ctx.revert();
