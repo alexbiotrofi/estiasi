@@ -11,7 +11,10 @@ const tiers = [
   {
     id: "ops", name: "Complete Operations", price: "€6,500",
     desc: "Culinary Core plus the systems that make a venue run like clockwork.",
-    items: ["Everything in Culinary Core", "Booking & reservation systems", "Lead tracking & CRM", "Staff scheduling & management", "Stock management systems", "Invoicing & payment workflows", "Supplier management", "Performance tracking & reporting"],
+    sections: [
+      { label: "Culinary", items: ["Concept creation & positioning", "Menu creation & engineering", "Food cost control frameworks", "Kitchen design consultancy", "HACCP & food safety compliance", "Staff training programmes", "Standard Operating Procedures", "Opening support"] },
+      { label: "Operations", items: ["Booking & reservation systems", "Lead tracking & CRM", "Staff scheduling & management", "Stock management systems", "Invoicing & payment workflows", "Supplier management", "Performance tracking & reporting"] },
+    ],
   },
   {
     id: "full", name: "Full Package", price: "€9,500",
@@ -87,22 +90,27 @@ export default function Pricing() {
 
               {/* Items */}
               {"sections" in t && t.sections ? (
-                // Full Package — show grouped sections
-                t.sections.map((section: { label: string; items: string[] }) => (
-                  <div key={section.label} style={{ marginBottom: "1.5rem" }}>
-                    <div style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "0.5rem", marginTop: "1.5rem" }}>{section.label}</div>
-                    <div className="divider-dark" />
-                    {section.items.map((item: string) => (
-                      <div key={item}>
-                        <div className="flex items-center gap-3" style={{ padding: "0.75rem 0" }}>
-                          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--copper)", opacity: 0.5, flexShrink: 0 }} />
-                          <span style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--limestone)" }}>{item}</span>
+                // Full Package — 3 columns, inherited items dimmer
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${t.sections.length}, 1fr)`, gap: "1.5rem", marginTop: "1.5rem" }}>
+                  {t.sections.map((section: { label: string; items: string[] }, si: number) => {
+                    const isNew = si === t.sections.length - 1; // last section = new additions
+                    return (
+                      <div key={section.label}>
+                        <div className="flex items-center gap-2" style={{ marginBottom: "1rem" }}>
+                          <span style={{ fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: isNew ? "var(--copper)" : "var(--white-30)" }}>{section.label}</span>
+                          {isNew && <span style={{ fontSize: "0.38rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#fff", background: "var(--copper)", padding: "2px 6px", borderRadius: "80px" }}>New</span>}
+                          {!isNew && <span style={{ fontSize: "0.38rem", fontWeight: 400, letterSpacing: "0.1em", color: "var(--white-15)" }}>included</span>}
                         </div>
-                        <div className="divider-dark" />
+                        {section.items.map((item: string) => (
+                          <div key={item} className="flex items-start gap-2" style={{ marginBottom: "0.5rem" }}>
+                            <span style={{ width: 4, height: 4, borderRadius: "50%", background: isNew ? "var(--copper)" : "var(--white-15)", marginTop: "0.4rem", flexShrink: 0 }} />
+                            <span style={{ fontSize: "0.78rem", fontWeight: 300, color: isNew ? "var(--limestone)" : "var(--white-30)", lineHeight: 1.5 }}>{item}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ))
+                    );
+                  })}
+                </div>
               ) : (
                 // Other tiers — flat list
                 <>
