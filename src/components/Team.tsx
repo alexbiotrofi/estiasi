@@ -54,7 +54,10 @@ export default function Team() {
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Culinary Director & Co-Founder</p>
               <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                Michelin-trained chef with experience at The Ritz London, Claude Bosi at Bibendum, and Mauro Colagreco&rsquo;s team at Raffles London at The OWO. Dimitris leads all culinary standards, menu direction, kitchen design, and staff training.
+                Michelin-trained chef with over a decade of experience in professional kitchens across Europe. Dimitris has worked at The Ritz London, under Claude Bosi at Bibendum, and as part of Mauro Colagreco&rsquo;s team at Raffles London at The OWO — three of the most demanding kitchens in the world.
+              </p>
+              <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
+                He leads all culinary standards at estιasι — from concept creation and menu engineering to kitchen design, HACCP compliance, staff recruitment, and the full operational lifecycle of every venue we touch. He doesn&rsquo;t advise from a distance. He builds from within.
               </p>
               <div style={{ display: "flex", gap: "2.5rem", marginBottom: "1.5rem" }}>
                 {[{ n: "3", l: "Michelin Kitchens" }, { n: "FRSPH", l: "Certified" }, { n: "4+", l: "Countries" }].map(s => (
@@ -82,7 +85,7 @@ export default function Team() {
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Strategy & Client Experience · Co-Founder</p>
               <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85, marginBottom: "1.5rem" }}>
-                Background in strategy, service design, and operations. Alex builds the infrastructure behind every engagement — from booking systems, CRM, and stock management to brand identity, websites, and digital visibility. He designs the operational architecture that lets a venue run with precision long after the kitchen is set, and oversees every client relationship from first call to handover.
+                Builds the infrastructure behind every engagement — operational systems, brand identity, websites, and digital visibility. Oversees client experience from first call to handover.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                 {["Operations & Systems", "Brand Identity", "Website & SEO", "CRM & Bookings", "Client Experience"].map(tag => (
