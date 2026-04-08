@@ -91,20 +91,19 @@ export default function Pricing() {
               {/* Items */}
               {"sections" in t && t.sections ? (
                 // Full Package — 3 columns, inherited items dimmer
-                <div style={{ display: "grid", gridTemplateColumns: `repeat(${t.sections.length}, 1fr)`, gap: "1.5rem", marginTop: "1.5rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${t.sections.length}, 1fr)`, gap: "2rem", marginTop: "2rem" }}>
                   {t.sections.map((section: { label: string; items: string[] }, si: number) => {
-                    const isNew = si === t.sections.length - 1; // last section = new additions
+                    const isNew = si === t.sections.length - 1;
                     return (
                       <div key={section.label}>
-                        <div className="flex items-center gap-2" style={{ marginBottom: "1rem" }}>
-                          <span style={{ fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: isNew ? "var(--copper)" : "var(--white-30)" }}>{section.label}</span>
-                          {isNew && <span style={{ fontSize: "0.38rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#fff", background: "var(--copper)", padding: "2px 6px", borderRadius: "80px" }}>New</span>}
-                          {!isNew && <span style={{ fontSize: "0.38rem", fontWeight: 400, letterSpacing: "0.1em", color: "var(--white-15)" }}>included</span>}
+                        <div className="flex items-center gap-2" style={{ marginBottom: "1.25rem", paddingBottom: "0.75rem", borderBottom: isNew ? "1px solid var(--copper)" : "1px solid var(--border-dark)" }}>
+                          <span style={{ fontSize: "0.52rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: isNew ? "var(--copper)" : "var(--white-50)" }}>{section.label}</span>
+                          {isNew && <span style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#fff", background: "var(--copper)", padding: "2px 8px", borderRadius: "80px" }}>Added</span>}
                         </div>
                         {section.items.map((item: string) => (
-                          <div key={item} className="flex items-start gap-2" style={{ marginBottom: "0.5rem" }}>
-                            <span style={{ width: 4, height: 4, borderRadius: "50%", background: isNew ? "var(--copper)" : "var(--white-15)", marginTop: "0.4rem", flexShrink: 0 }} />
-                            <span style={{ fontSize: "0.78rem", fontWeight: 300, color: isNew ? "var(--limestone)" : "var(--white-30)", lineHeight: 1.5 }}>{item}</span>
+                          <div key={item} className="flex items-start gap-3" style={{ marginBottom: "0.65rem" }}>
+                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: isNew ? "var(--copper)" : "var(--white-30)", marginTop: "0.45rem", flexShrink: 0 }} />
+                            <span style={{ fontSize: "0.88rem", fontWeight: isNew ? 400 : 300, color: isNew ? "var(--limestone)" : "var(--white-50)", lineHeight: 1.55 }}>{item}</span>
                           </div>
                         ))}
                       </div>
