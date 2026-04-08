@@ -96,14 +96,14 @@ export default function Pricing() {
                     const isNew = si === t.sections.length - 1;
                     return (
                       <div key={section.label}>
-                        <div className="flex items-center gap-2" style={{ marginBottom: "1.25rem", paddingBottom: "0.75rem", borderBottom: isNew ? "1px solid var(--copper)" : "1px solid var(--border-dark)" }}>
-                          <span style={{ fontSize: "0.52rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: isNew ? "var(--copper)" : "var(--white-50)" }}>{section.label}</span>
-                          {isNew && <span style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#fff", background: "var(--copper)", padding: "2px 8px", borderRadius: "80px" }}>Added</span>}
+                        <div className="flex items-center gap-2" style={{ marginBottom: "1.25rem", paddingBottom: "0.75rem", borderBottom: "1px solid var(--border-dark)" }}>
+                          <span style={{ fontSize: "0.52rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--white-50)" }}>{section.label}</span>
+                          {isNew && <span style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)", border: "1px solid var(--copper)", padding: "2px 8px", borderRadius: "80px" }}>+ Added in this tier</span>}
                         </div>
                         {section.items.map((item: string) => (
                           <div key={item} className="flex items-start gap-3" style={{ marginBottom: "0.65rem" }}>
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: isNew ? "var(--copper)" : "var(--white-30)", marginTop: "0.45rem", flexShrink: 0 }} />
-                            <span style={{ fontSize: "0.88rem", fontWeight: isNew ? 400 : 300, color: isNew ? "var(--limestone)" : "var(--white-50)", lineHeight: 1.55 }}>{item}</span>
+                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: isNew ? "var(--copper)" : "var(--white-50)", marginTop: "0.45rem", flexShrink: 0 }} />
+                            <span style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--limestone)", lineHeight: 1.55 }}>{item}</span>
                           </div>
                         ))}
                       </div>
