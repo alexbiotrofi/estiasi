@@ -74,7 +74,7 @@ export default function Work() {
           ))}
         </div>
 
-        <p style={{ fontSize: "0.7rem", fontWeight: 300, color: "var(--white-15)", lineHeight: 1.7, marginTop: "2.5rem", textAlign: "center" }}>
+        <p style={{ fontSize: "0.72rem", fontWeight: 300, color: "var(--white-30)", lineHeight: 1.7, marginTop: "2.5rem", textAlign: "center" }}>
           Projects led by Dimitris prior to founding estιasι.
         </p>
       </div>
