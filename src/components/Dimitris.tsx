@@ -77,31 +77,31 @@ export default function Dimitris() {
           </div>
         </div>
 
-        {/* Alex — mirrored layout: content left, photo right */}
+        {/* Alex — mirrored, smaller */}
         <div className="team-reveal rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden" }}>
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            {/* Content — left side */}
-            <div style={{ padding: "clamp(2rem, 4vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          <div className="grid grid-cols-1 md:grid-cols-12">
+            {/* Content — left, 7 cols */}
+            <div className="md:col-span-7" style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.5rem" }}>
                 Alex Apostolides
               </h3>
-              <p style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.5rem" }}>Strategy & Client Experience · Co-Founder</p>
+              <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Strategy & Client Experience · Co-Founder</p>
 
-              <p style={{ fontSize: "0.95rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.9, marginBottom: "2rem" }}>
-                Background in strategy, service design, and operations. Alex builds the infrastructure behind every engagement — from booking systems and CRM to brand identity, websites, and digital visibility. He ensures every venue runs with precision long after the kitchen is set.
+              <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85, marginBottom: "1.5rem", maxWidth: "50ch" }}>
+                Background in strategy, service design, and operations. Alex builds the infrastructure behind every engagement — from booking systems and CRM to brand identity, websites, and digital visibility.
               </p>
 
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                 {["Operations & Systems", "Brand Identity", "Website & SEO", "CRM & Bookings", "Client Experience"].map(tag => (
-                  <span key={tag} style={{ fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--white-30)", border: "1px solid var(--border-dark)", padding: "0.3rem 0.6rem", borderRadius: "3px" }}>{tag}</span>
+                  <span key={tag} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--white-30)", border: "1px solid var(--border-dark)", padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{tag}</span>
                 ))}
               </div>
             </div>
 
-            {/* Photo — right side (mirrored from Dimitris) */}
-            <div style={{ position: "relative", minHeight: "500px", overflow: "hidden" }}>
-              <img src="/photos/restaurant-interior.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, opacity: 0.6 }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 70%, var(--dark-2) 100%)" }} />
+            {/* Photo — right, 5 cols, shorter */}
+            <div className="md:col-span-5" style={{ position: "relative", minHeight: "350px", overflow: "hidden" }}>
+              <img src="/photos/restaurant-interior.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, opacity: 0.5 }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 60%, var(--dark-2) 100%)" }} />
             </div>
           </div>
         </div>
