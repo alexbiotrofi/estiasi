@@ -77,29 +77,17 @@ export default function Dimitris() {
           </div>
         </div>
 
-        {/* Alex — separate card, smaller but distinct */}
+        {/* Alex — mirrored layout: content left, photo right */}
         <div className="team-reveal rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden" }}>
-          <div className="grid grid-cols-1 md:grid-cols-12" style={{ minHeight: "280px" }}>
-            {/* Photo */}
-            <div className="md:col-span-4" style={{ position: "relative", overflow: "hidden", minHeight: "280px" }}>
-              <img src="/photos/restaurant-interior.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, opacity: 0.5 }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 50%, var(--dark-2) 100%)" }} />
-              {/* Overlay text on photo */}
-              <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem" }}>
-                <span style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>The Operation</span>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {/* Content — left side */}
+            <div style={{ padding: "clamp(2rem, 4vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.75rem" }}>
+                Alex Apostolides
+              </h3>
+              <p style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.5rem" }}>Strategy & Client Experience · Co-Founder</p>
 
-            {/* Content */}
-            <div className="md:col-span-8" style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "0.75rem" }}>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em" }}>
-                  Alex Apostolides
-                </h3>
-                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Strategy & Client Experience · Co-Founder</span>
-              </div>
-
-              <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85, marginBottom: "1.5rem", maxWidth: "55ch" }}>
+              <p style={{ fontSize: "0.95rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.9, marginBottom: "2rem" }}>
                 Background in strategy, service design, and operations. Alex builds the infrastructure behind every engagement — from booking systems and CRM to brand identity, websites, and digital visibility. He ensures every venue runs with precision long after the kitchen is set.
               </p>
 
@@ -108,6 +96,12 @@ export default function Dimitris() {
                   <span key={tag} style={{ fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--white-30)", border: "1px solid var(--border-dark)", padding: "0.3rem 0.6rem", borderRadius: "3px" }}>{tag}</span>
                 ))}
               </div>
+            </div>
+
+            {/* Photo — right side (mirrored from Dimitris) */}
+            <div style={{ position: "relative", minHeight: "500px", overflow: "hidden" }}>
+              <img src="/photos/restaurant-interior.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, opacity: 0.6 }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 70%, var(--dark-2) 100%)" }} />
             </div>
           </div>
         </div>
