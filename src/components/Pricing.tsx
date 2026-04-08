@@ -91,19 +91,27 @@ export default function Pricing() {
               {/* Items */}
               {"sections" in t && t.sections ? (
                 // Full Package — 3 columns, inherited items dimmer
-                <div style={{ display: "grid", gridTemplateColumns: `repeat(${t.sections.length}, 1fr)`, gap: "2rem", marginTop: "2rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${t.sections.length}, 1fr)`, gap: "6px", marginTop: "2rem" }}>
                   {t.sections.map((section: { label: string; items: string[] }, si: number) => {
                     const isNew = si === t.sections.length - 1;
                     return (
-                      <div key={section.label}>
-                        <div className="flex items-center gap-2" style={{ marginBottom: "1.25rem", paddingBottom: "0.75rem", borderBottom: "1px solid var(--border-dark)" }}>
-                          <span style={{ fontSize: "0.52rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--white-50)" }}>{section.label}</span>
-                          {isNew && <span style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)", border: "1px solid var(--copper)", padding: "2px 8px", borderRadius: "80px" }}>+ Added in this tier</span>}
+                      <div key={section.label} className="glass-card" style={{
+                        borderRadius: "16px",
+                        padding: "1.5rem",
+                        border: isNew ? "1px solid rgba(176,115,64,0.3)" : "1px solid var(--border-dark)",
+                        boxShadow: isNew ? "0 0 40px rgba(176,115,64,0.06), inset 0 1px 0 rgba(176,115,64,0.1)" : "none",
+                        background: isNew ? "rgba(176,115,64,0.04)" : "rgba(255,255,255,0.02)",
+                      }}>
+                        <div className="flex items-center justify-between" style={{ marginBottom: "1.25rem" }}>
+                          <span style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 400, color: "var(--limestone)" }}>{section.label}</span>
+                          {isNew && <span style={{ fontSize: "0.38rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)" }}>+ This tier</span>}
                         </div>
-                        {section.items.map((item: string) => (
-                          <div key={item} className="flex items-start gap-3" style={{ marginBottom: "0.65rem" }}>
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: isNew ? "var(--copper)" : "var(--white-50)", marginTop: "0.45rem", flexShrink: 0 }} />
-                            <span style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--limestone)", lineHeight: 1.55 }}>{item}</span>
+                        {section.items.map((item: string, ii: number) => (
+                          <div key={item}>
+                            <div style={{ padding: "0.6rem 0", fontSize: "0.82rem", fontWeight: 300, color: "var(--limestone)", lineHeight: 1.5 }}>
+                              {item}
+                            </div>
+                            {ii < section.items.length - 1 && <div style={{ height: "1px", background: "var(--border-dark)" }} />}
                           </div>
                         ))}
                       </div>
