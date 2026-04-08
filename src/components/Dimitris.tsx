@@ -13,7 +13,7 @@ export default function Dimitris() {
           <div className="grid grid-cols-1 md:grid-cols-2">
             {/* Photo */}
             <div style={{ position: "relative", minHeight: "500px", overflow: "hidden" }}>
-              <img src="/photos/chef-portrait.jpg" alt="Dimitris Kamaritis" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0 }} />
+              <img src="/photos/dimitris-kitchen.jpg" alt="Dimitris Kamaritis" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0 }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 60%, var(--dark-2) 100%)" }} />
             </div>
 
