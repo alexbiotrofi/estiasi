@@ -29,7 +29,7 @@ export default function Dimitris() {
               </p>
 
               <div className="reveal" style={{ display: "flex", gap: "3rem", marginBottom: "2rem" }}>
-                {[{ n: "3", l: "Michelin Kitchens" }, { n: "FR · ES · UK", l: "Trained" }, { n: "4+", l: "Countries" }, { n: "10+", l: "Years in Kitchens" }].map(s => (
+                {[{ n: "3", l: "Michelin Kitchens" }, { n: "FRSPH", l: "Certified" }, { n: "4+", l: "Countries" }].map(s => (
                   <div key={s.l}>
                     <div style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", color: "var(--copper)" }}>{s.n}</div>
                     <div style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>{s.l}</div>
