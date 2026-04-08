@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import gsap from "gsap";
 
 const tiers = [
@@ -37,109 +37,26 @@ export default function Pricing() {
   const isAnimating = useRef(false);
   const t = tiers.find(t => t.id === active)!;
 
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
+    gsap.fromTo(cards, {
+      opacity: 0,
+      scale: 0.93,
+      y: 15,
+    }, {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      duration: 0.45,
+      ease: "power2.out",
+      stagger: 0.07,
+    });
+  }, [active]);
+
   const switchTier = useCallback((newId: string) => {
-    if (newId === active || isAnimating.current || !gridRef.current) return;
-
-    isAnimating.current = true;
-    const grid = gridRef.current;
-    const oldCards = Array.from(grid.querySelectorAll<HTMLElement>(".price-card"));
-    const newTier = tiers.find(t => t.id === newId)!;
-    const newCount = newTier.sections.length;
-    const oldCount = oldCards.length;
-    const expanding = newCount > oldCount;
-
-    if (expanding) {
-      // SPLIT ANIMATION
-      // Step 1: Add a gap in the middle of the grid that grows
-      const tl = gsap.timeline({
-        onComplete: () => {
-          setActive(newId);
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              if (!gridRef.current) { isAnimating.current = false; return; }
-              const newCards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
-              // New cards pop in with a slight bounce
-              newCards.forEach((card, i) => {
-                gsap.fromTo(card, {
-                  opacity: 0,
-                  scale: 0.9,
-                  rotateY: i === newCards.length - 1 ? -8 : (i === 0 ? 8 : 0),
-                }, {
-                  opacity: 1,
-                  scale: 1,
-                  rotateY: 0,
-                  duration: 0.5,
-                  ease: "back.out(1.4)",
-                  delay: i * 0.08,
-                  clearProps: "rotateY",
-                });
-              });
-              setTimeout(() => { isAnimating.current = false; }, 700);
-            });
-          });
-        },
-      });
-
-      // Old cards split apart — each moves away from center with rotation
-      const centerX = grid.offsetWidth / 2;
-      oldCards.forEach((card, i) => {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        const direction = cardCenter < centerX ? -1 : cardCenter > centerX ? 1 : (i === 0 ? -1 : 1);
-
-        tl.to(card, {
-          x: direction * 60,
-          opacity: 0,
-          scale: 0.92,
-          rotateY: direction * 5,
-          duration: 0.35,
-          ease: "power2.in",
-        }, i * 0.04);
-      });
-    } else {
-      // MERGE ANIMATION — cards compress together
-      const tl = gsap.timeline({
-        onComplete: () => {
-          setActive(newId);
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              if (!gridRef.current) { isAnimating.current = false; return; }
-              const newCards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
-              newCards.forEach((card, i) => {
-                gsap.fromTo(card, {
-                  opacity: 0,
-                  scale: 1.05,
-                  rotateY: i === 0 ? -5 : 5,
-                }, {
-                  opacity: 1,
-                  scale: 1,
-                  rotateY: 0,
-                  duration: 0.45,
-                  ease: "back.out(1.2)",
-                  delay: i * 0.06,
-                  clearProps: "rotateY",
-                });
-              });
-              setTimeout(() => { isAnimating.current = false; }, 600);
-            });
-          });
-        },
-      });
-
-      // Cards compress toward center
-      const centerX = grid.offsetWidth / 2;
-      oldCards.forEach((card, i) => {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        const direction = cardCenter < centerX ? 1 : cardCenter > centerX ? -1 : 0;
-
-        tl.to(card, {
-          x: direction * 40,
-          opacity: 0,
-          scale: 0.95,
-          duration: 0.3,
-          ease: "power2.in",
-        }, i * 0.03);
-      });
-    }
+    if (newId === active) return;
+    setActive(newId);
   }, [active]);
 
   return (
