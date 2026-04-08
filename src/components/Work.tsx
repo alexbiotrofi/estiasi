@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   { num: "01", name: "Grain", location: "Holborn, London", type: "Full Launch", desc: "Modern Mediterranean. Concept to grand opening. Every system, every hire, every plate.", images: ["/photos/grain-exterior.jpg", "/photos/grain-dishes.jpg"] },
-  { num: "02", name: "Filos by Halepi", location: "London", type: "Restaurant Support", desc: "Greek dining reimagined. Operational diagnostic, menu overhaul, procedural redesign.", images: ["/photos/filos-kitchen.jpg", "/photos/filos-exterior.jpg"] },
+  { num: "02", name: "Filos by Halepi", location: "London", type: "Restaurant Support", desc: "Greek dining reimagined. Operational diagnostic, menu overhaul, procedural redesign.", images: ["/photos/filos-kitchen.jpg", "/photos/filos-3d-kitchen.jpg"] },
   { num: "03", name: "Mesa Stone", location: "Fine Dining", type: "Full Launch", desc: "Premium fine dining from zero. Kitchen spec, HACCP, SOPs, phased opening.", images: ["/photos/dining-room.jpg", "/photos/chef-plating.jpg"] },
   { num: "04", name: "Mauro Colagreco", location: "Raffles London, The OWO", type: "Collaboration", desc: "World-class culinary programme. One of London's most prestigious destinations.", images: ["/photos/mauro-dining.jpg", "/photos/mauro-building.jpg"] },
 ];
