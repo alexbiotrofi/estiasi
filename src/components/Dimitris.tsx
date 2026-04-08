@@ -81,13 +81,13 @@ export default function Dimitris() {
         <div className="team-reveal rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden" }}>
           <div className="grid grid-cols-1 md:grid-cols-12">
             {/* Content — left, 8 cols */}
-            <div className="md:col-span-8" style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div className="md:col-span-8" style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", paddingRight: "clamp(1rem, 2vw, 1.5rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.5rem" }}>
                 Alex Apostolides
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Strategy & Client Experience · Co-Founder</p>
 
-              <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85, marginBottom: "1.5rem", maxWidth: "50ch" }}>
+              <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85, marginBottom: "1.5rem" }}>
                 Background in strategy, service design, and operations. Alex builds the infrastructure behind every engagement — from booking systems and CRM to brand identity, websites, and digital visibility.
               </p>
 
