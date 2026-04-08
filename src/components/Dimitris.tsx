@@ -25,11 +25,11 @@ export default function Dimitris() {
               <p className="reveal" style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.5rem" }}>Culinary Director & Co-Founder</p>
 
               <p className="reveal" style={{ fontSize: "0.95rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.9, marginBottom: "2rem" }}>
-                A decade in professional kitchens. Fine dining in London. Restaurant launches across Europe. He doesn&rsquo;t consult from a distance — he builds from within. Every menu, every kitchen, every team.
+                Michelin-trained chef with experience at The Ritz London, Claude Bosi at Bibendum, and Mauro Colagreco&rsquo;s team at Raffles London at The OWO. Dimitris leads all culinary standards, menu direction, kitchen design, and staff training across every engagement.
               </p>
 
               <div className="reveal" style={{ display: "flex", gap: "3rem", marginBottom: "2rem" }}>
-                {[{ n: "15+", l: "Years" }, { n: "40+", l: "Venues" }, { n: "6", l: "Kitchens Led" }].map(s => (
+                {[{ n: "15+", l: "Years" }, { n: "40+", l: "Venues" }, { n: "3", l: "Michelin Kitchens" }].map(s => (
                   <div key={s.l}>
                     <div style={{ fontFamily: "var(--font-display)", fontSize: "2rem", color: "var(--copper)" }}>{s.n}</div>
                     <div style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>{s.l}</div>
@@ -40,7 +40,7 @@ export default function Dimitris() {
               <div className="divider-dark reveal" style={{ marginBottom: "1.5rem" }} />
               <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                 <span style={{ fontFamily: "var(--font-logo)", fontSize: "1rem", letterSpacing: "0.0618em", color: "var(--white-30)" }}>Alex Apostolides</span>
-                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Operations & Strategy</span>
+                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Strategy & Client Experience</span>
               </div>
             </div>
           </div>
