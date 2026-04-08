@@ -48,7 +48,31 @@ export default function Hero() {
         >
           We bring<br />restaurants to life
         </h1>
-        <div ref={subRef} style={{ opacity: 0 }} />
+        <div ref={subRef} style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "0.6rem", opacity: 0 }}>
+          <span style={{
+            width: "6px",
+            height: "6px",
+            borderRadius: "50%",
+            background: "var(--copper)",
+            animation: "pulse 3s ease-in-out infinite",
+            flexShrink: 0,
+          }} />
+          <span style={{
+            fontSize: "0.5rem",
+            fontWeight: 500,
+            letterSpacing: "0.4em",
+            textTransform: "uppercase" as const,
+            color: "var(--white-30)",
+          }}>
+            Culinary Consulting · Cyprus
+          </span>
+          <style>{`
+            @keyframes pulse {
+              0%, 100% { opacity: 0.4; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.3); }
+            }
+          `}</style>
+        </div>
       </div>
     </section>
   );
