@@ -7,10 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  { num: "01", name: "Grain", location: "Holborn, London", type: "Full Launch", desc: "Modern Mediterranean. Concept to grand opening. Every system, every hire, every plate.", images: ["/photos/restaurant-interior.jpg", "/photos/fine-dining-plate.jpg"] },
-  { num: "02", name: "Filos by Halepi", location: "London", type: "Restaurant Support", desc: "Greek dining reimagined. Operational diagnostic, menu overhaul, procedural redesign.", images: ["/photos/restaurant-ambience.jpg", "/photos/food-overhead.jpg"] },
+  { num: "01", name: "Grain", location: "Holborn, London", type: "Full Launch", desc: "Modern Mediterranean. Concept to grand opening. Every system, every hire, every plate.", images: ["/photos/grain-chef.jpg", "/photos/grain-team.jpg"] },
+  { num: "02", name: "Filos by Halepi", location: "London", type: "Restaurant Support", desc: "Greek dining reimagined. Operational diagnostic, menu overhaul, procedural redesign.", images: ["/photos/filos-kitchen.jpg", "/photos/filos-plans.jpg"] },
   { num: "03", name: "Mesa Stone", location: "Fine Dining", type: "Full Launch", desc: "Premium fine dining from zero. Kitchen spec, HACCP, SOPs, phased opening.", images: ["/photos/dining-room.jpg", "/photos/chef-plating.jpg"] },
-  { num: "04", name: "Mauro Colagreco", location: "The OWO, London", type: "Collaboration", desc: "World-class culinary programme. One of London's most prestigious destinations.", images: ["/photos/restaurant-bar.jpg", "/photos/chef-kitchen.jpg"] },
+  { num: "04", name: "Mauro Colagreco", location: "Raffles London, The OWO", type: "Collaboration", desc: "World-class culinary programme. One of London's most prestigious destinations.", images: ["/photos/mauro-portrait.jpg", "/photos/mauro-building.jpg"] },
 ];
 
 export default function Work() {
