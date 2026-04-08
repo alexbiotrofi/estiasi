@@ -100,7 +100,7 @@ export default function Dimitris() {
 
             {/* Photo — right, 4 cols */}
             <div className="md:col-span-4" style={{ position: "relative", minHeight: "350px", overflow: "hidden" }}>
-              <img src="/photos/restaurant-interior.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, opacity: 0.5 }} />
+              <img src="/photos/alex-restaurant.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 20%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 60%, var(--dark-2) 100%)" }} />
             </div>
           </div>
