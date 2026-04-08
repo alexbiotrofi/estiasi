@@ -26,8 +26,8 @@ export default function Process() {
       // Reveal one at a time with stagger, triggered when the grid enters
       ScrollTrigger.create({
         trigger: ref.current!.querySelector(".proc-grid"),
-        start: "top 80%",
-        end: "bottom 40%",
+        start: "top 90%",
+        end: "bottom -20%",
         scrub: 1.5,
         onUpdate: (self) => {
           const progress = self.progress;
@@ -70,7 +70,7 @@ export default function Process() {
           </div>
         </div>
 
-        <div className="proc-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "6px" }}>
+        <div className="proc-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px", minHeight: "80vh" }}>
           {steps.map((s) => (
             <div key={s.num} className="proc-item glass-card" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: "320px" }}>
               <div>
