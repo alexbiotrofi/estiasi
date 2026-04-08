@@ -41,7 +41,7 @@ export default function Work() {
             <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
               The work that built the consultancy.
             </p>
-            <p style={{ fontSize: "0.78rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.7, marginTop: "1rem" }}>
+            <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.7, marginTop: "1rem" }}>
               Projects led by Dimitris prior to founding estιasι.
             </p>
           </div>
