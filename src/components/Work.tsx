@@ -34,12 +34,12 @@ export default function Work() {
       <div className="wrap">
         <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "5rem" }}>
           <div>
-            <span className="label">Selected Work</span>
-            <span className="sect-num">[ 04 / 07 ]</span>
+            <span className="label">Track Record</span>
+            <span className="sect-num">[ 06 / 07 ]</span>
           </div>
           <div style={{ maxWidth: "550px" }}>
             <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
-              Venues we&rsquo;ve built, supported, transformed.
+              The work that built the consultancy.
             </p>
           </div>
         </div>
@@ -73,6 +73,10 @@ export default function Work() {
             </div>
           ))}
         </div>
+
+        <p style={{ fontSize: "0.7rem", fontWeight: 300, color: "var(--white-15)", lineHeight: 1.7, marginTop: "2.5rem", textAlign: "center" }}>
+          Projects led by Dimitris prior to founding estιasι.
+        </p>
       </div>
     </section>
   );

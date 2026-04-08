@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Dimitris() {
+export default function Team() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Dimitris() {
   }, []);
 
   return (
-    <section ref={ref} style={{ padding: "128px 0" }}>
+    <section id="about" ref={ref} style={{ padding: "128px 0" }}>
       <div className="wrap">
         <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "4rem" }}>
           <div>
@@ -41,64 +41,55 @@ export default function Dimitris() {
           </div>
         </div>
 
-        {/* Dimitris — large card */}
+        {/* Dimitris */}
         <div className="team-reveal rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden", marginBottom: "6px" }}>
           <div className="grid grid-cols-1 md:grid-cols-2">
-            <div style={{ position: "relative", minHeight: "650px", overflow: "hidden" }}>
+            <div style={{ position: "relative", minHeight: "550px", overflow: "hidden" }}>
               <img src="/photos/dimitris-kitchen.jpg" alt="Dimitris Kamaritis" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 15%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 70%, var(--dark-2) 100%)" }} />
             </div>
-
-            <div style={{ padding: "clamp(2rem, 4vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.75rem" }}>
+            <div style={{ padding: "clamp(2rem, 4vw, 3.5rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.5rem" }}>
                 Dimitris Kamaritis
               </h3>
-              <p style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.5rem" }}>Culinary Director & Co-Founder</p>
-
-              <p style={{ fontSize: "0.95rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.9, marginBottom: "2rem" }}>
-                Michelin-trained chef with experience at The Ritz London, Claude Bosi at Bibendum, and Mauro Colagreco&rsquo;s team at Raffles London at The OWO. Dimitris leads all culinary standards, menu direction, kitchen design, and staff training across every engagement.
+              <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Culinary Director & Co-Founder</p>
+              <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
+                Michelin-trained chef with experience at The Ritz London, Claude Bosi at Bibendum, and Mauro Colagreco&rsquo;s team at Raffles London at The OWO. Dimitris leads all culinary standards, menu direction, kitchen design, and staff training.
               </p>
-
-              <div style={{ display: "flex", gap: "3rem", marginBottom: "2rem" }}>
+              <div style={{ display: "flex", gap: "2.5rem", marginBottom: "1.5rem" }}>
                 {[{ n: "3", l: "Michelin Kitchens" }, { n: "FRSPH", l: "Certified" }, { n: "4+", l: "Countries" }].map(s => (
                   <div key={s.l}>
-                    <div style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", color: "var(--copper)" }}>{s.n}</div>
-                    <div style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>{s.l}</div>
+                    <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", color: "var(--copper)" }}>{s.n}</div>
+                    <div style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>{s.l}</div>
                   </div>
                 ))}
               </div>
-
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                 {["Menu Engineering", "Kitchen Design", "HACCP", "Staff Training", "Launch Management"].map(tag => (
-                  <span key={tag} style={{ fontSize: "0.48rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--white-30)", border: "1px solid var(--border-dark)", padding: "0.3rem 0.6rem", borderRadius: "3px" }}>{tag}</span>
+                  <span key={tag} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--white-30)", border: "1px solid var(--border-dark)", padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{tag}</span>
                 ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Alex — mirrored, smaller */}
+        {/* Alex */}
         <div className="team-reveal rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden" }}>
           <div className="grid grid-cols-1 md:grid-cols-12">
-            {/* Content — left, 8 cols */}
             <div className="md:col-span-8" style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", paddingRight: "clamp(2rem, 3vw, 3rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.5rem" }}>
                 Alex Apostolides
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Strategy & Client Experience · Co-Founder</p>
-
               <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85, marginBottom: "1.5rem" }}>
                 Background in strategy, service design, and operations. Alex builds the infrastructure behind every engagement — from booking systems, CRM, and stock management to brand identity, websites, and digital visibility. He designs the operational architecture that lets a venue run with precision long after the kitchen is set, and oversees every client relationship from first call to handover.
               </p>
-
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                 {["Operations & Systems", "Brand Identity", "Website & SEO", "CRM & Bookings", "Client Experience"].map(tag => (
                   <span key={tag} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--white-30)", border: "1px solid var(--border-dark)", padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{tag}</span>
                 ))}
               </div>
             </div>
-
-            {/* Photo — right, 4 cols */}
             <div className="md:col-span-4" style={{ position: "relative", minHeight: "350px", overflow: "hidden" }}>
               <img src="/photos/alex-restaurant.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 20%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 60%, var(--dark-2) 100%)" }} />
