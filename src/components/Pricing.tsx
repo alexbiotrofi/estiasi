@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
 
 const tiers = [
   {
@@ -32,7 +33,50 @@ const tiers = [
 
 export default function Pricing() {
   const [active, setActive] = useState("full");
+  const gridRef = useRef<HTMLDivElement>(null);
+  const prevCountRef = useRef(3);
   const t = tiers.find(t => t.id === active)!;
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const newCount = t.sections.length;
+    const prevCount = prevCountRef.current;
+    const cards = gridRef.current.querySelectorAll<HTMLElement>(".price-card");
+
+    if (prevCount !== newCount) {
+      // Animate cards in
+      cards.forEach((card, i) => {
+        // Existing cards (inherited) — scale from compressed
+        if (i < Math.min(prevCount, newCount)) {
+          gsap.fromTo(card, {
+            scaleX: newCount < prevCount ? 1 / (prevCount / newCount) : prevCount / newCount,
+            opacity: 0.5,
+          }, {
+            scaleX: 1,
+            opacity: 1,
+            duration: 0.7,
+            ease: "power3.out",
+            delay: i * 0.05,
+          });
+        } else {
+          // New card — splits out from the edge of the previous card
+          gsap.fromTo(card, {
+            scaleX: 0,
+            opacity: 0,
+            transformOrigin: "left center",
+          }, {
+            scaleX: 1,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power3.out",
+            delay: 0.15 + i * 0.08,
+          });
+        }
+      });
+    }
+
+    prevCountRef.current = newCount;
+  }, [active, t.sections.length]);
 
   return (
     <section style={{ padding: "128px 0" }}>
@@ -89,8 +133,9 @@ export default function Pricing() {
               <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.8, maxWidth: "38ch" }}>{t.desc}</p>
             </div>
 
-            {/* Glass cards grid */}
+            {/* Glass cards grid — animates on tier switch */}
             <div
+              ref={gridRef}
               key={t.id}
               style={{
                 display: "grid",
@@ -101,7 +146,7 @@ export default function Pricing() {
               {t.sections.map((section, si) => {
                 const isNew = si === t.sections.length - 1 && t.sections.length > 1;
                 return (
-                  <div key={section.label} style={{
+                  <div key={section.label} className="price-card" style={{
                     borderRadius: "16px",
                     padding: "1.5rem",
                     border: isNew ? "1px solid rgba(176,115,64,0.3)" : "1px solid var(--border-dark)",
