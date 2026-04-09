@@ -41,6 +41,10 @@ body {
   font-family: var(--font-body);
   color: var(--charcoal);
   background: var(--limestone);
+  background-image: url('/textures/marble-bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }

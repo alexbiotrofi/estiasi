@@ -24,39 +24,52 @@ export default function Navigation() {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style={{
-        background: scrolled ? "rgba(244,241,236,0.95)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
+        background: scrolled ? "rgba(244,241,236,0.92)" : "transparent",
+        backdropFilter: scrolled ? "blur(16px)" : "none",
         borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-        padding: "12px 0",
+        padding: "16px 0",
       }}>
-        <div className="wrap flex items-center justify-between">
-          <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} style={{ textDecoration: "none" }}>
-            <span style={{ fontFamily: "var(--font-logo)", fontSize: "1.4rem", letterSpacing: "0.0618em", color: scrolled ? "var(--charcoal)" : "#fff", transition: "color 0.3s" }}>estιasι</span>
-          </a>
-
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-7">
-            {links.map(l => (
-              <a key={l.href} href={l.href} style={{ fontSize: "0.55rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: scrolled ? "var(--stone-dark)" : "rgba(255,255,255,0.6)", textDecoration: "none", transition: "color 0.2s" }}
-                onMouseEnter={e => { e.currentTarget.style.color = scrolled ? "var(--charcoal)" : "#fff"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = scrolled ? "var(--stone-dark)" : "rgba(255,255,255,0.6)"; }}
-              >{l.label}</a>
-            ))}
-            <a href="#contact" className="btn" style={{
-              padding: "0.45rem 1.2rem", fontSize: "0.5rem",
-              background: scrolled ? "var(--charcoal)" : "transparent",
-              color: scrolled ? "var(--limestone)" : "#fff",
-              borderColor: scrolled ? "var(--charcoal)" : "rgba(255,255,255,0.3)",
-            }}>Hire Us</a>
+        <div className="wrap">
+          {/* Top row: logo left, hire us right */}
+          <div className="flex items-center justify-between" style={{ marginBottom: scrolled ? "0" : "8px" }}>
+            <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} style={{ textDecoration: "none" }}>
+              <span style={{ fontFamily: "var(--font-logo)", fontSize: "1.8rem", letterSpacing: "0.0618em", color: scrolled ? "var(--charcoal)" : "#fff", transition: "color 0.3s" }}>estιasι</span>
+            </a>
+            <div className="hidden md:flex items-center gap-4">
+              <a href="mailto:hello@estiasi.com" style={{ fontSize: "0.6rem", fontWeight: 400, color: scrolled ? "var(--stone)" : "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.3s" }}>hello@estiasi.com</a>
+              <a href="#contact" className="btn" style={{
+                padding: "0.5rem 1.3rem", fontSize: "0.5rem",
+                background: scrolled ? "var(--charcoal)" : "transparent",
+                color: scrolled ? "var(--limestone)" : "#fff",
+                borderColor: scrolled ? "var(--charcoal)" : "rgba(255,255,255,0.3)",
+              }}>Hire Us</a>
+            </div>
+            {/* Mobile hamburger */}
+            <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", cursor: "pointer", padding: "8px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: menuOpen ? "0px" : "5px", transition: "gap 0.2s" }}>
+                <span style={{ width: "20px", height: "1px", background: scrolled ? "var(--charcoal)" : "#fff", display: "block", transition: "all 0.2s", transform: menuOpen ? "rotate(45deg) translateY(0.5px)" : "none" }} />
+                <span style={{ width: "20px", height: "1px", background: scrolled ? "var(--charcoal)" : "#fff", display: "block", transition: "all 0.2s", transform: menuOpen ? "rotate(-45deg) translateY(-0.5px)" : "none" }} />
+              </div>
+            </button>
           </div>
 
-          {/* Mobile hamburger */}
-          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", cursor: "pointer", padding: "8px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: menuOpen ? "0px" : "5px", transition: "gap 0.2s" }}>
-              <span style={{ width: "20px", height: "1px", background: scrolled ? "var(--charcoal)" : "#fff", display: "block", transition: "all 0.2s", transform: menuOpen ? "rotate(45deg) translateY(0.5px)" : "none" }} />
-              <span style={{ width: "20px", height: "1px", background: scrolled ? "var(--charcoal)" : "#fff", display: "block", transition: "all 0.2s", transform: menuOpen ? "rotate(-45deg) translateY(-0.5px)" : "none" }} />
-            </div>
-          </button>
+          {/* Centred menu links — desktop only */}
+          <div className="hidden md:flex items-center justify-center gap-8">
+            {links.map(l => (
+              <a key={l.href} href={l.href} style={{
+                fontSize: "0.6rem",
+                fontWeight: 500,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase" as const,
+                color: scrolled ? "var(--stone-dark)" : "rgba(255,255,255,0.55)",
+                textDecoration: "none",
+                transition: "color 0.2s",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.color = scrolled ? "var(--charcoal)" : "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = scrolled ? "var(--stone-dark)" : "rgba(255,255,255,0.55)"; }}
+              >{l.label}</a>
+            ))}
+          </div>
         </div>
       </nav>
 
