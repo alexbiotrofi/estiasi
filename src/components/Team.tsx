@@ -8,9 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 function MichelinStars({ count }: { count: number }) {
   return (
-    <span style={{ display: "inline-flex", gap: "1px", verticalAlign: "middle", marginLeft: "4px" }}>
+    <span style={{ display: "inline-flex", gap: "2px", verticalAlign: "middle", marginLeft: "4px" }}>
       {Array.from({ length: count }).map((_, i) => (
-        <span key={i} style={{ color: "#E4002B", fontSize: "0.9em" }}>&#x2733;</span>
+        <img key={i} src="/michelin-star.png" alt="Michelin star" style={{ width: "14px", height: "14px", display: "inline-block" }} />
       ))}
     </span>
   );
