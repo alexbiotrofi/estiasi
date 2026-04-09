@@ -39,7 +39,7 @@ export default function Services() {
         onUpdate: (self) => {
           introSpans.forEach((span, i) => {
             const revealed = self.progress > i / introSpans.length;
-            (span as HTMLElement).style.color = revealed ? "var(--limestone)" : "var(--copper)";
+            (span as HTMLElement).style.color = revealed ? "var(--charcoal)" : "var(--copper)";
             (span as HTMLElement).style.opacity = revealed ? "1" : "0.4";
           });
         },
@@ -58,7 +58,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: "64px 0 80px" }}>
+    <section ref={sectionRef} style={{ padding: "64px 0 80px", background: "var(--limestone)" }}>
       <div className="wrap">
         <div className="flex items-center gap-4" style={{ marginBottom: "3rem" }}>
           <span className="label" style={{ marginBottom: 0 }}>Services</span>
@@ -74,7 +74,7 @@ export default function Services() {
           </div>
           {/* Photo — always visible */}
           <div style={{ width: "280px", flexShrink: 0, alignSelf: "stretch" }}>
-            <div style={{ height: "100%", minHeight: "220px", borderRadius: "20px", overflow: "hidden", position: "relative", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 0 0 1px rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.2), 0 8px 80px rgba(176,115,64,0.08), inset 0 4px 12px rgba(176,115,64,0.06)" }}>
+            <div style={{ height: "100%", minHeight: "220px", borderRadius: "20px", overflow: "hidden", position: "relative", border: "1px solid var(--border)", boxShadow: "0 2px 4px rgba(0,0,0,0.06), 0 8px 80px rgba(176,115,64,0.08), inset 0 4px 12px rgba(176,115,64,0.06)" }}>
               <img src="/photos/chef-plating.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.85 }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)", backdropFilter: "blur(2px)" }} />
               <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
@@ -85,7 +85,7 @@ export default function Services() {
         </div>
 
         {/* Service list with dividers + Honey blur-hover */}
-        <div className="divider-dark" />
+        <div className="divider-light" />
         {services.map((s) => (
           <div key={s.name}>
             <div
@@ -95,7 +95,7 @@ export default function Services() {
                 const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
                 const desc = e.currentTarget.querySelector<HTMLElement>(".svc-desc");
                 const line = e.currentTarget.querySelector<HTMLElement>(".svc-line");
-                if (name) { name.style.filter = "blur(0px)"; name.style.opacity = "1"; name.style.color = "#fff"; }
+                if (name) { name.style.filter = "blur(0px)"; name.style.opacity = "1"; name.style.color = "var(--copper)"; }
                 if (desc) { desc.style.opacity = "1"; }
                 if (line) { line.style.opacity = "0.5"; }
               }}
@@ -103,7 +103,7 @@ export default function Services() {
                 const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
                 const desc = e.currentTarget.querySelector<HTMLElement>(".svc-desc");
                 const line = e.currentTarget.querySelector<HTMLElement>(".svc-line");
-                if (name) { name.style.filter = "blur(1.5px)"; name.style.opacity = "0.35"; name.style.color = "var(--limestone)"; }
+                if (name) { name.style.filter = "blur(1.5px)"; name.style.opacity = "0.35"; name.style.color = "var(--charcoal)"; }
                 if (desc) { desc.style.opacity = "0.35"; }
                 if (line) { line.style.opacity = "0.15"; }
               }}
@@ -112,7 +112,7 @@ export default function Services() {
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(1.2rem, 2.2vw, 1.7rem)",
                 fontWeight: 400,
-                color: "var(--limestone)",
+                color: "var(--charcoal)",
                 letterSpacing: "-0.01em",
                 flexShrink: 0,
                 filter: "blur(1.5px)",
@@ -133,7 +133,7 @@ export default function Services() {
               <span className="svc-desc hidden md:inline" style={{
                 fontSize: "0.88rem",
                 fontWeight: 400,
-                color: "rgba(255,255,255,0.8)",
+                color: "var(--stone-dark)",
                 flexShrink: 0,
                 opacity: 0.35,
                 transition: "opacity 0.2s ease-out",
@@ -141,7 +141,7 @@ export default function Services() {
                 {s.desc}
               </span>
             </div>
-            <div className="divider-dark" />
+            <div className="divider-light" />
           </div>
         ))}
       </div>

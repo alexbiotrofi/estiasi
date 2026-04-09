@@ -38,10 +38,10 @@ export default function Work() {
             <span className="sect-num">[ 06 / 07 ]</span>
           </div>
           <div style={{ maxWidth: "550px" }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
               The work that built the consultancy.
             </p>
-            <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.7, marginTop: "1rem" }}>
+            <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, marginTop: "1rem" }}>
               Projects led by Dimitris prior to founding estιasι.
             </p>
           </div>
@@ -49,7 +49,7 @@ export default function Work() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
           {projects.map((p) => (
-            <div key={p.num} className="work-item rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden" }}>
+            <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden" }}>
               {/* Images row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
                 {p.images.map((img, j) => (
@@ -66,12 +66,12 @@ export default function Work() {
                 <div>
                   <div className="flex items-center gap-3" style={{ marginBottom: "0.5rem" }}>
                     <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>{p.type}</span>
-                    <span style={{ fontSize: "0.5rem", color: "var(--white-30)" }}>·</span>
-                    <span style={{ fontSize: "0.5rem", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--white-30)" }}>{p.location}</span>
+                    <span style={{ fontSize: "0.5rem", color: "var(--stone)" }}>·</span>
+                    <span style={{ fontSize: "0.5rem", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{p.location}</span>
                   </div>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em" }}>{p.name}</h3>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
                 </div>
-                <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.7, maxWidth: "40ch" }}>{p.desc}</p>
+                <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "40ch" }}>{p.desc}</p>
               </div>
             </div>
           ))}

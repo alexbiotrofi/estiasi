@@ -68,10 +68,10 @@ export default function Pricing() {
             <span className="sect-num">[ 07 / 07 ]</span>
           </div>
           <div style={{ maxWidth: "550px" }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
               Three tiers.<br />One standard.
             </p>
-            <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-30)", lineHeight: 1.8, marginTop: "1rem" }}>
+            <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone)", lineHeight: 1.8, marginTop: "1rem" }}>
               (Every engagement scoped to your venue. Discovery call defines the rest.)
             </p>
           </div>
@@ -81,9 +81,9 @@ export default function Pricing() {
           {tiers.map(tier => (
             <button key={tier.id} onClick={() => switchTier(tier.id)} className="btn" style={{
               padding: "0.6rem 1.5rem", fontSize: "0.55rem",
-              background: active === tier.id ? "var(--copper)" : "transparent",
-              borderColor: active === tier.id ? "var(--copper)" : "var(--border-dark)",
-              color: active === tier.id ? "#fff" : "var(--white-50)",
+              background: active === tier.id ? "var(--charcoal)" : "transparent",
+              borderColor: active === tier.id ? "var(--charcoal)" : "var(--border)",
+              color: active === tier.id ? "#fff" : "var(--stone-dark)",
             }}>
               {tier.name}
               {tier.highlight && <span style={{ width: 5, height: 5, borderRadius: "50%", background: active === tier.id ? "#fff" : "var(--copper)", marginLeft: 8, display: "inline-block" }} />}
@@ -91,7 +91,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="rounded-section" style={{ background: t.highlight ? "var(--dark-2)" : "var(--dark-3)", overflow: "hidden", position: "relative" }}>
+        <div className="rounded-section" style={{ background: t.highlight ? "var(--charcoal)" : "var(--warm-white)", overflow: "hidden", position: "relative" }}>
           {t.highlight && (
             <div className="absolute inset-0 z-0" style={{ opacity: 0.04 }}>
               <img src="/textures/marble-hero.jpg" alt="" className="w-full h-full object-cover" />
@@ -105,10 +105,10 @@ export default function Pricing() {
                   <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)" }}>{t.name}</span>
                   {t.highlight && <span style={{ fontSize: "0.4rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#fff", background: "var(--copper)", padding: "3px 8px", borderRadius: "80px" }}>Recommended</span>}
                 </div>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 4.5rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.02em", lineHeight: 1 }}>{t.price}</div>
-                <span style={{ fontSize: "0.65rem", fontWeight: 300, color: "var(--white-30)" }}>starting from</span>
+                <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 4.5rem)", fontWeight: 400, color: t.highlight ? "var(--limestone)" : "var(--charcoal)", letterSpacing: "-0.02em", lineHeight: 1 }}>{t.price}</div>
+                <span style={{ fontSize: "0.65rem", fontWeight: 300, color: t.highlight ? "var(--stone)" : "var(--stone)" }}>starting from</span>
               </div>
-              <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.8, maxWidth: "38ch" }}>{t.desc}</p>
+              <p style={{ fontSize: "0.9rem", fontWeight: 300, color: t.highlight ? "var(--stone-light)" : "var(--stone-dark)", lineHeight: 1.8, maxWidth: "38ch" }}>{t.desc}</p>
             </div>
 
             <div
@@ -122,23 +122,23 @@ export default function Pricing() {
                   <div key={`${t.id}-${section.label}`} className="price-card" style={{
                     borderRadius: "16px",
                     padding: "1.5rem",
-                    border: isNew ? "1px solid rgba(176,115,64,0.3)" : "1px solid var(--border-dark)",
+                    border: isNew ? "1px solid rgba(176,115,64,0.3)" : "1px solid var(--border)",
                     boxShadow: isNew ? "0 0 40px rgba(176,115,64,0.06), inset 0 1px 0 rgba(176,115,64,0.1)" : "none",
-                    background: isNew ? "rgba(176,115,64,0.04)" : "rgba(255,255,255,0.02)",
+                    background: "#fff",
                     backdropFilter: "blur(12px)",
                     WebkitBackdropFilter: "blur(12px)",
                     overflow: "hidden",
                   }}>
                     <div className="flex items-center justify-between" style={{ marginBottom: "1.25rem" }}>
-                      <span style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 400, color: "var(--limestone)" }}>{section.label}</span>
+                      <span style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 400, color: "var(--charcoal)" }}>{section.label}</span>
                       {isNew && <span style={{ fontSize: "0.38rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)" }}>+ This tier</span>}
                     </div>
                     {section.items.map((item, ii) => (
                       <div key={item}>
-                        <div style={{ padding: "0.6rem 0", fontSize: "0.82rem", fontWeight: 300, color: "var(--limestone)", lineHeight: 1.5 }}>
+                        <div style={{ padding: "0.6rem 0", fontSize: "0.82rem", fontWeight: 300, color: "var(--charcoal)", lineHeight: 1.5 }}>
                           {item}
                         </div>
-                        {ii < section.items.length - 1 && <div style={{ height: "1px", background: "var(--border-dark)" }} />}
+                        {ii < section.items.length - 1 && <div style={{ height: "1px", background: "var(--border)" }} />}
                       </div>
                     ))}
                   </div>

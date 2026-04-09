@@ -1,106 +1,89 @@
 @import "tailwindcss";
 
 :root {
-  --black: #000;
-  --dark: #0a0a0a;
-  --dark-2: #111;
-  --dark-3: #151515;
-  --dark-4: #1f1f1f;
+  --limestone: #F4F1EC;
+  --warm-white: #FDFCFA;
+  --cream: #EDEADE;
   --charcoal: #2A2A28;
+  --charcoal-deep: #1C1C1A;
+  --graphite: #3D3D3A;
   --copper: #B07340;
   --copper-light: #C8875A;
   --copper-glow: rgba(176,115,64,0.15);
-  --limestone: #F4F1EC;
-  --cream: #EDEADE;
   --stone: #A8A196;
   --stone-light: #C4BCB2;
   --stone-dark: #7A7368;
-  --white-05: rgba(255,255,255,0.05);
-  --white-10: rgba(255,255,255,0.1);
-  --white-15: rgba(255,255,255,0.15);
-  --white-30: rgba(255,255,255,0.3);
-  --white-50: rgba(255,255,255,0.5);
-  --white-70: rgba(255,255,255,0.7);
-  --border-dark: rgba(255,255,255,0.08);
+  --border: rgba(42, 42, 40, 0.08);
+  --border-s: rgba(42, 42, 40, 0.14);
   --font-logo: 'Times New Roman', Times, serif;
   --font-display: 'Times New Roman', Times, serif;
   --font-body: 'Switzer', -apple-system, sans-serif;
-  --font-mono: 'GT Flexa Mono Trial Rg', 'SF Mono', 'Courier New', monospace;
 }
 
 @theme inline {
-  --color-black: #000;
-  --color-dark: #0a0a0a;
-  --color-dark-2: #111;
-  --color-dark-3: #151515;
-  --color-copper: #B07340;
-  --color-copper-light: #C8875A;
   --color-limestone: #F4F1EC;
+  --color-warm-white: #FDFCFA;
+  --color-charcoal: #2A2A28;
+  --color-charcoal-deep: #1C1C1A;
+  --color-copper: #B07340;
   --color-stone: #A8A196;
   --color-stone-dark: #7A7368;
+  --color-stone-light: #C4BCB2;
   --font-logo: 'Times New Roman', Times, serif;
   --font-display: 'Times New Roman', Times, serif;
   --font-body: 'Switzer', -apple-system, sans-serif;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: auto; }
 
 body {
   font-family: var(--font-body);
-  color: var(--limestone);
-  background: #000000;
+  color: var(--charcoal);
+  background: var(--limestone);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-::selection { background: rgba(176,115,64,0.3); color: #fff; }
+::selection { background: rgba(176, 115, 64, 0.2); }
 
-/* Layout */
 .wrap { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 @media (min-width: 768px) { .wrap { padding: 0 40px; } }
 
-/* Section numbers */
-.sect-num {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--white-30);
-  letter-spacing: 0.1em;
-}
-
-/* Label */
+/* Section label */
 .label {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: 0.5rem;
   font-weight: 500;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.45em;
   text-transform: uppercase;
   color: var(--copper);
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
-/* Glass card */
+.sect-num {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--stone);
+  letter-spacing: 0.1em;
+}
+
+/* Glass card — light theme */
 .glass-card {
+  background: rgba(255,255,255,0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  background: var(--white-05);
-  border: 1px solid var(--border-dark);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px 28px;
   transition: all 0.3s ease;
 }
 .glass-card:hover {
   border-color: rgba(176,115,64,0.2);
-  box-shadow: 0 0 0 1px rgba(176,115,64,0.1), 0 4px 80px rgba(176,115,64,0.06);
+  box-shadow: 0 4px 40px rgba(176,115,64,0.06);
 }
 
-/* Rounded section */
-.rounded-section {
-  border-radius: 64px;
-  overflow: hidden;
-}
+.rounded-section { border-radius: 24px; overflow: hidden; }
 
 /* Buttons */
 .btn {
@@ -109,60 +92,31 @@ body {
   justify-content: center;
   padding: 1rem 2.2rem;
   font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  border-radius: 80px;
-  border: 1px solid var(--border-dark);
+  border-radius: 4px;
+  border: 1px solid var(--border-s);
   background: transparent;
-  color: var(--limestone);
+  color: var(--charcoal);
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
 }
-.btn:hover {
-  background: var(--copper);
-  border-color: var(--copper);
-  color: #fff;
-}
-.btn-copper {
-  background: var(--copper);
-  border-color: var(--copper);
-  color: #fff;
-}
-.btn-copper:hover {
-  background: var(--copper-light);
-  border-color: var(--copper-light);
-}
+.btn:hover { background: var(--charcoal); color: var(--limestone); border-color: var(--charcoal); }
+.btn-dark { background: var(--charcoal); color: var(--limestone); border-color: var(--charcoal); }
+.btn-dark:hover { background: var(--copper); border-color: var(--copper); }
+.btn-copper { background: var(--copper); color: #fff; border-color: var(--copper); }
+.btn-copper:hover { background: var(--copper-light); border-color: var(--copper-light); }
 
-/* Divider */
-.divider-dark {
-  height: 0.5px;
-  background: var(--border-dark);
-  width: 100%;
-}
+.divider-light { height: 1px; background: var(--border); width: 100%; }
 
-/* Reveal animations */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Word blur hover (like Honey's services) */
-.word-hover span {
-  display: inline-block;
-  transition: filter 0.2s ease-out, opacity 0.2s ease-out;
-}
-.word-hover:hover span { filter: blur(2px); opacity: 0.3; }
-.word-hover:hover span:hover { filter: blur(0); opacity: 1; }
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: var(--white-15); border-radius: 2px; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--limestone); }
+::-webkit-scrollbar-thumb { background: var(--stone-light); border-radius: 3px; }

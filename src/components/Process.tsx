@@ -43,10 +43,10 @@ export default function Process() {
             <span className="sect-num">[ 03 / 07 ]</span>
           </div>
           <div style={{ maxWidth: "550px" }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--limestone)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
               It&rsquo;s not a leap of faith.<br />It&rsquo;s a system.
             </p>
-            <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-30)", lineHeight: 1.8, marginTop: "1rem" }}>
+            <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone)", lineHeight: 1.8, marginTop: "1rem" }}>
               (Four phases. One outcome. Your venue, operational.)
             </p>
           </div>
@@ -54,12 +54,12 @@ export default function Process() {
 
         <div className="proc-grid grid grid-cols-1 md:grid-cols-2" style={{ gap: "6px" }}>
           {steps.map((s) => (
-            <div key={s.num} className="proc-item glass-card" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: "320px" }}>
+            <div key={s.num} className="proc-item glass-card" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: "320px", background: "#fff", border: "1px solid var(--border)" }}>
               <div>
-                <span style={{ fontFamily: "var(--font-display)", fontSize: "4rem", fontWeight: 400, color: "var(--white-10)", lineHeight: 1, display: "block", marginBottom: "1.5rem" }}>{s.num}</span>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 400, color: "var(--limestone)", letterSpacing: "-0.01em", marginBottom: "1rem" }}>{s.title}</h3>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "4rem", fontWeight: 400, color: "var(--copper)", lineHeight: 1, display: "block", marginBottom: "1.5rem", opacity: 0.3 }}>{s.num}</span>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em", marginBottom: "1rem" }}>{s.title}</h3>
               </div>
-              <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.8 }}>{s.desc}</p>
+              <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.8 }}>{s.desc}</p>
             </div>
           ))}
         </div>

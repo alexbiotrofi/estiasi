@@ -39,7 +39,7 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={ref} style={{ padding: "128px 0 90px" }}>
+    <section ref={ref} style={{ padding: "128px 0 90px", background: "var(--warm-white)" }}>
       {/* Copper radial glow */}
       <div style={{ position: "absolute", left: "50%", top: "0", transform: "translateX(-50%)", width: "2000px", height: "300px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.08) 0%, rgba(176,115,64,0.03) 54%, transparent 100%)", pointerEvents: "none" }} />
 
@@ -50,10 +50,10 @@ export default function About() {
             <span className="sect-num">[ 01 / 07 ]</span>
           </div>
           <div style={{ maxWidth: "650px" }}>
-            <p ref={textRef} style={{ fontSize: "clamp(1.1rem, 2vw, 1.4rem)", fontWeight: 300, color: "var(--limestone)", lineHeight: 1.85, marginBottom: "2rem" }}>
+            <p ref={textRef} style={{ fontSize: "clamp(1.1rem, 2vw, 1.4rem)", fontWeight: 300, color: "var(--charcoal)", lineHeight: 1.85, marginBottom: "2rem" }}>
               Estιasι is a culinary consultancy that brings restaurants to life. We take your vision — from the first sketch on a napkin to a fully operational venue — and build every system, every menu, every team that makes it run.
             </p>
-            <p className="reveal" style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--white-50)", lineHeight: 1.85 }}>
+            <p className="reveal" style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85 }}>
               Founded by a chef who has opened kitchens across London and Europe, and an operator who builds the systems behind them. Based in Cyprus. Operating across the Mediterranean.
             </p>
             <div className="reveal" style={{ marginTop: "2rem" }}>
