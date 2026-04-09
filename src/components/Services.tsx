@@ -84,65 +84,32 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Service list with dividers + Honey blur-hover */}
-        <div className="divider-light" />
-        {services.map((s) => (
-          <div key={s.name}>
-            <div
-              className="svc-row flex items-center gap-4"
-              style={{ padding: "1.2rem 0", cursor: "default" }}
-              onMouseEnter={(e) => {
-                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
-                const desc = e.currentTarget.querySelector<HTMLElement>(".svc-desc");
-                const line = e.currentTarget.querySelector<HTMLElement>(".svc-line");
-                if (name) { name.style.filter = "blur(0px)"; name.style.opacity = "1"; name.style.color = "var(--copper)"; }
-                if (desc) { desc.style.opacity = "1"; }
-                if (line) { line.style.opacity = "0.5"; }
-              }}
-              onMouseLeave={(e) => {
-                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
-                const desc = e.currentTarget.querySelector<HTMLElement>(".svc-desc");
-                const line = e.currentTarget.querySelector<HTMLElement>(".svc-line");
-                if (name) { name.style.filter = "blur(1.5px)"; name.style.opacity = "0.35"; name.style.color = "var(--charcoal)"; }
-                if (desc) { desc.style.opacity = "0.35"; }
-                if (line) { line.style.opacity = "0.15"; }
-              }}
-            >
-              <span className="svc-name" style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.2rem, 2.2vw, 1.7rem)",
-                fontWeight: 400,
-                color: "var(--charcoal)",
-                letterSpacing: "-0.01em",
-                flexShrink: 0,
-                filter: "blur(1.5px)",
-                opacity: 0.35,
-                transition: "filter 0.2s ease-out, opacity 0.2s ease-out, color 0.2s ease-out",
-              }}>
+        {/* Service names as a flowing sentence */}
+        <div className="reveal" style={{ lineHeight: 1.6 }}>
+          {services.map((s, i) => (
+            <span key={s.name} className="svc-row" style={{ display: "inline" }}>
+              <span
+                className="svc-name"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                  fontWeight: 400,
+                  color: "var(--charcoal)",
+                  letterSpacing: "-0.01em",
+                  transition: "color 0.2s ease-out",
+                  cursor: "default",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = "var(--copper)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "var(--charcoal)"; }}
+              >
                 {s.name}
               </span>
-              <span className="svc-line hidden md:block" style={{
-                width: "200px",
-                height: "1px",
-                background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)",
-                flexShrink: 0,
-                alignSelf: "center",
-                opacity: 0.15,
-                transition: "opacity 0.2s ease-out",
-              }} />
-              <span className="svc-desc hidden md:inline" style={{
-                fontSize: "0.88rem",
-                fontWeight: 400,
-                color: "var(--stone-dark)",
-                flexShrink: 0,
-                opacity: 0.35,
-                transition: "opacity 0.2s ease-out",
-              }}>
-                {s.desc}
-              </span>
-            </div>
-            <div className="divider-light" />
-          </div>
+              {i < services.length - 1 && (
+                <span style={{ display: "inline-block", margin: "0 0.6em", color: "var(--copper)", opacity: 0.4, fontSize: "clamp(1rem, 2vw, 1.4rem)" }}>·</span>
+              )}
+            </span>
+          ))}
+        </div>
         ))}
       </div>
     </section>
