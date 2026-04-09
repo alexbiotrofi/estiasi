@@ -69,7 +69,7 @@ export default function Services() {
         <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "4rem" }}>
           <div style={{ flex: "1 1 0" }}>
             <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
-              We design menus that make your guests weak in the knees. Kitchen systems precise enough for a Michelin star. Staff training that turns a team into a unit. And operational architecture that runs when we're not in the room.
+              Menus that tell a story. Kitchens that run themselves. Teams that set a new standard. From concept and compliance to brand and bookings — we build every layer of a venue that works.
             </p>
           </div>
           {/* Photo — always visible */}

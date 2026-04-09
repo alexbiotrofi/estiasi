@@ -33,14 +33,14 @@ export default function Navigation() {
           {/* Single row: logo left, centred links, hire us right */}
           <div className="flex items-center justify-between">
             <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} style={{ textDecoration: "none", flexShrink: 0 }}>
-              <span style={{ fontFamily: "var(--font-logo)", fontSize: "1.8rem", letterSpacing: "0.0618em", color: scrolled ? "var(--charcoal)" : "#fff", transition: "color 0.3s" }}>estιasι</span>
+              <span style={{ fontFamily: "var(--font-logo)", fontSize: scrolled ? "1.6rem" : "2.4rem", letterSpacing: "0.0618em", color: scrolled ? "var(--charcoal)" : "#fff", transition: "all 0.4s ease" }}>estιasι</span>
             </a>
 
             {/* Centred menu links */}
             <div className="hidden md:flex items-center justify-center gap-7" style={{ flex: 1 }}>
               {links.map(l => (
                 <a key={l.href} href={l.href} style={{
-                  fontSize: "0.6rem",
+                  fontSize: "0.68rem",
                   fontWeight: 500,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase" as const,

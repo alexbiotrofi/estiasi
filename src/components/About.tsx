@@ -54,7 +54,7 @@ export default function About() {
               Estιasι is a culinary consultancy that brings restaurants to life. We take your vision — from the first sketch on a napkin to a fully operational venue — and build every system, every menu, every team that makes it run.
             </p>
             <p className="reveal" style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85 }}>
-              Founded by a chef who has opened kitchens across London and Europe, and an operator who builds the systems behind them. Based in Cyprus. Operating across the Mediterranean.
+              Founded by Dimitris Kamaritis — a Michelin-trained chef with over a decade in some of the UK&rsquo;s most respected kitchens, from The Ritz London to Raffles at The OWO — and Alex Apostolides, who builds the operational and digital infrastructure behind every venue. Based in Cyprus. Operating across Europe.
             </p>
             <div className="reveal" style={{ marginTop: "2rem" }}>
               <a href="#work" className="btn" style={{ fontSize: "0.55rem" }}>escape velocity</a>

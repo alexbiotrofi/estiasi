@@ -58,11 +58,11 @@ export default function Hero() {
             flexShrink: 0,
           }} />
           <span style={{
-            fontSize: "0.7rem",
+            fontSize: "0.85rem",
             fontWeight: 500,
-            letterSpacing: "0.35em",
+            letterSpacing: "0.4em",
             textTransform: "uppercase" as const,
-            color: "rgba(255,255,255,0.5)",
+            color: "rgba(255,255,255,0.7)",
           }}>
             Culinary Consulting · Cyprus
           </span>
