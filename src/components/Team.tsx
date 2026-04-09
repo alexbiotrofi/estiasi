@@ -6,6 +6,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function MichelinStars({ count }: { count: number }) {
+  return (
+    <span style={{ display: "inline-flex", gap: "2px", verticalAlign: "middle", marginLeft: "4px" }}>
+      {Array.from({ length: count }).map((_, i) => (
+        <svg key={i} xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--copper)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block" }}>
+          <path d="M14.792 17.063c0 .337 .057 .618 .057 .9c0 1.8 -1.238 3.037 -2.982 3.037c-1.8 0 -2.98 -1.238 -2.98 -3.206v-.731c-.957 .675 -1.576 .9 -2.42 .9c-1.518 0 -2.925 -1.463 -2.925 -3.094c0 -1.181 .844 -2.194 2.082 -2.756l.28 -.113c-1.574 -.787 -2.362 -1.688 -2.362 -2.925c0 -1.687 1.294 -3.094 2.925 -3.094c.675 0 1.52 .338 2.138 .788l.281 .112c0 -.337 -.056 -.619 -.056 -.844c0 -1.8 1.237 -3.037 2.98 -3.037c1.8 0 2.981 1.237 2.981 3.206v.394l-.056 .281c.956 -.675 1.575 -.9 2.419 -.9c1.519 0 2.925 1.463 2.925 3.094c0 1.181 -.844 2.194 -2.081 2.756l-.282 .169c1.575 .787 2.363 1.688 2.363 2.925c0 1.688 -1.294 3.094 -2.925 3.094c-.675 0 -1.575 -.281 -2.138 -.788l-.225 -.169l.001 .001" />
+        </svg>
+      ))}
+    </span>
+  );
+}
+
 export default function Team() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -54,14 +66,14 @@ export default function Team() {
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Culinary Director & Co-Founder</p>
               <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                Michelin-trained chef with multiple years of experience in professional kitchens. Dimitris has gained knowledge about hospitality across four countries — the UK, Canada, Israel, and Cyprus — and has worked at The Ritz London <span style={{ color: "var(--copper)" }}>&#9733;</span>, under Claude Bosi at Bibendum <span style={{ color: "var(--copper)" }}>&#9733;&#9733;</span>, and as part of three-Michelin-star chef Mauro Colagreco&rsquo;s team at Raffles London at The OWO.
+                Michelin-trained chef with multiple years of experience in professional kitchens. Dimitris has gained knowledge about hospitality across four countries — the UK, Canada, Israel, and Cyprus — and has worked at The Ritz London <MichelinStars count={2} />, under Claude Bosi at Bibendum <MichelinStars count={2} />, and as part of three-Michelin-star chef Mauro Colagreco&rsquo;s team at Raffles London at The OWO.
               </p>
               <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
                 A Fellow of the Royal Society for Public Health and co-founder of Biotrofi — a premium private chef and wellness service in Cyprus — Dimitris leads all culinary standards at estιasι. From concept creation and menu engineering to kitchen design, HACCP compliance, staff recruitment, and the full operational lifecycle of every venue we touch. He doesn&rsquo;t advise from a distance. He builds from within.
               </p>
-              <div style={{ display: "flex", gap: "2.5rem", marginBottom: "1.5rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1.5rem" }}>
                 {[{ n: "3", l: "Michelin Kitchens" }, { n: "FRSPH", l: "Fellow" }, { n: "4", l: "Countries" }].map(s => (
-                  <div key={s.l} style={{ textAlign: "center" }}>
+                  <div key={s.l} style={{ textAlign: "center", flex: "1 1 0" }}>
                     <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", color: "var(--copper)" }}>{s.n}</div>
                     <div style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{s.l}</div>
                   </div>

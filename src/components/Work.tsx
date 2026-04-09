@@ -1,20 +1,21 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  { num: "01", name: "Grain", location: "Holborn, London", type: "Full Launch", desc: "Modern Mediterranean. Concept to grand opening. Every system, every hire, every plate.", images: ["/photos/grain-exterior.jpg", "/photos/grain-dishes.jpg"] },
-  { num: "02", name: "Filos by Halepi", location: "London", type: "Restaurant Support", desc: "Greek dining reimagined. Operational diagnostic, menu overhaul, procedural redesign.", images: ["/photos/filos-kitchen.jpg", "/photos/filos-3d-kitchen.jpg"] },
-  { num: "03", name: "Mesa Stone", location: "Fine Dining", type: "Full Launch", desc: "Premium fine dining from zero. Kitchen spec, HACCP, SOPs, phased opening.", images: ["/photos/dining-room.jpg", "/photos/chef-plating.jpg"] },
-  { num: "04", name: "Mauro Colagreco", location: "Raffles London, The OWO", type: "Collaboration", desc: "World-class culinary programme. One of London's most prestigious destinations.", images: ["/photos/mauro-dining.jpg", "/photos/mauro-building.jpg"] },
+  { num: "01", name: "Grain", location: "Holborn, London", type: "Full Launch", desc: "Modern Mediterranean. Concept to grand opening. Every system, every hire, every plate.", detail: "End-to-end launch consultancy for a modern Mediterranean restaurant in the heart of London. We defined the concept, designed the kitchen layout, engineered the full menu with food costing, recruited and trained the team, wrote every SOP, and managed the soft opening through to grand opening.", scope: ["Concept & Positioning", "Kitchen Design", "Menu Engineering", "Food Cost Control", "Staff Recruitment & Training", "SOPs", "Soft Opening", "Grand Opening"], images: ["/photos/grain-exterior.jpg", "/photos/grain-dishes.jpg"] },
+  { num: "02", name: "Filos by Halepi", location: "London", type: "Restaurant Support", desc: "Greek dining reimagined. Operational diagnostic, menu overhaul, procedural redesign.", detail: "Full operational diagnostic and improvement programme for an established Greek dining concept. We conducted a complete review, reimagined the menu, redesigned kitchen workflows, retrained the team on new service standards, and implemented new procedures that reduced waste and improved consistency.", scope: ["Operational Review", "Menu Reimagination", "Procedure Redesign", "Kitchen Workflow", "Staff Retraining", "Waste Reduction"], images: ["/photos/filos-kitchen.jpg", "/photos/filos-3d-kitchen.jpg"] },
+  { num: "03", name: "Mesa Stone", location: "Fine Dining", type: "Full Launch", desc: "Premium fine dining from zero. Kitchen spec, HACCP, SOPs, phased opening.", detail: "Concept creation and full operational build for a premium fine-dining venue. From positioning and kitchen specification to HACCP frameworks, SOP documentation, and phased opening management. Every detail considered from the first sketch to the last plate.", scope: ["Fine Dining Concept", "Kitchen Specification", "HACCP Frameworks", "SOP Documentation", "Phased Opening", "Quality Systems"], images: ["/photos/dining-room.jpg", "/photos/chef-plating.jpg"] },
+  { num: "04", name: "Mauro Colagreco", location: "Raffles London, The OWO", type: "Collaboration", desc: "World-class culinary programme. One of London's most prestigious destinations.", detail: "Part of the team supporting the culinary programme at one of London's most prestigious new hospitality destinations. Working alongside world-class standards in fine dining operations, service delivery, and quality systems under three-Michelin-star chef Mauro Colagreco.", scope: ["Fine Dining Operations", "Service Delivery", "Quality Systems", "World-Class Standards"], images: ["/photos/mauro-dining.jpg", "/photos/mauro-building.jpg"] },
 ];
 
 export default function Work() {
   const ref = useRef<HTMLDivElement>(null);
+  const [flipped, setFlipped] = useState<string | null>(null);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -30,7 +31,7 @@ export default function Work() {
   }, []);
 
   return (
-    <section ref={ref} style={{ padding: "128px 0" }}>
+    <section id="work" ref={ref} style={{ padding: "128px 0" }}>
       <div className="wrap">
         <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "5rem" }}>
           <div>
@@ -49,34 +50,78 @@ export default function Work() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
           {projects.map((p) => (
-            <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden" }}>
-              {/* Images row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
-                {p.images.map((img, j) => (
-                  <div key={j} style={{ height: "clamp(250px, 30vw, 400px)", overflow: "hidden", position: "relative" }}>
-                    <img src={img} alt="" className="w-full h-full object-cover" style={{ transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
-                    {j === 0 && (
-                      <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 400, color: "rgba(255,255,255,0.08)", lineHeight: 1 }}>{p.num}</div>
-                    )}
+            <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden", perspective: "1200px" }}>
+              <div style={{
+                transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+                transformStyle: "preserve-3d",
+                transform: flipped === p.num ? "rotateY(180deg)" : "rotateY(0deg)",
+                position: "relative",
+              }}>
+                {/* FRONT */}
+                <div style={{ backfaceVisibility: "hidden" }}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
+                    {p.images.map((img, j) => (
+                      <div key={j} style={{ height: "clamp(200px, 25vw, 320px)", overflow: "hidden", position: "relative" }}>
+                        <img src={img} alt="" className="w-full h-full object-cover" style={{ transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
+                        {j === 0 && (
+                          <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 400, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              {/* Content */}
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4" style={{ padding: "2rem 2.5rem" }}>
-                <div>
-                  <div className="flex items-center gap-3" style={{ marginBottom: "0.5rem" }}>
-                    <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>{p.type}</span>
-                    <span style={{ fontSize: "0.5rem", color: "var(--stone)" }}>·</span>
-                    <span style={{ fontSize: "0.5rem", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{p.location}</span>
+                  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4" style={{ padding: "1.5rem 2rem" }}>
+                    <div>
+                      <div className="flex items-center gap-3" style={{ marginBottom: "0.4rem" }}>
+                        <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>{p.type}</span>
+                        <span style={{ fontSize: "0.5rem", color: "var(--stone-light)" }}>·</span>
+                        <span style={{ fontSize: "0.5rem", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{p.location}</span>
+                      </div>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <p style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "35ch" }}>{p.desc}</p>
+                      <button onClick={() => setFlipped(p.num)} style={{ flexShrink: 0, width: "36px", height: "36px", borderRadius: "50%", border: "1px solid var(--border-s)", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s", fontSize: "0.7rem", color: "var(--copper)" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "var(--copper)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--copper)"; e.currentTarget.style.borderColor = "var(--border-s)"; }}
+                      >→</button>
+                    </div>
                   </div>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
                 </div>
-                <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "40ch" }}>{p.desc}</p>
+
+                {/* BACK */}
+                <div style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                  position: "absolute",
+                  inset: 0,
+                  background: "var(--charcoal)",
+                  padding: "clamp(1.5rem, 3vw, 2.5rem)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  overflow: "auto",
+                }}>
+                  <div className="flex items-center justify-between" style={{ marginBottom: "1.5rem" }}>
+                    <div>
+                      <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.35rem" }}>{p.type} · {p.location}</span>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--limestone)" }}>{p.name}</h3>
+                    </div>
+                    <button onClick={() => setFlipped(null)} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", color: "var(--limestone)", flexShrink: 0, transition: "all 0.2s" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.borderColor = "var(--copper)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; }}
+                    >✕</button>
+                  </div>
+                  <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "rgba(255,255,255,0.6)", lineHeight: 1.85, marginBottom: "1.5rem" }}>{p.detail}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {p.scope.map(s => (
+                      <span key={s} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--copper)", border: "1px solid rgba(176,115,64,0.3)", padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{s}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
