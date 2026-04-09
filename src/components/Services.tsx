@@ -66,7 +66,7 @@ export default function Services() {
         </div>
 
         {/* Intro text + image */}
-        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "4rem" }}>
+        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "3rem" }}>
           <div style={{ flex: "1 1 0" }}>
             <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
               Menus that tell a story. Kitchens that run themselves. Teams that set a new standard. From concept and compliance to brand and bookings — we build every layer of a venue that works.
@@ -84,51 +84,37 @@ export default function Services() {
           </div>
         </div>
 
-      </div>
-
-      {/* Marble strip with service grid */}
-      <div className="reveal" style={{ position: "relative", overflow: "hidden", marginTop: "3rem", padding: "3rem 0" }}>
-        {/* Solid white background — contrasts against marble body */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0, background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }} />
-        {/* Subtle top/bottom borders */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.2 }} />
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.2 }} />
-
-        <div className="wrap relative" style={{ zIndex: 1 }}>
-          <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: "0", textAlign: "center" }}>
-            {services.map((s, i) => (
-              <div
-                key={s.name}
-                style={{
-                  cursor: "default",
-                  padding: "1.25rem 1rem",
-                  borderRight: (i % 4 !== 3) ? "1px solid rgba(176,115,64,0.1)" : "none",
-                  borderBottom: i < 4 ? "1px solid rgba(176,115,64,0.1)" : "none",
-                }}
-                onMouseEnter={e => {
-                  const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
-                  if (name) name.style.color = "var(--copper)";
-                }}
-                onMouseLeave={e => {
-                  const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
-                  if (name) name.style.color = "var(--charcoal)";
-                }}
-              >
-                <span className="svc-name" style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(0.9rem, 1.6vw, 1.15rem)",
-                  fontWeight: 400,
-                  color: "var(--charcoal)",
-                  letterSpacing: "0",
-                  transition: "color 0.2s ease-out",
-                }}>
-                  {s.name}
-                </span>
-              </div>
-            ))}
+        {/* Service list */}
+        <div className="divider-light" />
+        {services.map((s) => (
+          <div key={s.name}>
+            <div className="svc-row flex items-center justify-between" style={{ padding: "1.1rem 0", cursor: "default" }}
+              onMouseEnter={e => {
+                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
+                if (name) name.style.color = "var(--copper)";
+              }}
+              onMouseLeave={e => {
+                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
+                if (name) name.style.color = "var(--charcoal)";
+              }}
+            >
+              <span className="svc-name" style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
+                fontWeight: 400,
+                color: "var(--charcoal)",
+                letterSpacing: "-0.01em",
+                transition: "color 0.2s ease-out",
+              }}>
+                {s.name}
+              </span>
+              <span className="hidden md:inline" style={{ fontSize: "0.8rem", fontWeight: 300, color: "var(--stone)", transition: "color 0.2s" }}>
+                {s.desc}
+              </span>
+            </div>
+            <div className="divider-light" />
           </div>
-        </div>
-      </div>
+        ))}
 
     </section>
   );
