@@ -115,7 +115,7 @@ export default function Services() {
             <div className="divider-light" />
           </div>
         ))}
-
+      </div>
     </section>
   );
 }
