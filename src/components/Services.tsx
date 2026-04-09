@@ -88,10 +88,8 @@ export default function Services() {
 
       {/* Marble strip with service grid */}
       <div className="reveal" style={{ position: "relative", overflow: "hidden", marginTop: "3rem", padding: "3rem 0" }}>
-        {/* Marble texture background */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-          <img src="/textures/marble-hero.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.2 }} />
-        </div>
+        {/* Solid white background — contrasts against marble body */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 0, background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }} />
         {/* Subtle top/bottom borders */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.2 }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.2 }} />
