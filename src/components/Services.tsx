@@ -84,30 +84,36 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Service names as a flowing sentence */}
-        <div className="reveal" style={{ lineHeight: 1.6 }}>
+        {/* 4x2 centred grid */}
+        <div className="reveal grid grid-cols-2 md:grid-cols-4" style={{ gap: "2rem 1rem", textAlign: "center" }}>
           {services.map((s, i) => (
-            <span key={s.name} className="svc-row" style={{ display: "inline" }}>
-              <span
-                className="svc-name"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
-                  fontWeight: 400,
-                  color: "var(--charcoal)",
-                  letterSpacing: "-0.01em",
-                  transition: "color 0.2s ease-out",
-                  cursor: "default",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.color = "var(--copper)"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "var(--charcoal)"; }}
-              >
+            <div
+              key={s.name}
+              className="svc-row"
+              style={{ cursor: "default", padding: "1rem 0" }}
+              onMouseEnter={e => {
+                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
+                if (name) name.style.color = "var(--copper)";
+              }}
+              onMouseLeave={e => {
+                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
+                if (name) name.style.color = "var(--charcoal)";
+              }}
+            >
+              <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", color: "var(--copper)", opacity: 0.5, display: "block", marginBottom: "0.5rem" }}>
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="svc-name" style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
+                fontWeight: 400,
+                color: "var(--charcoal)",
+                letterSpacing: "-0.01em",
+                transition: "color 0.2s ease-out",
+              }}>
                 {s.name}
               </span>
-              {i < services.length - 1 && (
-                <span style={{ display: "inline-block", margin: "0 0.6em", color: "var(--copper)", opacity: 0.4, fontSize: "clamp(1rem, 2vw, 1.4rem)" }}>·</span>
-              )}
-            </span>
+            </div>
           ))}
         </div>
       </div>
