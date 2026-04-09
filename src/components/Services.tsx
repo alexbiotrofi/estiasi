@@ -110,7 +110,6 @@ export default function Services() {
             </span>
           ))}
         </div>
-        ))}
       </div>
     </section>
   );
