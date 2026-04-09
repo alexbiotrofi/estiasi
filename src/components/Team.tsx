@@ -50,26 +50,34 @@ export default function Team() {
             </div>
             <div style={{ padding: "clamp(2rem, 4vw, 3.5rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.25rem" }}>
-                Dimitris Kamaritis<span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", color: "var(--copper)", marginLeft: "0.75rem", verticalAlign: "middle" }}>FRSPH</span>
+                Dimitris Kamaritis FRSPH
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Culinary Director & Co-Founder</p>
               <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                Michelin-trained chef with over a decade of experience in professional kitchens. Dimitris trained across four countries — the UK, Canada, Israel, and Cyprus — before working at The Ritz London (*), under Claude Bosi at Bibendum (**), and as part of three-Michelin-star chef Mauro Colagreco&rsquo;s team at Raffles London at The OWO.
+                Michelin-trained chef with multiple years of experience in professional kitchens. Dimitris has gained knowledge about hospitality across four countries — the UK, Canada, Israel, and Cyprus — and has worked at The Ritz London <span style={{ color: "var(--copper)" }}>&#9733;</span>, under Claude Bosi at Bibendum <span style={{ color: "var(--copper)" }}>&#9733;&#9733;</span>, and as part of three-Michelin-star chef Mauro Colagreco&rsquo;s team at Raffles London at The OWO.
               </p>
               <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                A Fellow of the Royal Society for Public Health, Dimitris leads all culinary standards at estιasι — from concept creation and menu engineering to kitchen design, HACCP compliance, staff recruitment, and the full operational lifecycle of every venue we touch. He doesn&rsquo;t advise from a distance. He builds from within.
+                A Fellow of the Royal Society for Public Health and co-founder of Biotrofi — a premium private chef and wellness service in Cyprus — Dimitris leads all culinary standards at estιasι. From concept creation and menu engineering to kitchen design, HACCP compliance, staff recruitment, and the full operational lifecycle of every venue we touch. He doesn&rsquo;t advise from a distance. He builds from within.
               </p>
               <div style={{ display: "flex", gap: "2.5rem", marginBottom: "1.5rem" }}>
-                {[{ n: "3", l: "Michelin Kitchens" }, { n: "FRSPH", l: "Fellow" }, { n: "4", l: "Countries Trained" }].map(s => (
-                  <div key={s.l}>
+                {[{ n: "3", l: "Michelin Kitchens" }, { n: "FRSPH", l: "Fellow" }, { n: "4", l: "Countries" }].map(s => (
+                  <div key={s.l} style={{ textAlign: "center" }}>
                     <div style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", color: "var(--copper)" }}>{s.n}</div>
                     <div style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{s.l}</div>
                   </div>
                 ))}
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                {["Menu Engineering", "Kitchen Design", "Staff Training", "Launch Management", "Level 3 Supervising Food Safety & Hygiene", "Level 3 HACCP Development", "FCA Food Allergen & Intolerance"].map(tag => (
-                  <span key={tag} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--stone)", border: "1px solid var(--border)", padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{tag}</span>
+                {[
+                  { tag: "Menu Engineering", cert: false },
+                  { tag: "Kitchen Design", cert: false },
+                  { tag: "Staff Training", cert: false },
+                  { tag: "Launch Management", cert: false },
+                  { tag: "Level 3 Supervising Food Safety & Hygiene", cert: true },
+                  { tag: "Level 3 HACCP Development", cert: true },
+                  { tag: "FCA Food Allergen & Intolerance", cert: true },
+                ].map(t => (
+                  <span key={t.tag} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: t.cert ? "var(--copper)" : "var(--stone)", border: `1px solid ${t.cert ? "var(--copper)" : "var(--border)"}`, padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{t.tag}</span>
                 ))}
               </div>
             </div>
