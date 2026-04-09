@@ -57,7 +57,8 @@ body {
 ::selection { background: rgba(176,115,64,0.3); color: #fff; }
 
 /* Layout */
-.wrap { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+.wrap { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+@media (min-width: 768px) { .wrap { padding: 0 40px; } }
 
 /* Section numbers */
 .sect-num {

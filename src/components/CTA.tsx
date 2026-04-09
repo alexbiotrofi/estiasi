@@ -1,6 +1,6 @@
 export default function CTA() {
   return (
-    <section className="rounded-section" style={{ margin: "0 40px", background: "var(--copper)", padding: "clamp(4rem, 10vw, 8rem) 0" }}>
+    <section className="rounded-section" style={{ margin: "0 clamp(12px, 3vw, 40px)", background: "var(--copper)", padding: "clamp(4rem, 10vw, 8rem) 0" }}>
       <div className="wrap text-center">
         <span style={{ fontFamily: "var(--font-logo)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 400, letterSpacing: "0.0618em", color: "#fff", display: "block", lineHeight: 0.9, marginBottom: "2rem" }}>
           estιasι

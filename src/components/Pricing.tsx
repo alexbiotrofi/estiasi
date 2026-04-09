@@ -77,7 +77,7 @@ export default function Pricing() {
           </div>
         </div>
 
-        <div className="flex gap-2" style={{ marginBottom: "2rem" }}>
+        <div className="flex flex-wrap gap-2" style={{ marginBottom: "2rem" }}>
           {tiers.map(tier => (
             <button key={tier.id} onClick={() => switchTier(tier.id)} className="btn" style={{
               padding: "0.6rem 1.5rem", fontSize: "0.55rem",
@@ -113,11 +113,8 @@ export default function Pricing() {
 
             <div
               ref={gridRef}
-              style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${t.sections.length}, 1fr)`,
-                gap: "6px",
-              }}
+              className={`grid grid-cols-1 ${t.sections.length >= 2 ? "md:grid-cols-2" : ""} ${t.sections.length >= 3 ? "lg:grid-cols-3" : ""}`}
+              style={{ gap: "6px" }}
             >
               {t.sections.map((section, si) => {
                 const isNew = si === t.sections.length - 1 && t.sections.length > 1;

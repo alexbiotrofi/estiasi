@@ -44,7 +44,7 @@ export default function Team() {
         {/* Dimitris */}
         <div className="team-reveal rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden", marginBottom: "6px" }}>
           <div className="grid grid-cols-1 md:grid-cols-2">
-            <div style={{ position: "relative", minHeight: "550px", overflow: "hidden" }}>
+            <div style={{ position: "relative", minHeight: "clamp(300px, 50vw, 550px)", overflow: "hidden" }}>
               <img src="/photos/dimitris-kitchen.jpg" alt="Dimitris Kamaritis" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 15%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 70%, var(--dark-2) 100%)" }} />
             </div>
@@ -93,7 +93,7 @@ export default function Team() {
                 ))}
               </div>
             </div>
-            <div className="md:col-span-4" style={{ position: "relative", minHeight: "350px", overflow: "hidden" }}>
+            <div className="md:col-span-4" style={{ position: "relative", minHeight: "clamp(250px, 40vw, 350px)", overflow: "hidden" }}>
               <img src="/photos/alex-restaurant.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 20%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 60%, var(--dark-2) 100%)" }} />
             </div>

@@ -114,7 +114,6 @@ export default function Services() {
                 fontWeight: 400,
                 color: "var(--limestone)",
                 letterSpacing: "-0.01em",
-                whiteSpace: "nowrap" as const,
                 flexShrink: 0,
                 filter: "blur(1.5px)",
                 opacity: 0.35,
@@ -122,7 +121,7 @@ export default function Services() {
               }}>
                 {s.name}
               </span>
-              <span className="svc-line" style={{
+              <span className="svc-line hidden md:block" style={{
                 width: "200px",
                 height: "1px",
                 background: "linear-gradient(90deg, transparent 0%, var(--copper) 30%, var(--copper) 70%, transparent 100%)",
@@ -131,11 +130,10 @@ export default function Services() {
                 opacity: 0.15,
                 transition: "opacity 0.2s ease-out",
               }} />
-              <span className="svc-desc" style={{
+              <span className="svc-desc hidden md:inline" style={{
                 fontSize: "0.88rem",
                 fontWeight: 400,
                 color: "rgba(255,255,255,0.8)",
-                whiteSpace: "nowrap" as const,
                 flexShrink: 0,
                 opacity: 0.35,
                 transition: "opacity 0.2s ease-out",

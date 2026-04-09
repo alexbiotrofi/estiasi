@@ -52,7 +52,7 @@ export default function Process() {
           </div>
         </div>
 
-        <div className="proc-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px", minHeight: "80vh" }}>
+        <div className="proc-grid grid grid-cols-1 md:grid-cols-2" style={{ gap: "6px" }}>
           {steps.map((s) => (
             <div key={s.num} className="proc-item glass-card" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: "320px" }}>
               <div>

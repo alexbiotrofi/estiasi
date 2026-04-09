@@ -51,7 +51,7 @@ export default function Work() {
           {projects.map((p) => (
             <div key={p.num} className="work-item rounded-section" style={{ background: "var(--dark-2)", overflow: "hidden" }}>
               {/* Images row */}
-              <div className="grid grid-cols-2 gap-px">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
                 {p.images.map((img, j) => (
                   <div key={j} style={{ height: "clamp(250px, 30vw, 400px)", overflow: "hidden", position: "relative" }}>
                     <img src={img} alt="" className="w-full h-full object-cover" style={{ transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
