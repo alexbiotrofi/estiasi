@@ -15,7 +15,7 @@ const projects = [
 
 export default function Work() {
   const ref = useRef<HTMLDivElement>(null);
-  const [flipped, setFlipped] = useState<string | null>(null);
+  const [selected, setSelected] = useState<typeof projects[0] | null>(null);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -30,99 +30,169 @@ export default function Work() {
     return () => ctx.revert();
   }, []);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selected) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [selected]);
+
   return (
-    <section id="work" ref={ref} style={{ padding: "128px 0" }}>
-      <div className="wrap">
-        <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "5rem" }}>
-          <div>
-            <span className="label">Track Record</span>
-            <span className="sect-num">[ 06 / 07 ]</span>
+    <>
+      <section id="work" ref={ref} style={{ padding: "128px 0" }}>
+        <div className="wrap">
+          <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "5rem" }}>
+            <div>
+              <span className="label">Track Record</span>
+              <span className="sect-num">[ 06 / 07 ]</span>
+            </div>
+            <div style={{ maxWidth: "550px" }}>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+                The work that built the consultancy.
+              </p>
+              <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, marginTop: "1rem" }}>
+                Projects led by Dimitris prior to founding estιasι.
+              </p>
+            </div>
           </div>
-          <div style={{ maxWidth: "550px" }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
-              The work that built the consultancy.
-            </p>
-            <p style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, marginTop: "1rem" }}>
-              Projects led by Dimitris prior to founding estιasι.
-            </p>
-          </div>
-        </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-          {projects.map((p) => (
-            <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden", perspective: "1200px" }}>
-              <div style={{
-                transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
-                transformStyle: "preserve-3d",
-                transform: flipped === p.num ? "rotateY(180deg)" : "rotateY(0deg)",
-                position: "relative",
-              }}>
-                {/* FRONT */}
-                <div style={{ backfaceVisibility: "hidden" }}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
-                    {p.images.map((img, j) => (
-                      <div key={j} style={{ height: "clamp(200px, 25vw, 320px)", overflow: "hidden", position: "relative" }}>
-                        <img src={img} alt="" className="w-full h-full object-cover" style={{ transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
-                        {j === 0 && (
-                          <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 400, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4" style={{ padding: "1.5rem 2rem" }}>
-                    <div>
-                      <div className="flex items-center gap-3" style={{ marginBottom: "0.4rem" }}>
-                        <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>{p.type}</span>
-                        <span style={{ fontSize: "0.5rem", color: "var(--stone-light)" }}>·</span>
-                        <span style={{ fontSize: "0.5rem", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{p.location}</span>
-                      </div>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            {projects.map((p) => (
+              <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden", cursor: "pointer" }} onClick={() => setSelected(p)}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
+                  {p.images.map((img, j) => (
+                    <div key={j} style={{ height: "clamp(200px, 25vw, 320px)", overflow: "hidden", position: "relative" }}>
+                      <img src={img} alt="" className="w-full h-full object-cover" style={{ transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
+                      {j === 0 && (
+                        <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 400, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
+                      )}
                     </div>
-                    <div className="flex items-center gap-4">
-                      <p style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "35ch" }}>{p.desc}</p>
-                      <button onClick={() => setFlipped(p.num)} style={{ flexShrink: 0, width: "36px", height: "36px", borderRadius: "50%", border: "1px solid var(--border-s)", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s", fontSize: "0.7rem", color: "var(--copper)" }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "var(--copper)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--copper)"; e.currentTarget.style.borderColor = "var(--border-s)"; }}
-                      >→</button>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-
-                {/* BACK */}
-                <div style={{
-                  backfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
-                  position: "absolute",
-                  inset: 0,
-                  background: "var(--charcoal)",
-                  padding: "clamp(1.5rem, 3vw, 2.5rem)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  overflow: "auto",
-                }}>
-                  <div className="flex items-center justify-between" style={{ marginBottom: "1.5rem" }}>
-                    <div>
-                      <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.35rem" }}>{p.type} · {p.location}</span>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--limestone)" }}>{p.name}</h3>
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4" style={{ padding: "1.5rem 2rem" }}>
+                  <div>
+                    <div className="flex items-center gap-3" style={{ marginBottom: "0.4rem" }}>
+                      <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>{p.type}</span>
+                      <span style={{ fontSize: "0.5rem", color: "var(--stone-light)" }}>·</span>
+                      <span style={{ fontSize: "0.5rem", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{p.location}</span>
                     </div>
-                    <button onClick={() => setFlipped(null)} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", color: "var(--limestone)", flexShrink: 0, transition: "all 0.2s" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.borderColor = "var(--copper)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; }}
-                    >✕</button>
+                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
                   </div>
-                  <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "rgba(255,255,255,0.6)", lineHeight: 1.85, marginBottom: "1.5rem" }}>{p.detail}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {p.scope.map(s => (
-                      <span key={s} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--copper)", border: "1px solid rgba(176,115,64,0.3)", padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{s}</span>
-                    ))}
-                  </div>
+                  <p style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "35ch" }}>{p.desc}</p>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Modal popup */}
+      {selected && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "2rem",
+            animation: "modalBgIn 0.3s ease-out",
+          }}
+          onClick={() => setSelected(null)}
+        >
+          {/* Backdrop */}
+          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)" }} />
+
+          {/* Modal card */}
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1,
+              background: "#fff",
+              borderRadius: "24px",
+              maxWidth: "900px",
+              width: "100%",
+              maxHeight: "90vh",
+              overflow: "auto",
+              animation: "modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setSelected(null)}
+              style={{
+                position: "absolute",
+                top: "1.25rem",
+                right: "1.25rem",
+                zIndex: 2,
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                border: "1px solid var(--border)",
+                background: "rgba(255,255,255,0.9)",
+                backdropFilter: "blur(8px)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1rem",
+                color: "var(--charcoal)",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "var(--copper)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.9)"; e.currentTarget.style.color = "var(--charcoal)"; e.currentTarget.style.borderColor = "var(--border)"; }}
+            >✕</button>
+
+            {/* Hero image */}
+            <div style={{ height: "clamp(200px, 30vw, 350px)", overflow: "hidden", borderRadius: "24px 24px 0 0", position: "relative" }}>
+              <img src={selected.images[0]} alt="" className="w-full h-full object-cover" />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)" }} />
+              <div style={{ position: "absolute", bottom: "2rem", left: "2rem" }}>
+                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper-light)", display: "block", marginBottom: "0.35rem" }}>{selected.type} · {selected.location}</span>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "#fff", letterSpacing: "-0.02em" }}>{selected.name}</h2>
+              </div>
+              <div style={{ position: "absolute", top: "2rem", left: "2rem", fontFamily: "var(--font-display)", fontSize: "5rem", fontWeight: 400, color: "rgba(255,255,255,0.08)", lineHeight: 1 }}>{selected.num}</div>
+            </div>
+
+            {/* Content */}
+            <div style={{ padding: "2.5rem" }}>
+              <p style={{ fontSize: "1rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "2rem" }}>
+                {selected.detail}
+              </p>
+
+              <div style={{ marginBottom: "2rem" }}>
+                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.75rem" }}>Scope of Work</span>
+                <div className="flex flex-wrap gap-2">
+                  {selected.scope.map(s => (
+                    <span key={s} style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "var(--charcoal)", border: "1px solid var(--border-s)", padding: "0.35rem 0.7rem", borderRadius: "3px" }}>{s}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Second image */}
+              <div style={{ borderRadius: "12px", overflow: "hidden", height: "clamp(150px, 20vw, 250px)" }}>
+                <img src={selected.images[1]} alt="" className="w-full h-full object-cover" />
+              </div>
+            </div>
+          </div>
+
+          <style>{`
+            @keyframes modalBgIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            @keyframes modalIn {
+              from { opacity: 0; transform: scale(0.92) translateY(20px); }
+              to { opacity: 1; transform: scale(1) translateY(0); }
+            }
+          `}</style>
+        </div>
+      )}
+    </>
   );
 }
