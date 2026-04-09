@@ -8,7 +8,7 @@ export default function Contact() {
   const inp: React.CSSProperties = { width: "100%", padding: "0.9rem 0", fontFamily: "var(--font-body)", fontSize: "0.9rem", fontWeight: 300, color: "var(--charcoal)", background: "#fff", border: "none", borderBottom: "1px solid var(--border)", outline: "none", transition: "border-color 0.25s", borderRadius: 0 };
 
   return (
-    <section id="contact" style={{ padding: "128px 0 64px", background: "var(--limestone)" }}>
+    <section id="contact" className="marble-bg" style={{ padding: "128px 0 64px", background: "var(--limestone)" }}>
       <div className="wrap">
         <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "4rem" }}>
           <div>

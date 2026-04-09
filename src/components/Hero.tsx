@@ -19,7 +19,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative" style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+    <section className="relative" style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end", background: "var(--charcoal-deep)" }}>
       {/* Video with gradient mask */}
       <div className="absolute inset-0 z-0" style={{ mask: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)", WebkitMask: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)" }}>
         <video autoPlay muted loop playsInline className="w-full h-full object-cover" style={{ opacity: 0.4 }}>

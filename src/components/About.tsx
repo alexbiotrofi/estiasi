@@ -39,7 +39,7 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={ref} style={{ padding: "128px 0 90px", background: "var(--warm-white)" }}>
+    <section ref={ref} className="marble-bg" style={{ padding: "128px 0 90px", background: "var(--warm-white)" }}>
       {/* Copper radial glow */}
       <div style={{ position: "absolute", left: "50%", top: "0", transform: "translateX(-50%)", width: "2000px", height: "300px", background: "radial-gradient(50% 50% at 50% 50%, rgba(176,115,64,0.08) 0%, rgba(176,115,64,0.03) 54%, transparent 100%)", pointerEvents: "none" }} />
 

@@ -41,12 +41,24 @@ body {
   font-family: var(--font-body);
   color: var(--charcoal);
   background: var(--limestone);
-  background-image: url('/textures/marble-bg.jpg');
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+/* Marble background helper — add to sections that need marble */
+.marble-bg {
+  position: relative;
+}
+.marble-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/textures/marble-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
 }
 
 ::selection { background: rgba(176, 115, 64, 0.2); }
