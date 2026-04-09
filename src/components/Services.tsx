@@ -88,14 +88,16 @@ export default function Services() {
         <div className="divider-light" />
         {services.map((s) => (
           <div key={s.name}>
-            <div className="svc-row flex items-center justify-between" style={{ padding: "1.1rem 0", cursor: "default" }}
+            <div className="svc-row flex items-center justify-center gap-6 md:gap-10" style={{ padding: "1.1rem 0", cursor: "default", transition: "transform 0.25s ease-out" }}
               onMouseEnter={e => {
                 const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
                 if (name) name.style.color = "var(--copper)";
+                e.currentTarget.style.transform = "scale(1.04)";
               }}
               onMouseLeave={e => {
                 const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
                 if (name) name.style.color = "var(--charcoal)";
+                e.currentTarget.style.transform = "scale(1)";
               }}
             >
               <span className="svc-name" style={{
@@ -104,11 +106,14 @@ export default function Services() {
                 fontWeight: 400,
                 color: "var(--charcoal)",
                 letterSpacing: "-0.01em",
-                transition: "color 0.2s ease-out",
+                transition: "color 0.25s ease-out",
+                textAlign: "right" as const,
+                flex: "1 1 0",
               }}>
                 {s.name}
               </span>
-              <span className="hidden md:inline" style={{ fontSize: "0.8rem", fontWeight: 300, color: "var(--stone)", transition: "color 0.2s" }}>
+              <span style={{ width: "1px", height: "16px", background: "var(--copper)", opacity: 0.2, flexShrink: 0 }} />
+              <span className="hidden md:inline" style={{ fontSize: "0.8rem", fontWeight: 300, color: "var(--stone)", transition: "color 0.25s", textAlign: "left" as const, flex: "1 1 0" }}>
                 {s.desc}
               </span>
             </div>
