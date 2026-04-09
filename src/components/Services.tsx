@@ -84,39 +84,54 @@ export default function Services() {
           </div>
         </div>
 
-        {/* 4x2 centred grid */}
-        <div className="reveal grid grid-cols-2 md:grid-cols-4" style={{ gap: "2rem 1rem", textAlign: "center" }}>
-          {services.map((s, i) => (
-            <div
-              key={s.name}
-              className="svc-row"
-              style={{ cursor: "default", padding: "1rem 0" }}
-              onMouseEnter={e => {
-                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
-                if (name) name.style.color = "var(--copper)";
-              }}
-              onMouseLeave={e => {
-                const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
-                if (name) name.style.color = "var(--charcoal)";
-              }}
-            >
-              <span style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.25em", color: "var(--copper)", opacity: 0.5, display: "block", marginBottom: "0.5rem" }}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="svc-name" style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
-                fontWeight: 400,
-                color: "var(--charcoal)",
-                letterSpacing: "-0.01em",
-                transition: "color 0.2s ease-out",
-              }}>
-                {s.name}
-              </span>
-            </div>
-          ))}
+      </div>
+
+      {/* Marble strip with service grid */}
+      <div className="reveal" style={{ position: "relative", overflow: "hidden", marginTop: "3rem", padding: "3rem 0" }}>
+        {/* Marble texture background */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <img src="/textures/marble-hero.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.2 }} />
+        </div>
+        {/* Subtle top/bottom borders */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.2 }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, var(--copper), transparent)", opacity: 0.2 }} />
+
+        <div className="wrap relative" style={{ zIndex: 1 }}>
+          <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: "0", textAlign: "center" }}>
+            {services.map((s, i) => (
+              <div
+                key={s.name}
+                style={{
+                  cursor: "default",
+                  padding: "1.25rem 1rem",
+                  borderRight: (i % 4 !== 3) ? "1px solid rgba(176,115,64,0.1)" : "none",
+                  borderBottom: i < 4 ? "1px solid rgba(176,115,64,0.1)" : "none",
+                }}
+                onMouseEnter={e => {
+                  const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
+                  if (name) name.style.color = "var(--copper)";
+                }}
+                onMouseLeave={e => {
+                  const name = e.currentTarget.querySelector<HTMLElement>(".svc-name");
+                  if (name) name.style.color = "var(--charcoal)";
+                }}
+              >
+                <span className="svc-name" style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(0.9rem, 1.6vw, 1.15rem)",
+                  fontWeight: 400,
+                  color: "var(--charcoal)",
+                  letterSpacing: "0",
+                  transition: "color 0.2s ease-out",
+                }}>
+                  {s.name}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
     </section>
   );
 }
