@@ -55,7 +55,7 @@ export default function Team() {
         <div className="team-reveal rounded-section" style={{ background: "#fff", overflow: "hidden", marginBottom: "6px" }}>
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div style={{ position: "relative", minHeight: "clamp(300px, 50vw, 550px)", overflow: "hidden" }}>
-              <img src="/photos/dimitris-kitchen.jpg" alt="Dimitris Kamaritis" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 15%" }} />
+              <img src="/photos/dimitris-kitchen.png" alt="Dimitris Kamaritis" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 15%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 70%, #fff 100%)" }} />
             </div>
             <div style={{ padding: "clamp(2rem, 4vw, 3.5rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
