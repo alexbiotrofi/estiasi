@@ -112,7 +112,7 @@ export default function Team() {
               </div>
             </div>
             <div className="md:col-span-4" style={{ position: "relative", minHeight: "clamp(250px, 40vw, 350px)", overflow: "hidden" }}>
-              <img src="/photos/alex-restaurant.jpg" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 20%" }} />
+              <img src="/photos/alex-restaurant.png" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 15%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 60%, #fff 100%)" }} />
             </div>
           </div>
