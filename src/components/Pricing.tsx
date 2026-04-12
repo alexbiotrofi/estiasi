@@ -91,10 +91,10 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="rounded-section" style={{ background: t.highlight ? "var(--charcoal)" : "var(--warm-white)", overflow: "hidden", position: "relative" }}>
+        <div className="rounded-section" style={{ background: t.highlight ? "var(--charcoal-deep)" : "var(--warm-white)", overflow: "hidden", position: "relative" }}>
           {t.highlight && (
-            <div className="absolute inset-0 z-0" style={{ opacity: 0.04 }}>
-              <img src="/textures/marble-hero.jpg" alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 z-0">
+              <img src="/textures/granite.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.35 }} />
             </div>
           )}
 

@@ -81,7 +81,10 @@ export default function Work() {
                     </div>
                     <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
                   </div>
-                  <p style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "35ch" }}>{p.desc}</p>
+                  <div className="flex items-end gap-4">
+                    <p style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "35ch" }}>{p.desc}</p>
+                    <span style={{ flexShrink: 0, fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)", whiteSpace: "nowrap", paddingBottom: "0.2rem" }}>View Details →</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -175,8 +178,27 @@ export default function Work() {
               </div>
 
               {/* Second image */}
-              <div style={{ borderRadius: "12px", overflow: "hidden", height: "clamp(150px, 20vw, 250px)" }}>
+              <div style={{ borderRadius: "12px", overflow: "hidden", height: "clamp(150px, 20vw, 250px)", marginBottom: "2rem" }}>
                 <img src={selected.images[1]} alt="" className="w-full h-full object-cover" />
+              </div>
+
+              {/* Extended detail — placeholder */}
+              <div style={{ borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.75rem" }}>The Process</span>
+                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
+                  The engagement began with a comprehensive discovery phase — understanding the client&rsquo;s vision, target audience, and operational constraints. From there, we developed a detailed roadmap covering every phase of the project from concept through to opening night.
+                </p>
+                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
+                  On the culinary side, Dimitris led menu development with full food costing, recipe standardisation, and supplier sourcing. Kitchen design was specified down to equipment placement and workflow optimisation. Staff were recruited, onboarded, and trained on every procedure before the first service.
+                </p>
+                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
+                  The operational framework included complete SOP documentation, HACCP compliance, health and safety protocols, and fire maintenance procedures. Every system was built to run independently — the measure of success is when we leave and nothing changes.
+                </p>
+
+                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.75rem", marginTop: "2rem" }}>Outcome</span>
+                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9 }}>
+                  A fully operational venue with documented systems, a trained team, and a clear identity — ready to serve from day one. The kind of opening where nothing is left to chance.
+                </p>
               </div>
             </div>
           </div>

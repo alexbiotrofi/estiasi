@@ -56,9 +56,6 @@ export default function About() {
             <p className="reveal" style={{ fontSize: "0.9rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85 }}>
               Founded by Dimitris Kamaritis — a Michelin-trained chef who has worked in some of the UK&rsquo;s most respected kitchens, from The Ritz London to Raffles at The OWO — and Alex Apostolides, who builds the operational and digital infrastructure behind every venue. Based in Cyprus. Operating across Europe.
             </p>
-            <div className="reveal" style={{ marginTop: "2rem" }}>
-              <a href="#work" className="btn" style={{ fontSize: "0.55rem" }}>escape velocity</a>
-            </div>
           </div>
         </div>
       </div>
