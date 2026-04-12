@@ -39,7 +39,7 @@ export default function Navigation() {
             {/* Centred menu links */}
             <div className="hidden md:flex items-center justify-center gap-7" style={{ flex: 1 }}>
               {links.map(l => (
-                <a key={l.href} href={l.href} style={{
+                <a key={l.href} href={l.href} onClick={e => { e.preventDefault(); document.querySelector(l.href)?.scrollIntoView({ behavior: "smooth" }); }} style={{
                   fontSize: "0.68rem",
                   fontWeight: 500,
                   letterSpacing: "0.18em",
@@ -47,6 +47,7 @@ export default function Navigation() {
                   color: scrolled ? "var(--stone-dark)" : "rgba(255,255,255,0.55)",
                   textDecoration: "none",
                   transition: "color 0.2s",
+                  cursor: "pointer",
                 }}
                   onMouseEnter={e => { e.currentTarget.style.color = scrolled ? "var(--charcoal)" : "#fff"; }}
                   onMouseLeave={e => { e.currentTarget.style.color = scrolled ? "var(--stone-dark)" : "rgba(255,255,255,0.55)"; }}
@@ -55,7 +56,7 @@ export default function Navigation() {
             </div>
 
             <div className="hidden md:flex items-center gap-4" style={{ flexShrink: 0 }}>
-              <a href="#contact" className="btn" style={{
+              <a href="#contact" onClick={e => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }} className="btn" style={{
                 padding: "0.5rem 1.3rem", fontSize: "0.5rem",
                 background: scrolled ? "var(--charcoal)" : "transparent",
                 color: scrolled ? "var(--limestone)" : "#fff",
@@ -79,12 +80,12 @@ export default function Navigation() {
         <div className="fixed inset-0 z-40 md:hidden" style={{ background: "rgba(244,241,236,0.98)", paddingTop: "80px" }}>
           <div className="wrap flex flex-col gap-5">
             {links.map(l => (
-              <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 400, color: "var(--charcoal)", textDecoration: "none" }}>
+              <a key={l.href} href={l.href} onClick={e => { e.preventDefault(); setMenuOpen(false); setTimeout(() => document.querySelector(l.href)?.scrollIntoView({ behavior: "smooth" }), 100); }} style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 400, color: "var(--charcoal)", textDecoration: "none", cursor: "pointer" }}>
                 {l.label}
               </a>
             ))}
             <div style={{ marginTop: "1.5rem", borderTop: "1px solid var(--border)", paddingTop: "1.5rem" }}>
-              <a href="#contact" onClick={() => setMenuOpen(false)} className="btn btn-dark" style={{ width: "100%", justifyContent: "center" }}>Hire Us</a>
+              <a href="#contact" onClick={e => { e.preventDefault(); setMenuOpen(false); setTimeout(() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }), 100); }} className="btn btn-dark" style={{ width: "100%", justifyContent: "center" }}>Hire Us</a>
             </div>
           </div>
         </div>

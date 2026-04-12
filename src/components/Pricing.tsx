@@ -60,7 +60,7 @@ export default function Pricing() {
   }, [active]);
 
   return (
-    <section style={{ padding: "128px 0" }}>
+    <section id="pricing" style={{ padding: "128px 0" }}>
       <div className="wrap">
         <div className="flex justify-between items-start gap-8 flex-col md:flex-row" style={{ marginBottom: "4rem" }}>
           <div>
