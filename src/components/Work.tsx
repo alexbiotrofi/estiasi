@@ -30,14 +30,24 @@ export default function Work() {
     return () => ctx.revert();
   }, []);
 
-  // Lock body scroll when modal is open
+  // Lock ALL scroll when modal is open (including Lenis)
   useEffect(() => {
     if (selected) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      // Stop Lenis if it exists
+      const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+      if (lenis) lenis.stop();
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+      if (lenis) lenis.start();
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
   }, [selected]);
 
   return (
@@ -83,7 +93,7 @@ export default function Work() {
                   </div>
                   <div className="flex items-end gap-4">
                     <p style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "35ch" }}>{p.desc}</p>
-                    <span style={{ flexShrink: 0, fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)", whiteSpace: "nowrap", paddingBottom: "0.2rem" }}>View Details →</span>
+                    <span style={{ flexShrink: 0, width: "32px", height: "32px", borderRadius: "50%", border: "1px solid var(--border-s)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", color: "var(--copper)", transition: "all 0.2s" }}>+</span>
                   </div>
                 </div>
               </div>
