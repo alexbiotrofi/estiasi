@@ -103,7 +103,7 @@ export default function Team() {
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Operations, Design & Branding · Co-Founder</p>
               <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85, marginBottom: "1.5rem" }}>
-                Has built and designed multiple businesses from the ground up — the operational systems, the brand, and the front-end and back-end that each one runs on.
+                Has built and designed multiple businesses from the ground up — the operational systems, the brand, and the front-end and back-end that each one runs on. Co-designed Biotrofi alongside Dimitris, with years of experience shipping brand, web, and operational systems across hospitality and lifestyle ventures.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                 {[
