@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   { name: "Concept & Positioning", desc: "Market research, competitor analysis, brand positioning" },
-  { name: "Menu Engineering", desc: "Recipe development, costing, profitability optimisation" },
+  { name: "Menu Creation", desc: "Recipe development, costing, profitability optimisation" },
   { name: "Kitchen Design", desc: "Equipment specification, workflow, layout planning" },
   { name: "Staff Training", desc: "Service standards, kitchen procedures, team development" },
   { name: "HACCP & Compliance", desc: "Food safety frameworks, documentation, audits" },
@@ -72,14 +72,42 @@ export default function Services() {
               Menus that tell a story. Kitchens that run themselves. Teams that set a new standard. From concept and compliance to brand and bookings — we build every layer of a venue that works.
             </p>
           </div>
-          {/* Photo — always visible */}
+          {/* Services collage */}
           <div style={{ width: "280px", flexShrink: 0, alignSelf: "stretch" }}>
-            <div style={{ height: "100%", minHeight: "220px", borderRadius: "20px", overflow: "hidden", position: "relative", border: "1px solid var(--border)", boxShadow: "0 2px 4px rgba(0,0,0,0.06), 0 8px 80px rgba(176,115,64,0.08), inset 0 4px 12px rgba(176,115,64,0.06)" }}>
-              <img src="/photos/chef-plating.jpg" alt="" className="w-full h-full object-cover" style={{ opacity: 0.85 }} />
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)", backdropFilter: "blur(2px)" }} />
-              <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
-                <span style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper)" }}>Culinary Consulting</span>
-              </div>
+            <div style={{
+              height: "100%",
+              minHeight: "280px",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gridTemplateRows: "1fr 1fr",
+              gap: "4px",
+              borderRadius: "20px",
+              overflow: "hidden",
+              position: "relative",
+              border: "1px solid var(--border)",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.06), 0 8px 80px rgba(176,115,64,0.08)",
+            }}>
+              {[
+                { src: "/photos/chef-plating.jpg", label: "Menu" },
+                { src: "/photos/filos-3d-kitchen.jpg", label: "Kitchen" },
+                { src: "/photos/kitchen-team.jpg", label: "Team" },
+                { src: "/photos/restaurant-interior.jpg", label: "Brand" },
+              ].map((tile) => (
+                <div key={tile.label} style={{ position: "relative", overflow: "hidden", background: "var(--charcoal-deep)" }}>
+                  <img src={tile.src} alt="" className="w-full h-full object-cover" style={{ opacity: 0.88 }} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55), transparent 55%)" }} />
+                  <span style={{
+                    position: "absolute",
+                    bottom: "0.55rem",
+                    left: "0.6rem",
+                    fontSize: "0.38rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.22em",
+                    textTransform: "uppercase" as const,
+                    color: "var(--copper-light)",
+                  }}>{tile.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

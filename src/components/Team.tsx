@@ -64,7 +64,7 @@ export default function Team() {
               </h3>
               <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Culinary Director & Co-Founder</p>
               <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                Michelin-trained chef with multiple years of experience in professional kitchens. Dimitris has gained knowledge about hospitality across four countries — the UK, Canada, Israel, and Cyprus — and has worked at The Ritz London <MichelinStars count={2} />, under Claude Bosi at Bibendum <MichelinStars count={2} />, and as part of three-Michelin-star chef Mauro Colagreco&rsquo;s team at Raffles London at The OWO.
+                Michelin-trained chef with multiple years of experience in professional kitchens. Dimitris has gained knowledge about hospitality across four countries — the UK, Canada, Israel, and Cyprus — and has worked at The Ritz London <MichelinStars count={2} />, under Claude Bosi at Bibendum <MichelinStars count={2} />, and as part of chef Mauro Colagreco&rsquo;s <MichelinStars count={3} /> team at Raffles London at The OWO.
               </p>
               <p style={{ fontSize: "0.88rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
                 A Fellow of the Royal Society for Public Health and co-founder of Biotrofi — a premium private chef and wellness service in Cyprus — Dimitris leads all culinary standards at estιasι. From concept creation and menu engineering to kitchen design, HACCP compliance, staff recruitment, and the full operational lifecycle of every venue we touch. He doesn&rsquo;t advise from a distance. He builds from within.
@@ -79,7 +79,7 @@ export default function Team() {
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                 {[
-                  { tag: "Menu Engineering", cert: false },
+                  { tag: "Menu Creation", cert: false },
                   { tag: "Kitchen Design", cert: false },
                   { tag: "Staff Training", cert: false },
                   { tag: "Launch Management", cert: false },
