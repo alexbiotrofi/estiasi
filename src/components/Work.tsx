@@ -136,6 +136,7 @@ export default function Work() {
           {/* Modal card */}
           <div
             data-modal-content
+            data-lenis-prevent
             style={{
               position: "relative",
               zIndex: 1,
@@ -144,12 +145,15 @@ export default function Work() {
               maxWidth: "900px",
               width: "100%",
               maxHeight: "90vh",
-              overflow: "auto",
+              overflowY: "auto",
+              overflowX: "hidden",
               overscrollBehavior: "contain",
               WebkitOverflowScrolling: "touch",
+              touchAction: "pan-y",
               animation: "modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
             onClick={e => e.stopPropagation()}
+            onTouchMove={e => e.stopPropagation()}
           >
             {/* Close button */}
             <button

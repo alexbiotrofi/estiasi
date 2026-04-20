@@ -97,7 +97,7 @@ export default function Team() {
         {/* Alex */}
         <div className="team-reveal rounded-section" style={{ background: "#fff", overflow: "hidden" }}>
           <div className="grid grid-cols-1 md:grid-cols-12">
-            <div className="md:col-span-8" style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", paddingRight: "clamp(2rem, 3vw, 3rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div className="md:col-span-8 md:order-1 order-2" style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)", paddingRight: "clamp(2rem, 3vw, 3rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.5rem" }}>
                 Alex Apostolides
               </h3>
@@ -111,7 +111,7 @@ export default function Team() {
                 ))}
               </div>
             </div>
-            <div className="md:col-span-4" style={{ position: "relative", minHeight: "clamp(300px, 45vw, 420px)", overflow: "hidden" }}>
+            <div className="md:col-span-4 md:order-2 order-1 alex-photo-wrap" style={{ position: "relative", overflow: "hidden" }}>
               <img src="/photos/alex-restaurant.png" alt="Alex Apostolides" className="w-full h-full object-cover" style={{ position: "absolute", inset: 0, objectPosition: "center 0%" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, transparent 60%, #fff 100%)" }} />
             </div>

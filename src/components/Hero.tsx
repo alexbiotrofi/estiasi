@@ -19,7 +19,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative" style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end", background: "var(--charcoal-deep)" }}>
+    <section className="relative" style={{ height: "100svh", minHeight: "520px", display: "flex", flexDirection: "column", justifyContent: "flex-end", background: "var(--charcoal-deep)", overflow: "hidden" }}>
       {/* Video with gradient mask */}
       <div className="absolute inset-0 z-0" style={{ mask: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)", WebkitMask: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)" }}>
         <video autoPlay muted loop playsInline className="w-full h-full object-cover" style={{ opacity: 0.5 }}>
@@ -32,12 +32,12 @@ export default function Hero() {
         <img src="/textures/marble-hero.jpg" alt="" className="w-full h-full object-cover" />
       </div>
 
-      <div className="wrap relative z-10" style={{ paddingBottom: "clamp(3rem, 8vh, 6rem)", paddingLeft: "clamp(2rem, 4vw, 40px)" }}>
+      <div className="wrap relative z-10 hero-content">
         <h1
           ref={headingRef}
+          className="hero-heading"
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(3.5rem, 9vw, 120px)",
             fontWeight: 400,
             color: "var(--limestone)",
             lineHeight: 0.95,
@@ -48,7 +48,7 @@ export default function Hero() {
         >
           We bring<br />restaurants to life
         </h1>
-        <div ref={subRef} style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "0.6rem", opacity: 0 }}>
+        <div ref={subRef} className="hero-tag" style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", opacity: 0 }}>
           <span style={{
             width: "6px",
             height: "6px",
@@ -57,10 +57,8 @@ export default function Hero() {
             animation: "pulse 3s ease-in-out infinite",
             flexShrink: 0,
           }} />
-          <span style={{
-            fontSize: "0.85rem",
+          <span className="hero-tag-text" style={{
             fontWeight: 500,
-            letterSpacing: "0.4em",
             textTransform: "uppercase" as const,
             color: "rgba(255,255,255,0.7)",
           }}>
