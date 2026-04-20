@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   { num: "01", title: "Discovery", desc: "We start with a conversation. Your venue, your vision, your challenges. No pitch — just listening. A 30-minute call that defines everything that follows." },
-  { num: "02", title: "Diagnosis", desc: "Full operational review. Gap analysis. A structured roadmap with clear deliverables, timelines, and costs. You know exactly what you're getting before we start." },
+  { num: "02", title: "Evaluation", desc: "Full operational review. Gap analysis. A structured roadmap with clear deliverables, timelines, and costs. You know exactly what you're getting before we start." },
   { num: "03", title: "Build", desc: "Menus, SOPs, kitchen specs, training programmes, HACCP frameworks. Built on-site, in your kitchen, with your team. Not from a template. Not from a distance." },
   { num: "04", title: "Launch", desc: "Soft opening. Adjustment phase. Grand opening. We stay until the operation runs without us. That's the measure. When we leave, the system stays." },
 ];
