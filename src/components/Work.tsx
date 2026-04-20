@@ -11,11 +11,10 @@ const projects = [
     num: "01",
     name: "Mauro Colagreco",
     fullName: "Mauro Colagreco at Raffles London at The OWO",
-    location: "London · 2023",
+    location: "London, 2023",
     type: "Pre-opening",
-    desc: "World-class culinary programme. One of London's most prestigious destinations.",
     paragraphs: [
-      "Dimitris Kamaritis was a member of the pre-opening team for Mauro Colagreco at Raffles London at The OWO — one of the most anticipated restaurant launches in London in a generation, set within the landmark Grade II-listed Old War Office building on Whitehall.",
+      "Dimitris Kamaritis was a member of the pre-opening team for Mauro Colagreco at Raffles London at The OWO—one of the most anticipated restaurant launches in London in a generation, set within the landmark Grade II-listed Old War Office building on Whitehall.",
       "Mauro Colagreco is the Italian-Argentine chef behind Mirazur on the Côte d'Azur — a three-Michelin-starred restaurant that was crowned the World's Best Restaurant by the World's 50 Best in 2019, and the only restaurant in the world to hold that title for three consecutive years. Colagreco is also a UNESCO Goodwill Ambassador for Biodiversity, and sustainability sits at the very core of his culinary philosophy.",
       "Working in close collaboration with Mauro Colagreco and the Mirazur development team, Dimitris contributed across every operational dimension of the project: designing the kitchen, establishing the standard operating procedures, and co-developing the opening menu. A key part of his role was sourcing and building relationships with local British suppliers whose values aligned with Colagreco's deep commitment to sustainability, seasonality, and ethical provenance — ensuring the restaurant's philosophy was embedded from the ground up. Dimitris then led the team through the full launch and opening of the restaurant.",
       "The restaurant was awarded a Michelin star following its opening and is today regarded as one of London's premier fine dining destinations.",
@@ -29,7 +28,6 @@ const projects = [
     fullName: "Grain Mediterranean",
     location: "Holborn, London",
     type: "Executive Chef Consultant",
-    desc: "The UK's first clean-label Mediterranean quick-service concept — built to scale.",
     paragraphs: [
       "Dimitris Kamaritis served as Executive Chef Consultant for Grain Mediterranean, the UK's first clean-label Mediterranean quick-service restaurant, located in Holborn, London.",
       "Grain is built around a simple but powerful idea: that fast food can be genuinely good for you. The menu draws on the diets of the world's Blue Zones — regions associated with exceptional longevity — with every dish cooked in extra-virgin olive and cold-pressed avocado oils, sourdough breads replacing refined alternatives, and a build-your-own bowl format that brings Mediterranean eating to the high street without compromise.",
@@ -45,7 +43,6 @@ const projects = [
     fullName: "Filos by Halepi",
     location: "Notting Hill, London",
     type: "Chef Consultant",
-    desc: "A new Cypriot café and restaurant — a daytime journey through Cypriot tradition.",
     paragraphs: [
       "Dimitris Kamaritis served as Chef Consultant for Filos by Halepi, a new Cypriot café and restaurant opening in Notting Hill, London — located alongside the legendary Halepi, one of the most beloved Greek Cypriot institutions in the city.",
       "Filos is the latest venture of Kostas Kazolides, whose family has been at the heart of London's Greek Cypriot dining scene since founding Halepi in 1966. Where Halepi has long been celebrated for its taverna spirit and authentic Cypriot cooking, Filos takes a different and deeply personal direction — a daytime destination dedicated to the sweeter, more intimate side of Cypriot food culture. The concept is built around a journey through Cypriot tradition: homemade pastries, traditional sweets, and a breakfast and lunch menu that brings the warmth and heritage of the island to Notting Hill.",
@@ -61,7 +58,6 @@ const projects = [
     fullName: "Mesa Stone",
     location: "Walthamstow, London",
     type: "Chef Consultant",
-    desc: "Native American culinary tradition reimagined for a fast casual format.",
     paragraphs: [
       "Dimitris Kamaritis joined Mesa Stone as Chef Consultant from the very beginning, bringing his full expertise to bear on one of London's most distinctive upcoming food concepts.",
       "Mesa Stone is a fast casual restaurant rooted in Native American culinary tradition, launching its first site in Walthamstow with plans to expand across the UK. The concept takes traditional Native American recipes as its foundation and reinterprets them through a contemporary lens — honouring the integrity and depth of indigenous food culture while making it accessible, exciting and relevant to a modern British audience. It is a project with both a strong identity and real ambition.",
@@ -163,7 +159,6 @@ export default function Work() {
                     <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
                   </div>
                   <div className="flex items-end gap-4">
-                    <p style={{ fontSize: "0.82rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, maxWidth: "35ch" }}>{p.desc}</p>
                     <span style={{ flexShrink: 0, fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)", border: "1px solid var(--copper)", borderRadius: "4px", padding: "0.4rem 0.8rem", transition: "all 0.2s", whiteSpace: "nowrap" }}>Read More</span>
                   </div>
                 </div>
