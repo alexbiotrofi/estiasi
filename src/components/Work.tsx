@@ -7,10 +7,70 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  { num: "01", name: "Mauro Colagreco", location: "Raffles London, The OWO", type: "Collaboration", desc: "World-class culinary programme. One of London's most prestigious destinations.", detail: "Part of the team supporting the culinary programme at one of London's most prestigious new hospitality destinations. Working alongside world-class standards in fine dining operations, service delivery, and quality systems under three-Michelin-star chef Mauro Colagreco.", scope: ["Fine Dining Operations", "Service Delivery", "Quality Systems", "World-Class Standards"], images: ["/photos/mauro-dining.jpg", "/photos/mauro-building.jpg"] },
-  { num: "02", name: "Grain", location: "Holborn, London", type: "Full Launch", desc: "Modern Mediterranean. Concept to grand opening. Every system, every hire, every plate.", detail: "End-to-end launch consultancy for a modern Mediterranean restaurant in the heart of London. We defined the concept, designed the kitchen layout, engineered the full menu with food costing, recruited and trained the team, wrote every SOP, and managed the soft opening through to grand opening.", scope: ["Concept & Positioning", "Kitchen Design", "Menu Creation", "Food Cost Control", "Staff Recruitment & Training", "SOPs", "Soft Opening", "Grand Opening"], images: ["/photos/grain-exterior.jpg", "/photos/grain-dishes.jpg"] },
-  { num: "03", name: "Filos by Halepi", location: "London", type: "Restaurant Support", desc: "Greek dining reimagined. Operational evaluation, menu overhaul, procedural redesign.", detail: "Full operational evaluation and improvement programme for an established Greek dining concept. We conducted a complete review, reimagined the menu, redesigned kitchen workflows, retrained the team on new service standards, and implemented new procedures that reduced waste and improved consistency.", scope: ["Operational Review", "Menu Reimagination", "Procedure Redesign", "Kitchen Workflow", "Staff Retraining", "Waste Reduction"], images: ["/photos/filos-kitchen.jpg", "/photos/filos-3d-kitchen.jpg"] },
-  { num: "04", name: "Mesa Stone", location: "Fine Dining", type: "Full Launch", desc: "Premium fine dining from zero. Kitchen spec, HACCP, SOPs, phased opening.", detail: "Concept creation and full operational build for a premium fine-dining venue. From positioning and kitchen specification to HACCP frameworks, SOP documentation, and phased opening management. Every detail considered from the first sketch to the last plate.", scope: ["Fine Dining Concept", "Kitchen Specification", "HACCP Frameworks", "SOP Documentation", "Phased Opening", "Quality Systems"], images: ["/photos/dining-room.jpg", "/photos/chef-plating.jpg"] },
+  {
+    num: "01",
+    name: "Mauro Colagreco",
+    fullName: "Mauro Colagreco at Raffles London at The OWO",
+    location: "London · 2023",
+    type: "Pre-opening",
+    desc: "World-class culinary programme. One of London's most prestigious destinations.",
+    paragraphs: [
+      "Dimitris Kamaritis was a member of the pre-opening team for Mauro Colagreco at Raffles London at The OWO — one of the most anticipated restaurant launches in London in a generation, set within the landmark Grade II-listed Old War Office building on Whitehall.",
+      "Mauro Colagreco is the Italian-Argentine chef behind Mirazur on the Côte d'Azur — a three-Michelin-starred restaurant that was crowned the World's Best Restaurant by the World's 50 Best in 2019, and the only restaurant in the world to hold that title for three consecutive years. Colagreco is also a UNESCO Goodwill Ambassador for Biodiversity, and sustainability sits at the very core of his culinary philosophy.",
+      "Working in close collaboration with Mauro Colagreco and the Mirazur development team, Dimitris contributed across every operational dimension of the project: designing the kitchen, establishing the standard operating procedures, and co-developing the opening menu. A key part of his role was sourcing and building relationships with local British suppliers whose values aligned with Colagreco's deep commitment to sustainability, seasonality, and ethical provenance — ensuring the restaurant's philosophy was embedded from the ground up. Dimitris then led the team through the full launch and opening of the restaurant.",
+      "The restaurant was awarded a Michelin star following its opening and is today regarded as one of London's premier fine dining destinations.",
+    ],
+    scope: ["Kitchen Design", "SOPs", "Menu Co-development", "Supplier Sourcing", "Launch & Opening"],
+    images: ["/photos/mauro-dining.jpg", "/photos/mauro-building.jpg"],
+  },
+  {
+    num: "02",
+    name: "Grain Mediterranean",
+    fullName: "Grain Mediterranean",
+    location: "Holborn, London",
+    type: "Executive Chef Consultant",
+    desc: "The UK's first clean-label Mediterranean quick-service concept — built to scale.",
+    paragraphs: [
+      "Dimitris Kamaritis served as Executive Chef Consultant for Grain Mediterranean, the UK's first clean-label Mediterranean quick-service restaurant, located in Holborn, London.",
+      "Grain is built around a simple but powerful idea: that fast food can be genuinely good for you. The menu draws on the diets of the world's Blue Zones — regions associated with exceptional longevity — with every dish cooked in extra-virgin olive and cold-pressed avocado oils, sourdough breads replacing refined alternatives, and a build-your-own bowl format that brings Mediterranean eating to the high street without compromise.",
+      "Dimitris oversaw the full scope of the restaurant's development and launch. This included kitchen design, the creation of standard operating procedures and HACCP compliance frameworks, menu development and engineering, and full staff training. Beyond the kitchen, his involvement extended to shaping the restaurant's marketing policy and supporting the brand management strategy through the launch phase — ensuring that the culinary identity and the brand story were aligned from day one.",
+      "With the restaurant now open and an ambitious expansion plan targeting ten further UK sites in 2026 and 50 locations by the end of the decade, Dimitris's foundational work underpins a concept built to scale without sacrificing quality or integrity.",
+    ],
+    scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
+    images: ["/photos/grain-exterior.jpg", "/photos/grain-dishes.jpg"],
+  },
+  {
+    num: "03",
+    name: "Filos by Halepi",
+    fullName: "Filos by Halepi",
+    location: "Notting Hill, London",
+    type: "Chef Consultant",
+    desc: "A new Cypriot café and restaurant — a daytime journey through Cypriot tradition.",
+    paragraphs: [
+      "Dimitris Kamaritis served as Chef Consultant for Filos by Halepi, a new Cypriot café and restaurant opening in Notting Hill, London — located alongside the legendary Halepi, one of the most beloved Greek Cypriot institutions in the city.",
+      "Filos is the latest venture of Kostas Kazolides, whose family has been at the heart of London's Greek Cypriot dining scene since founding Halepi in 1966. Where Halepi has long been celebrated for its taverna spirit and authentic Cypriot cooking, Filos takes a different and deeply personal direction — a daytime destination dedicated to the sweeter, more intimate side of Cypriot food culture. The concept is built around a journey through Cypriot tradition: homemade pastries, traditional sweets, and a breakfast and lunch menu that brings the warmth and heritage of the island to Notting Hill.",
+      "Dimitris oversaw the full operational and creative development of the concept, encompassing kitchen design, standard operating procedures, HACCP compliance, menu development and engineering, and full staff training. His involvement also extended to shaping the restaurant's marketing policy and supporting brand management through the launch strategy — ensuring that the identity of Filos feels both rooted in Cypriot tradition and ready for its new London home.",
+      "Filos by Halepi is opening soon.",
+    ],
+    scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
+    images: ["/photos/filos-kitchen.jpg", "/photos/filos-3d-kitchen.jpg"],
+  },
+  {
+    num: "04",
+    name: "Mesa Stone",
+    fullName: "Mesa Stone",
+    location: "Walthamstow, London",
+    type: "Chef Consultant",
+    desc: "Native American culinary tradition reimagined for a fast casual format.",
+    paragraphs: [
+      "Dimitris Kamaritis joined Mesa Stone as Chef Consultant from the very beginning, bringing his full expertise to bear on one of London's most distinctive upcoming food concepts.",
+      "Mesa Stone is a fast casual restaurant rooted in Native American culinary tradition, launching its first site in Walthamstow with plans to expand across the UK. The concept takes traditional Native American recipes as its foundation and reinterprets them through a contemporary lens — honouring the integrity and depth of indigenous food culture while making it accessible, exciting and relevant to a modern British audience. It is a project with both a strong identity and real ambition.",
+      "Dimitris's role spanned the entire pre-opening journey. He led the kitchen design and built out the operational backbone of the business through detailed standard operating procedures and HACCP frameworks. Working closely with the team, he developed and engineered a menu that stays true to the concept's cultural roots while functioning seamlessly within a fast casual format. Staff training, marketing policy and brand management support through the launch phase rounded out his contribution — ensuring Mesa Stone opens with a clear voice, a well-drilled team and a kitchen built to grow with the brand.",
+      "Mesa Stone is opening soon in Walthamstow, with UK expansion to follow.",
+    ],
+    scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
+    images: ["/photos/dining-room.jpg", "/photos/chef-plating.jpg"],
+  },
 ];
 
 export default function Work() {
@@ -185,50 +245,33 @@ export default function Work() {
             <div style={{ height: "clamp(200px, 30vw, 350px)", overflow: "hidden", borderRadius: "24px 24px 0 0", position: "relative" }}>
               <img src={selected.images[0]} alt="" className="w-full h-full object-cover" />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)" }} />
-              <div style={{ position: "absolute", bottom: "2rem", left: "2rem" }}>
+              <div style={{ position: "absolute", bottom: "2rem", left: "2rem", right: "2rem" }}>
                 <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper-light)", display: "block", marginBottom: "0.35rem" }}>{selected.type} · {selected.location}</span>
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "#fff", letterSpacing: "-0.02em" }}>{selected.name}</h2>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3.2vw, 2.4rem)", fontWeight: 400, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.15 }}>{selected.fullName}</h2>
               </div>
               <div style={{ position: "absolute", top: "2rem", left: "2rem", fontFamily: "var(--font-display)", fontSize: "5rem", fontWeight: 400, color: "rgba(255,255,255,0.08)", lineHeight: 1 }}>{selected.num}</div>
             </div>
 
             {/* Content */}
             <div style={{ padding: "2.5rem" }}>
-              <p style={{ fontSize: "1rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "2rem" }}>
-                {selected.detail}
-              </p>
+              {selected.paragraphs.map((para, i) => (
+                <p key={i} style={{ fontSize: i === 0 ? "1rem" : "0.95rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
+                  {para}
+                </p>
+              ))}
 
-              <div style={{ marginBottom: "2rem" }}>
+              {/* Second image */}
+              <div style={{ borderRadius: "12px", overflow: "hidden", height: "clamp(150px, 20vw, 250px)", margin: "2rem 0" }}>
+                <img src={selected.images[1]} alt="" className="w-full h-full object-cover" />
+              </div>
+
+              <div style={{ borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
                 <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.75rem" }}>Scope of Work</span>
                 <div className="flex flex-wrap gap-2">
                   {selected.scope.map(s => (
                     <span key={s} style={{ fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "var(--charcoal)", border: "1px solid var(--border-s)", padding: "0.35rem 0.7rem", borderRadius: "3px" }}>{s}</span>
                   ))}
                 </div>
-              </div>
-
-              {/* Second image */}
-              <div style={{ borderRadius: "12px", overflow: "hidden", height: "clamp(150px, 20vw, 250px)", marginBottom: "2rem" }}>
-                <img src={selected.images[1]} alt="" className="w-full h-full object-cover" />
-              </div>
-
-              {/* Extended detail — placeholder */}
-              <div style={{ borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
-                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.75rem" }}>The Process</span>
-                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                  The engagement began with a comprehensive discovery phase — understanding the client&rsquo;s vision, target audience, and operational constraints. From there, we developed a detailed roadmap covering every phase of the project from concept through to opening night.
-                </p>
-                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                  On the culinary side, Dimitris led menu development with full food costing, recipe standardisation, and supplier sourcing. Kitchen design was specified down to equipment placement and workflow optimisation. Staff were recruited, onboarded, and trained on every procedure before the first service.
-                </p>
-                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-                  The operational framework included complete SOP documentation, HACCP compliance, health and safety protocols, and fire maintenance procedures. Every system was built to run independently — the measure of success is when we leave and nothing changes.
-                </p>
-
-                <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", display: "block", marginBottom: "0.75rem", marginTop: "2rem" }}>Outcome</span>
-                <p style={{ fontSize: "0.92rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.9 }}>
-                  A fully operational venue with documented systems, a trained team, and a clear identity — ready to serve from day one. The kind of opening where nothing is left to chance.
-                </p>
               </div>
             </div>
           </div>
