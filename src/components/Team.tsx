@@ -101,13 +101,20 @@ export default function Team() {
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "0.5rem" }}>
                 Alex Apostolides
               </h3>
-              <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Strategy & Client Experience · Co-Founder</p>
+              <p style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "var(--copper)", marginBottom: "1.25rem" }}>Operations, Design & Branding · Co-Founder</p>
               <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.85, marginBottom: "1.5rem" }}>
-                Builds the infrastructure behind every engagement — operational systems, brand identity, websites, and digital visibility. Oversees client experience from first call to handover.
+                Has built and designed multiple businesses from the ground up — the operational systems, the brand, and the front-end and back-end that each one runs on.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                {["Operations & Systems", "Brand Identity", "Website & SEO", "CRM & Bookings", "Client Experience"].map(tag => (
-                  <span key={tag} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--stone)", border: "1px solid var(--border)", padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{tag}</span>
+                {[
+                  { tag: "Operations", gold: true },
+                  { tag: "Brand & Design", gold: true },
+                  { tag: "Web Design", gold: true },
+                  { tag: "Frontend & Backend", gold: false },
+                  { tag: "Systems Architecture", gold: false },
+                  { tag: "Digital Infrastructure", gold: false },
+                ].map(t => (
+                  <span key={t.tag} style={{ fontSize: "0.42rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: t.gold ? "var(--copper)" : "var(--stone)", border: `1px solid ${t.gold ? "var(--copper)" : "var(--border)"}`, padding: "0.25rem 0.5rem", borderRadius: "3px" }}>{t.tag}</span>
                 ))}
               </div>
             </div>

@@ -188,6 +188,33 @@ export default function Work() {
           {/* Backdrop */}
           <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)" }} />
 
+          {/* Close button — stays visible no matter how far you scroll inside the card */}
+          <button
+            onClick={e => { e.stopPropagation(); setSelected(null); }}
+            style={{
+              position: "fixed",
+              top: "1.25rem",
+              right: "1.25rem",
+              zIndex: 102,
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              border: "1px solid rgba(255,255,255,0.3)",
+              background: "rgba(28,28,26,0.7)",
+              backdropFilter: "blur(8px)",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1rem",
+              color: "#fff",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.borderColor = "var(--copper)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(28,28,26,0.7)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
+            aria-label="Close"
+          >✕</button>
+
           {/* Modal card */}
           <div
             data-modal-content
@@ -210,31 +237,6 @@ export default function Work() {
             onClick={e => e.stopPropagation()}
             onTouchMove={e => e.stopPropagation()}
           >
-            {/* Close button */}
-            <button
-              onClick={() => setSelected(null)}
-              style={{
-                position: "absolute",
-                top: "1.25rem",
-                right: "1.25rem",
-                zIndex: 2,
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                border: "1px solid var(--border)",
-                background: "rgba(255,255,255,0.9)",
-                backdropFilter: "blur(8px)",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "1rem",
-                color: "var(--charcoal)",
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "var(--copper)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.9)"; e.currentTarget.style.color = "var(--charcoal)"; e.currentTarget.style.borderColor = "var(--border)"; }}
-            >✕</button>
 
             {/* Hero image */}
             <div style={{ height: "clamp(200px, 30vw, 350px)", overflow: "hidden", borderRadius: "24px 24px 0 0", position: "relative" }}>

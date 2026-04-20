@@ -46,8 +46,8 @@ body {
   max-width: 100%;
 }
 
-/* Hero responsive sizing */
-.hero-content {
+/* Hero responsive sizing — compound selector beats plain .wrap shorthand padding */
+.wrap.hero-content {
   padding-bottom: clamp(3rem, 8vh, 6rem);
   padding-left: clamp(2rem, 4vw, 40px);
 }
@@ -59,12 +59,12 @@ body {
   letter-spacing: 0.4em;
 }
 @media (max-width: 600px) {
-  .hero-content {
-    padding-bottom: 2rem;
-    padding-top: 5rem;
+  .wrap.hero-content {
+    padding-bottom: clamp(6rem, 22vh, 12rem);
+    padding-top: 4rem;
   }
   .hero-heading {
-    font-size: clamp(2.75rem, 12vw, 4rem);
+    font-size: clamp(2.9rem, 12.5vw, 4.5rem);
   }
   .hero-tag-text {
     font-size: 0.7rem;
@@ -128,15 +128,16 @@ body {
 
 .rounded-section { border-radius: 24px; overflow: hidden; }
 
-/* Alex photo container — shorter and tighter on mobile so his face sits higher */
+/* Alex photo container */
 .alex-photo-wrap { min-height: clamp(300px, 45vw, 420px); }
 @media (max-width: 767px) {
   .alex-photo-wrap {
-    min-height: 240px;
-    max-height: 260px;
+    min-height: 360px;
+    max-height: 400px;
   }
+  /* Position Alex higher in the frame; taller container gives a wider crop (zoom-out feel) */
   .alex-photo-wrap img {
-    object-position: center 20% !important;
+    object-position: center 10% !important;
   }
 }
 
