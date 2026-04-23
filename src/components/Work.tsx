@@ -6,13 +6,28 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
+type Project = {
+  num: string;
+  name: string;
+  fullName: string;
+  location: string;
+  type: string;
+  paragraphs: string[];
+  scope: string[];
+  images: string[];
+  imageFits?: ("cover" | "contain")[];
+  michelin?: boolean;
+  status?: string;
+};
+
+const projects: Project[] = [
   {
     num: "01",
-    name: "Mauro Colagreco",
+    name: "Mauro Colagreco at Raffles London",
     fullName: "Mauro Colagreco at Raffles London at The OWO",
     location: "London, 2023",
     type: "Pre-opening",
+    michelin: true,
     paragraphs: [
       "Dimitris Kamaritis was a member of the pre-opening team for Mauro Colagreco at Raffles London at The OWO—one of the most anticipated restaurant launches in London in a generation, set within the landmark Grade II-listed Old War Office building on Whitehall.",
       "Mauro Colagreco is the Italian-Argentine chef behind Mirazur on the Côte d'Azur — a three-Michelin-starred restaurant that was crowned the World's Best Restaurant by the World's 50 Best in 2019, and the only restaurant in the world to hold that title for three consecutive years. Colagreco is also a UNESCO Goodwill Ambassador for Biodiversity, and sustainability sits at the very core of his culinary philosophy.",
@@ -36,6 +51,7 @@ const projects = [
     ],
     scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
     images: ["/photos/grain-exterior.jpg", "/photos/grain-dishes.jpg"],
+    imageFits: ["contain", "cover"],
   },
   {
     num: "03",
@@ -43,6 +59,7 @@ const projects = [
     fullName: "Filos by Halepi",
     location: "Notting Hill, London",
     type: "Chef Consultant",
+    status: "Opening Soon",
     paragraphs: [
       "Dimitris Kamaritis served as Chef Consultant for Filos by Halepi, a new Cypriot café and restaurant opening in Notting Hill, London — located alongside the legendary Halepi, one of the most beloved Greek Cypriot institutions in the city.",
       "Filos is the latest venture of Kostas Kazolides, whose family has been at the heart of London's Greek Cypriot dining scene since founding Halepi in 1966. Where Halepi has long been celebrated for its taverna spirit and authentic Cypriot cooking, Filos takes a different and deeply personal direction — a daytime destination dedicated to the sweeter, more intimate side of Cypriot food culture. The concept is built around a journey through Cypriot tradition: homemade pastries, traditional sweets, and a breakfast and lunch menu that brings the warmth and heritage of the island to Notting Hill.",
@@ -50,7 +67,7 @@ const projects = [
       "Filos by Halepi is opening soon.",
     ],
     scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
-    images: ["/photos/filos-kitchen.jpg", "/photos/filos-3d-kitchen.jpg"],
+    images: ["/photos/filos-halepi-exterior.jpg", "/photos/filos-3d-kitchen.jpg"],
   },
   {
     num: "04",
@@ -58,6 +75,7 @@ const projects = [
     fullName: "Mesa Stone",
     location: "Walthamstow, London",
     type: "Chef Consultant",
+    status: "Opening Soon",
     paragraphs: [
       "Dimitris Kamaritis joined Mesa Stone as Chef Consultant from the very beginning, bringing his full expertise to bear on one of London's most distinctive upcoming food concepts.",
       "Mesa Stone is a fast casual restaurant rooted in Native American culinary tradition, launching its first site in Walthamstow with plans to expand across the UK. The concept takes traditional Native American recipes as its foundation and reinterprets them through a contemporary lens — honouring the integrity and depth of indigenous food culture while making it accessible, exciting and relevant to a modern British audience. It is a project with both a strong identity and real ambition.",
@@ -65,13 +83,13 @@ const projects = [
       "Mesa Stone is opening soon in Walthamstow, with UK expansion to follow.",
     ],
     scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
-    images: ["/photos/dining-room.jpg", "/photos/chef-plating.jpg"],
+    images: ["/photos/mesa-kitchen-design.jpg", "/photos/mesa-corn.jpg"],
   },
 ];
 
 export default function Work() {
   const ref = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState<typeof projects[0] | null>(null);
+  const [selected, setSelected] = useState<Project | null>(null);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -140,14 +158,17 @@ export default function Work() {
             {projects.map((p) => (
               <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden", cursor: "pointer" }} onClick={() => setSelected(p)}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
-                  {p.images.map((img, j) => (
-                    <div key={j} style={{ height: "clamp(200px, 25vw, 320px)", overflow: "hidden", position: "relative" }}>
-                      <img src={img} alt="" className="w-full h-full object-cover" style={{ transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
-                      {j === 0 && (
-                        <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 400, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
-                      )}
-                    </div>
-                  ))}
+                  {p.images.map((img, j) => {
+                    const fit = p.imageFits?.[j] ?? "cover";
+                    return (
+                      <div key={j} style={{ height: "clamp(200px, 25vw, 320px)", overflow: "hidden", position: "relative", background: fit === "contain" ? "#f4f1ec" : undefined }}>
+                        <img src={img} alt="" className="w-full h-full" style={{ objectFit: fit, transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
+                        {j === 0 && (
+                          <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 400, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4" style={{ padding: "1.5rem 2rem" }}>
                   <div>
@@ -156,7 +177,15 @@ export default function Work() {
                       <span style={{ fontSize: "0.5rem", color: "var(--stone-light)" }}>·</span>
                       <span style={{ fontSize: "0.5rem", fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--stone)" }}>{p.location}</span>
                     </div>
-                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
+                    <div className="flex items-center flex-wrap" style={{ gap: "0.75rem" }}>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 400, color: "var(--charcoal)", letterSpacing: "-0.01em" }}>{p.name}</h3>
+                      {p.michelin && (
+                        <img src="/michelin-star.png" alt="Michelin star" style={{ width: "clamp(1.25rem, 2vw, 1.6rem)", height: "clamp(1.25rem, 2vw, 1.6rem)", objectFit: "contain" }} />
+                      )}
+                      {p.status && (
+                        <span style={{ fontSize: "0.55rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--copper)", border: "1px solid var(--copper)", borderRadius: "999px", padding: "0.3rem 0.7rem", whiteSpace: "nowrap" }}>{p.status}</span>
+                      )}
+                    </div>
                   </div>
                   <div className="flex items-end gap-4">
                     <span style={{ flexShrink: 0, fontSize: "0.5rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)", border: "1px solid var(--copper)", borderRadius: "4px", padding: "0.4rem 0.8rem", transition: "all 0.2s", whiteSpace: "nowrap" }}>Read More</span>
@@ -244,7 +273,15 @@ export default function Work() {
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)" }} />
               <div style={{ position: "absolute", bottom: "2rem", left: "2rem", right: "2rem" }}>
                 <span style={{ fontSize: "0.45rem", fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "var(--copper-light)", display: "block", marginBottom: "0.35rem" }}>{selected.type} · {selected.location}</span>
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3.2vw, 2.4rem)", fontWeight: 400, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.15 }}>{selected.fullName}</h2>
+                <div className="flex items-center flex-wrap" style={{ gap: "0.75rem" }}>
+                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3.2vw, 2.4rem)", fontWeight: 400, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.15 }}>{selected.fullName}</h2>
+                  {selected.michelin && (
+                    <img src="/michelin-star.png" alt="Michelin star" style={{ width: "clamp(1.4rem, 2.2vw, 1.8rem)", height: "clamp(1.4rem, 2.2vw, 1.8rem)", objectFit: "contain" }} />
+                  )}
+                  {selected.status && (
+                    <span style={{ fontSize: "0.55rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "#fff", border: "1px solid rgba(255,255,255,0.6)", borderRadius: "999px", padding: "0.3rem 0.7rem", whiteSpace: "nowrap" }}>{selected.status}</span>
+                  )}
+                </div>
               </div>
               <div style={{ position: "absolute", top: "2rem", left: "2rem", fontFamily: "var(--font-display)", fontSize: "5rem", fontWeight: 400, color: "rgba(255,255,255,0.08)", lineHeight: 1 }}>{selected.num}</div>
             </div>
