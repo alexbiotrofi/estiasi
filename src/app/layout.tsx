@@ -1,9 +1,34 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl = "https://www.estiasi.cy";
+const title = "estιasι — culinary consulting";
+const description = "We bring restaurants to life. End-to-end culinary consulting for the hospitality sector.";
+
 export const metadata: Metadata = {
-  title: "estιasι — culinary consulting",
-  description: "We bring restaurants to life. End-to-end culinary consulting for the hospitality sector.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "estιasι",
+    title,
+    description,
+    locale: "en_GB",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
