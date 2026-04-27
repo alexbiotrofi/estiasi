@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CalendlyAssets } from "@/components/BookDiscoveryCall";
 
 const siteUrl = "https://www.estiasi.cy";
 const title = "estιasι — culinary consulting";
@@ -37,8 +38,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link href="https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,100i,200i,300i,400i,500i,600i,700i&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <CalendlyAssets />
+      </body>
     </html>
   );
 }

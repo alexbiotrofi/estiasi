@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import gsap from "gsap";
+import BookDiscoveryCall from "./BookDiscoveryCall";
 
 const tiers = [
   {
@@ -147,7 +148,7 @@ export default function Pricing() {
             </div>
 
             <div style={{ marginTop: "2.5rem" }}>
-              <a href="#contact" className="btn btn-copper" style={{ width: "100%", justifyContent: "center" }}>Book a Discovery Call</a>
+              <BookDiscoveryCall className="btn btn-copper" style={{ width: "100%", justifyContent: "center" }} />
             </div>
           </div>
         </div>

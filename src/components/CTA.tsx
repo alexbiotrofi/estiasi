@@ -1,3 +1,5 @@
+import BookDiscoveryCall from "./BookDiscoveryCall";
+
 export default function CTA() {
   return (
     <section className="rounded-section" style={{ margin: "0 clamp(12px, 3vw, 40px)", background: "var(--copper)", padding: "clamp(4rem, 10vw, 8rem) 0" }}>
@@ -9,7 +11,7 @@ export default function CTA() {
         <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 400, color: "rgba(255,255,255,0.85)", lineHeight: 1.5, maxWidth: "28ch", margin: "0 auto 3rem" }}>
           Ready to build something that lasts?
         </p>
-        <a href="#contact" className="btn" style={{ background: "#fff", borderColor: "#fff", color: "var(--copper)", fontSize: "0.65rem" }}>Book a Discovery Call</a>
+        <BookDiscoveryCall className="btn" style={{ background: "#fff", borderColor: "#fff", color: "var(--copper)", fontSize: "0.65rem" }} />
       </div>
     </section>
   );
