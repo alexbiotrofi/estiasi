@@ -7,7 +7,7 @@ export default function Footer() {
           <span style={{ fontSize: "0.5rem", color: "var(--stone)", marginLeft: "8px" }}>©{new Date().getFullYear()}</span>
         </div>
         <div className="flex items-center gap-6">
-          <a href="mailto:hello@estiasi.com" style={{ fontSize: "0.6rem", fontWeight: 400, color: "var(--stone)", textDecoration: "none" }}>hello@estiasi.com</a>
+          <a href="mailto:hello@estiasi.cy" style={{ fontSize: "0.6rem", fontWeight: 400, color: "var(--stone)", textDecoration: "none" }}>hello@estiasi.cy</a>
           <a href="#contact" style={{ fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--copper)", textDecoration: "none" }}>Hire Us</a>
         </div>
       </div>
