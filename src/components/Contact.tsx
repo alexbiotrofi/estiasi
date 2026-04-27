@@ -63,6 +63,10 @@ export default function Contact() {
             <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--charcoal)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
               Start the conversation.
             </p>
+            <p style={{ fontSize: "0.85rem", fontWeight: 300, color: "var(--stone-dark)", lineHeight: 1.7, marginTop: "1.25rem" }}>
+              Send us a message, or call us directly on{" "}
+              <a href="tel:+35722030800" style={{ color: "var(--copper)", textDecoration: "none", whiteSpace: "nowrap" }}>+357 22 030 800</a>.
+            </p>
           </div>
         </div>
 
