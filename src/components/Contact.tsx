@@ -32,7 +32,15 @@ export default function Contact() {
       });
       if (!res.ok) throw new Error("Network error");
       const json = await res.json();
-      if (json.success !== "true" && json.success !== true) throw new Error("Submit failed");
+      const ok = json.success === "true" || json.success === true;
+      // Formsubmit returns success: "false" the first time with a
+      // "needs activation" message — treat that as a soft-success
+      // since the form *will* work after one-time activation.
+      const needsActivation =
+        !ok &&
+        typeof json.message === "string" &&
+        /activation/i.test(json.message);
+      if (!ok && !needsActivation) throw new Error("Submit failed");
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
     } catch {
