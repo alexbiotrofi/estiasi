@@ -85,11 +85,32 @@ const projects: Project[] = [
     scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
     images: ["/photos/mesa-kitchen-design.jpg", "/photos/mesa-corn.jpg"],
   },
+  {
+    num: "05",
+    name: "Querky Café",
+    fullName: "Querky Café — Evening Menu Development",
+    location: "Walthamstow, London | 2026",
+    type: "Project Development Chef",
+    status: "Project Ongoing",
+    paragraphs: [
+      "Estiasi Consulting was engaged by Querky Hoe Street Ltd, the multi-site East London café group, to lead the development of a new evening menu for the flagship Hoe Street location. Querky had built a strong daytime brand around breakfast, brunch, and loaded bowls, and was looking to extend trading into the dinner daypart in a way that would lift average order value without disrupting kitchen flow or diluting the brand.",
+      "Dimitris led the project end-to-end as Project Development Chef: location and customer research, competitive analysis of the Walthamstow dining scene, menu architecture, dish development, and operational design for delivery and dine-in service. The work was built around the operational realities of an existing café — making intelligent use of the kitchen's existing ingredients and equipment, keeping training time short, and ensuring every item performs on both delivery platforms and at the table.",
+      "The engagement reflects Estiasi's preferred way of working with operators: starting with the customer and the location, building the menu around what the business already does well, and pushing for commercial outcomes through operational discipline rather than chef-led complexity.",
+    ],
+    scope: ["Customer Research", "Competitive Analysis", "Menu Architecture", "Dish Development", "Operational Design", "Delivery & Dine-in"],
+    images: ["/photos/querky-collaboration.png", "/photos/querky-logo.jpg"],
+    imageFits: ["contain", "contain"],
+  },
 ];
+
+const INITIAL_VISIBLE = 3;
 
 export default function Work() {
   const ref = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<Project | null>(null);
+  const [showAll, setShowAll] = useState(false);
+  const visibleProjects = showAll ? projects : projects.slice(0, INITIAL_VISIBLE);
+  const hiddenCount = projects.length - INITIAL_VISIBLE;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -155,7 +176,7 @@ export default function Work() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            {projects.map((p) => (
+            {visibleProjects.map((p) => (
               <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden", cursor: "pointer" }} onClick={() => setSelected(p)}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
                   {p.images.map((img, j) => {
@@ -194,6 +215,32 @@ export default function Work() {
               </div>
             ))}
           </div>
+
+          {hiddenCount > 0 && (
+            <div className="flex justify-center" style={{ marginTop: "3rem" }}>
+              <button
+                onClick={() => setShowAll(v => !v)}
+                style={{
+                  fontFamily: "inherit",
+                  fontSize: "0.55rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.25em",
+                  textTransform: "uppercase",
+                  color: "var(--copper)",
+                  background: "transparent",
+                  border: "1px solid var(--copper)",
+                  borderRadius: "999px",
+                  padding: "0.9rem 2rem",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "var(--copper)"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--copper)"; }}
+              >
+                {showAll ? "Show Less" : `View More (${hiddenCount})`}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
