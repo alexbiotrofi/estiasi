@@ -3,8 +3,8 @@ import "./globals.css";
 import { CalendlyAssets } from "@/components/BookDiscoveryCall";
 
 const siteUrl = "https://www.estiasi.cy";
-const title = "estιasι — culinary consulting";
-const description = "We bring restaurants to life. End-to-end culinary consulting for the hospitality sector.";
+const title = "estιasι — Culinary Consulting for Restaurants, Hotels & Cafés";
+const description = "From concept to opening day — Estiasi is a culinary consultancy bringing restaurants, hotels and cafés to life. Menu development, kitchen design, HACCP compliance, staff training, brand identity and launch management. Cyprus-based, working across Europe and the UK.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

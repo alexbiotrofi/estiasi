@@ -66,17 +66,16 @@ export default function Services() {
         </div>
 
         {/* Intro text + image */}
-        <div className="flex flex-col md:flex-row gap-8 items-start" style={{ marginBottom: "3rem" }}>
+        <div className="flex flex-col md:flex-row gap-8 md:items-center" style={{ marginBottom: "3rem" }}>
           <div style={{ flex: "1 1 0" }}>
-            <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.35, letterSpacing: "-0.02em" }}>
+            <p ref={introRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.35rem, 2.4vw, 2rem)", fontWeight: 400, color: "var(--copper)", lineHeight: 1.4, letterSpacing: "-0.015em" }}>
               Menus that tell a story. Kitchens that run themselves. Teams that set a new standard. From concept and compliance to brand and bookings — we build every layer of a venue that works.
             </p>
           </div>
           {/* Services collage */}
-          <div style={{ width: "280px", flexShrink: 0, alignSelf: "stretch" }}>
+          <div style={{ width: "280px", flexShrink: 0 }}>
             <div style={{
-              height: "100%",
-              minHeight: "280px",
+              height: "280px",
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gridTemplateRows: "1fr 1fr",
