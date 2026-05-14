@@ -67,7 +67,8 @@ const projects: Project[] = [
       "Filos by Halepi is opening soon.",
     ],
     scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
-    images: ["/photos/filos-halepi-exterior.jpg", "/photos/filos-3d-kitchen.jpg"],
+    images: ["/photos/filos-shop.png", "/photos/filos-3d-kitchen.jpg"],
+    imageFits: ["contain", "cover"],
   },
   {
     num: "04",
@@ -83,7 +84,8 @@ const projects: Project[] = [
       "Mesa Stone is opening soon in Walthamstow, with UK expansion to follow.",
     ],
     scope: ["Kitchen Design", "SOPs & HACCP", "Menu Development", "Menu Engineering", "Staff Training", "Marketing Policy", "Brand Management"],
-    images: ["/photos/mesa-kitchen-design.jpg", "/photos/mesa-corn.jpg"],
+    images: ["/photos/mesa-stone.png"],
+    imageFits: ["contain"],
   },
   {
     num: "05",
@@ -98,7 +100,7 @@ const projects: Project[] = [
       "The engagement reflects Estiasi's preferred way of working with operators: starting with the customer and the location, building the menu around what the business already does well, and pushing for commercial outcomes through operational discipline rather than chef-led complexity.",
     ],
     scope: ["Customer Research", "Competitive Analysis", "Menu Architecture", "Dish Development", "Operational Design", "Delivery & Dine-in"],
-    images: ["/photos/querky-collaboration.png", "/photos/querky-logo.jpg"],
+    images: ["/photos/querky-shop.png", "/photos/querky-logo.jpg"],
     imageFits: ["contain", "contain"],
   },
 ];
@@ -178,7 +180,7 @@ export default function Work() {
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             {visibleProjects.map((p) => (
               <div key={p.num} className="work-item rounded-section" style={{ background: "#fff", overflow: "hidden", cursor: "pointer" }} onClick={() => setSelected(p)}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-px">
+                <div className={`grid grid-cols-1 ${p.images.length > 1 ? "md:grid-cols-2" : ""} gap-px`}>
                   {p.images.map((img, j) => {
                     const fit = p.imageFits?.[j] ?? "cover";
                     return (
