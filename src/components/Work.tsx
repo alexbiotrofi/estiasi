@@ -183,9 +183,17 @@ export default function Work() {
                 <div className={`grid grid-cols-1 ${p.images.length > 1 ? "md:grid-cols-2" : ""} gap-px`}>
                   {p.images.map((img, j) => {
                     const fit = p.imageFits?.[j] ?? "cover";
+                    const isSingle = p.images.length === 1;
                     return (
-                      <div key={j} style={{ height: "clamp(200px, 25vw, 320px)", overflow: "hidden", position: "relative", background: fit === "contain" ? "#f4f1ec" : undefined }}>
-                        <img src={img} alt="" className="w-full h-full" style={{ objectFit: fit, transition: "transform 0.6s ease" }} onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }} onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }} />
+                      <div key={j} style={{ height: isSingle ? "auto" : "clamp(200px, 25vw, 320px)", overflow: "hidden", position: "relative", background: fit === "contain" ? "#f4f1ec" : undefined }}>
+                        <img
+                          src={img}
+                          alt=""
+                          className={isSingle ? "w-full block" : "w-full h-full"}
+                          style={{ objectFit: fit, transition: "transform 0.6s ease", ...(isSingle ? { height: "auto" } : {}) }}
+                          onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                        />
                         {j === 0 && (
                           <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 400, color: "rgba(255,255,255,0.1)", lineHeight: 1 }}>{p.num}</div>
                         )}
